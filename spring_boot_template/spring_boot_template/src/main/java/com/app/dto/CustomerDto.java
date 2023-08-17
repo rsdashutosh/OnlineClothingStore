@@ -7,21 +7,23 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@ToString
 public class CustomerDto {
-	private Long customerId;
+	private Integer coins;
+	private String email;
 	private String firstName;
 	private String lastName;
-	private String email;
 	private String password;
+	private String paymentInformation;
 	private Long phoneNumber;
 	private String shippingAddress;
-	private String paymentInformation;
-	private Integer coins;
+	
+	
 	
 }

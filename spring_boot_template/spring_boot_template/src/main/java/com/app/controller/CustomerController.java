@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.dto.ApiResponse;
 import com.app.dto.CustomerDto;
 import com.app.service.CustomerService;
 
@@ -20,15 +21,14 @@ public class CustomerController {
 	private CustomerService customerService;
 	
 	@PostMapping
-	public ResponseEntity<String> addCustomer(@RequestBody CustomerDto customerDto) {
-		try
+	public ResponseEntity<?> addCustomer(@RequestBody CustomerDto customerDto) {
+		try 
 		{
-			String response=customerService.addCustomerDetails(customerDto);
-			return ResponseEntity.status(HttpStatus.OK).body(response);	
-		}
-		catch(RuntimeException e)
+			return new ResponseEntity<>(new ApiResponse(customerService.addCustomerDetails(customerDto)), HttpStatus.CREATED);
+		} 
+		catch (RuntimeException e) 
 		{
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getStackTrace().toString());
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
 		}
 		
 	    

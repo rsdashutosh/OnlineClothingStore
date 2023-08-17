@@ -1,8 +1,5 @@
 package com.app.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,17 +7,17 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+@NoArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name="customers")
 public class Customer {
 	
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long customerId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	//@Column(name = "first_name",nullable = false)
 	private String firstName;
 	private String lastName;
@@ -31,4 +28,17 @@ public class Customer {
 	private String paymentInformation;
 	private Integer coins;
 	
+	
+	public Customer(String firstName, String lastName, String email, String password, Long phoneNumber,
+			String shippingAddress, String paymentInformation, Integer coins) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.phoneNumber = phoneNumber;
+		this.shippingAddress = shippingAddress;
+		this.paymentInformation = paymentInformation;
+		this.coins = coins;
+	}
 }
