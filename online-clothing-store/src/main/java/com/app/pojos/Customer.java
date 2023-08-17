@@ -25,4 +25,11 @@ public class Customer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer customerId;
 	private String firstName;
+	private String lastName;
+	private String email;
+	private String password;
+	private Long phoneNumber;
+	private String shippingAddress;
+	private String paymentInformation;
+	private Integer coins;
 }
