@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="spring_boot_template/src/main/java"/>
-	<classpathentry kind="src" path="spring_boot_template/src/test/java"/>
-	<classpathentry kind="output" path="spring_boot_template/target/classes"/>
-</classpath>
