@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -25,7 +27,13 @@ public class Review {
 	private String text;
 	private Blob image;
 	private Integer rating;
-	private Integer customerId;
+	@ManyToOne
+	@JoinColumn(name="customer_id")
+	private Customer customer;
+	
+	@ManyToOne
+	@JoinColumn(name="product_id")
+	private Product product;
 	
 
 }

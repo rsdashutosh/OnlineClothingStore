@@ -30,7 +30,7 @@ public class Order {
     private Long orderId;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     private Date orderDate;
@@ -38,6 +38,8 @@ public class Order {
     private String paymentMethod;
     private String paymentStatus;
     private String shippingAddress;
+   
+    
 	
 
 }

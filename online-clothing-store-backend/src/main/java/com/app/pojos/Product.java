@@ -1,11 +1,16 @@
 package com.app.pojos;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.app.enums.CategoryType;
@@ -48,5 +53,13 @@ private CategoryType category;
 private Float discount;
 private Float mrp;
 
+@OneToMany(mappedBy = "product")
+private List<Offer> offerList;
 
+@OneToMany(mappedBy = "product")
+private List<Review> reviewList;
+
+@ManyToOne
+@JoinColumn(name="cart_id")
+private CartItem cartItem;
 }

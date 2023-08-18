@@ -6,6 +6,8 @@ import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,6 +34,9 @@ public class Address {
 	private String city;
 	private String country;
 	private int pinCode;
-	private Integer customerId;
+	
+	@ManyToOne
+	@JoinColumn(name="customer_id")
+	private Customer customer;
 }
 

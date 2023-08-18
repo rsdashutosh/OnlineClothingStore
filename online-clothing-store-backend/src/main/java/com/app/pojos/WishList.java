@@ -26,10 +26,9 @@ public class WishList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-   // @ManyToOne
-    //@JoinColumn(name = "customer_id", referencedColumnName = "customerId")
-    //private Customer customer;
-	private String customer;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 	
     //@ManyToOne
     //@JoinColumn(name = "product_id", referencedColumnName = "productId")
