@@ -2,11 +2,13 @@ package com.app.dtos;
 
 import java.sql.Date;
 
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-import com.app.pojos.Category;
+import com.app.enums.Category;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +38,7 @@ public class OfferDto {
     private Date startDate;
 
     @NotNull(message = "End date is required")
+    @Future		// promo code should expire on a date in the future
     private Date endDate;
 
     @NotNull(message = "Category is required")

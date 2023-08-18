@@ -2,6 +2,9 @@ package com.app.dtos;
 
 import java.sql.Blob;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,12 +17,14 @@ import lombok.ToString;
 @AllArgsConstructor
 public class ReviewDto 
 {
+	@NotBlank(message = "review text is mandatory")
+	private String text;
 
-		private Integer reviewId;
-		private String text;
-		private Blob image;
-		private Integer rating;
-		private Integer customerId;
+	private Blob image;
+	@NotNull(message = "review rating is mandatory")
+	private Integer rating;
+	@NotNull(message = "customer Id is mandatory")
+	private Integer customerId;
 		
 	
 

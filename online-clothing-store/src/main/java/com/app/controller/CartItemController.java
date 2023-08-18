@@ -48,14 +48,14 @@ public class CartItemController {
 	
 	
 	// UPDATE 
-	@PutMapping
+	@PutMapping("/{cartItemId}")
 	public ResponseEntity<?> updateCartItem(@PathVariable Integer cartItemId,@RequestBody CartItemDto cartItemDto)
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(cartItemService.updateCartItem(cartItemId, cartItemDto));
 	}
 	
 	// DELETE
-	@DeleteMapping
+	@DeleteMapping("/{cartItemId}")
 	public ResponseEntity<?> deleteCartItem(@PathVariable Integer cartItemId)
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(cartItemService.deleteCartItem(cartItemId));

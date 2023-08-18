@@ -42,7 +42,7 @@ public class CartItemServiceImpl implements CartItemService{
 	// to do
 	@Override
 	public List<CartItemDto> getCartItemsOfACustomer(Integer customerId) {
-		List<CartItem> cartItems=cartItemRepo.findBycustomerId(customerId);
+		List<CartItem> cartItems=cartItemRepo.findByCustomerId(customerId);
 		return cartItems.stream().map(cartItem->mapper.map(cartItem, CartItemDto.class)).collect(Collectors.toList());
 	}
 

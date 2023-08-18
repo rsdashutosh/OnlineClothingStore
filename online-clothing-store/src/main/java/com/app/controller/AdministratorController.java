@@ -46,14 +46,14 @@ public class AdministratorController {
 	}
 	
 	// UPDATE details of an administrator
-	@PutMapping
+	@PutMapping("/{administratorId}")
 	public ResponseEntity<?> updateAdministrator(@PathVariable Integer administratorId,@RequestBody AdministratorDto administratorDto)
 	{
 		return ResponseEntity.status(HttpStatus.CREATED).body(adminService.updateAdministratorDetails(administratorId, administratorDto));
 	}
 	
 	// DELETE details of an administrator
-	@DeleteMapping
+	@DeleteMapping("/{administratorId}")
 	public ResponseEntity<?> deleteAdministrator(@PathVariable Integer administratorId)
 	{
 		return ResponseEntity.status(HttpStatus.CREATED).body(adminService.deleteAdministrator(administratorId));
