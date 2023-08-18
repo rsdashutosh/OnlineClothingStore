@@ -1,11 +1,11 @@
 package com.app.pojos;
 
-import javax.annotation.Generated;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.*;
+import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,8 +24,8 @@ import lombok.ToString;
 public class Address {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	
-	private Integer customerId;
+	@Column(name="address_id")
+	private Integer addressId;
 	private String line1;
 	private String street;
 	private String town;
