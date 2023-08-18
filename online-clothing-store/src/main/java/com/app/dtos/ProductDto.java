@@ -1,4 +1,4 @@
-package com.app.dto;
+package com.app.dtos;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;

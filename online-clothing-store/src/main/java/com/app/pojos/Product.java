@@ -1,4 +1,4 @@
-package com.app.entities;
+package com.app.pojos;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

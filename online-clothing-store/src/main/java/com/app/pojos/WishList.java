@@ -28,8 +28,9 @@ public class WishList {
 
    // @ManyToOne
     //@JoinColumn(name = "customer_id", referencedColumnName = "customerId")
-    private Customer customer;
-
+    //private Customer customer;
+	private String customer;
+	
     //@ManyToOne
     //@JoinColumn(name = "product_id", referencedColumnName = "productId")
     private Long productid;
