@@ -23,6 +23,9 @@ public class AddressDto {
 
     @NotBlank(message = "street is mandatory")
     private String street;
+    
+    @NotBlank(message = "town is mandatory")
+    private String town;
 
     @NotBlank(message = "city is mandatory")
     private String city;

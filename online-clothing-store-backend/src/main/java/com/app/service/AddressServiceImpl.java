@@ -1,6 +1,8 @@
 package com.app.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -33,26 +35,26 @@ public class AddressServiceImpl implements AddressService {
 
 	//GET address by Id 
 	@Override
-	public AddressDto getAddressById(Integer customerId) {
-		Optional<Address> address=addressRepo.findById(customerId);
-		AddressDto addressDto=mapper.map(address.get(), AddressDto.class);
-		return addressDto;
+	public List<AddressDto> getAddressById(Integer customerId) {
+		Optional<List<Address>> addressList=addressRepo.findByCustomerId(customerId);
+		//AddressDto addressDto=mapper.map(address.get(), AddressDto.class);
+		return addressList.get().stream().map(address->mapper.map(address, AddressDto.class)).collect(Collectors.toList());
 	}
 
 	//PUT
 	@Override
-	public String updateAddress(Integer customerId, AddressDto addressDto) {
-		Optional<Address> address=addressRepo.findById(customerId);
+	public String updateAddress(Integer addressId, AddressDto addressDto) {
+		Optional<Address> address=addressRepo.findById(addressId);
 		Address persistantAddress=address.get();
 		mapper.map(addressDto, persistantAddress);
-		return "Aaddress updated successfully!!!";
+		return "Address with id:"+persistantAddress.getAddressId()+"updated successfully!!!";
 	}
 
 	//Put
 	@Override
-	public String deleteAddress(Integer customerId) {
-		addressRepo.deleteById(customerId);
-		return "Aaddress deleted successfully!!!";
+	public String deleteAddress(Integer addressId) {
+		addressRepo.deleteById(addressId);
+		return "Address with address id :"+addressId+" deleted successfully!!!";
 	}
 
 }

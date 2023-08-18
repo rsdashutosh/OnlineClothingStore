@@ -27,17 +27,17 @@ public class AddressController {
 	}
 	
 	@GetMapping("/{customerId}")
-	public ResponseEntity<AddressDto> getAddress(@PathVariable Integer customerId){
-		return new ResponseEntity<AddressDto>(addressService.getAddressById(customerId),HttpStatus.FOUND);
+	public ResponseEntity<?> getAddress(@PathVariable Integer customerId){
+		return ResponseEntity.status(HttpStatus.FOUND).body(addressService.getAddressById(customerId));
 	}
 	
-	@PutMapping("/{customerId}")
-	public ResponseEntity<?> updateAddress(@PathVariable Integer customerId,@RequestBody AddressDto addressDto){
-		return ResponseEntity.status(HttpStatus.OK).body(addressService.updateAddress(customerId,addressDto));
+	@PutMapping("/{addressId}")
+	public ResponseEntity<?> updateAddress(@PathVariable Integer addressId,@RequestBody AddressDto addressDto){
+		return ResponseEntity.status(HttpStatus.OK).body(addressService.updateAddress(addressId,addressDto));
 	}
 	
-	@DeleteMapping("/{customerId}")
-	public ResponseEntity<?> deleteAddress(@PathVariable Integer customerId){
-		return ResponseEntity.status(HttpStatus.OK).body(addressService.deleteAddress(customerId));
+	@DeleteMapping("/{addressId}")
+	public ResponseEntity<?> deleteAddress(@PathVariable Integer addressId){
+		return ResponseEntity.status(HttpStatus.OK).body(addressService.deleteAddress(addressId));
 	}
 }

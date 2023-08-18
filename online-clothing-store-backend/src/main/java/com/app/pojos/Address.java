@@ -32,5 +32,6 @@ public class Address {
 	private String city;
 	private String country;
 	private int pinCode;
+	private Integer customerId;
 }
 
