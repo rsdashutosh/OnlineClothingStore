@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +25,5 @@ public class Administrator {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer adminId;
 	private String username;
-	@Min(value = 8)
 	private String password;
 }
