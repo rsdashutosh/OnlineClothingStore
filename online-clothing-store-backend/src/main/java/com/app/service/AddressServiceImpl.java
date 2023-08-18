@@ -34,12 +34,13 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	//GET address by Id 
-	@Override
-	public List<AddressDto> getAddressById(Integer customerId) {
-		Optional<List<Address>> addressList=addressRepo.findByCustomerId(customerId);
-		//AddressDto addressDto=mapper.map(address.get(), AddressDto.class);
-		return addressList.get().stream().map(address->mapper.map(address, AddressDto.class)).collect(Collectors.toList());
-	}
+	/*
+	 * @Override public List<AddressDto> getAddressById(Integer customerId) {
+	 * Optional<List<Address>> addressList=addressRepo.findByCustomerId(customerId);
+	 * //AddressDto addressDto=mapper.map(address.get(), AddressDto.class); return
+	 * addressList.get().stream().map(address->mapper.map(address,
+	 * AddressDto.class)).collect(Collectors.toList()); }
+	 */
 
 	//PUT
 	@Override

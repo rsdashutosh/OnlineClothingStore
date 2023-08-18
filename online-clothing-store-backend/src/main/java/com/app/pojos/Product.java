@@ -33,33 +33,37 @@ import lombok.ToString;
 
 public class Product {
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Integer productId;
-private String Name;
-private String description;
-private Float price;
-private int stock;
-
-@Enumerated(EnumType.STRING)
-private ColorOptions color;
-
-@Enumerated(EnumType.STRING)
-private SizeOptions size;
-
-@Enumerated(EnumType.STRING)
-private CategoryType category;
-//private byte[] image;
-private Float discount;
-private Float mrp;
-
-@OneToMany(mappedBy = "product")
-private List<Offer> offerList;
-
-@OneToMany(mappedBy = "product")
-private List<Review> reviewList;
-
-@ManyToOne
-@JoinColumn(name="cart_id")
-private CartItem cartItem;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer productId;
+	private String Name;
+	private String description;
+	private Float price;
+	private int stock;
+	
+	@Enumerated(EnumType.STRING)
+	private ColorOptions color;
+	
+	@Enumerated(EnumType.STRING)
+	private SizeOptions size;
+	
+	@Enumerated(EnumType.STRING)
+	private CategoryType category;
+	//private byte[] image;
+	private Float discount;
+	private Float mrp;
+	
+	@OneToMany(mappedBy = "product")
+	private List<Offer> offerList;
+	
+	@OneToMany(mappedBy = "product")
+	private List<Review> reviewList;
+	
+	@ManyToOne
+	@JoinColumn(name="cart_id")
+	private CartItem cartItem;
+	
+	@ManyToOne
+	@JoinColumn(name="wishlist_id")
+	private WishList wishList;
 }

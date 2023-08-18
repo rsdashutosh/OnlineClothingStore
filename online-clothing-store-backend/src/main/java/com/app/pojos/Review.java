@@ -28,7 +28,7 @@ public class Review {
 	private Blob image;
 	private Integer rating;
 	@ManyToOne
-	@JoinColumn(name="customer_id")
+	@JoinColumn(name="customer_id_who_wrote_this_review")
 	private Customer customer;
 	
 	@ManyToOne

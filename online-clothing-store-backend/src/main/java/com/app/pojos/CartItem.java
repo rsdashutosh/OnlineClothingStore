@@ -36,10 +36,10 @@ public class CartItem {
 	// specify mapping to customer table
 	private Integer customerId;
 
-	@OneToMany(mappedBy="product")
+	@OneToMany(mappedBy="cartItem")
 	private List<Product> productList;
 	
 	@OneToOne
-	@JoinColumn(name="customer_id")
+	@JoinColumn(name="customer_id_whose_cart_this_is")
 	private Customer customer;
 }

@@ -30,7 +30,7 @@ public class Order {
     private Long orderId;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id_whose_order_this_is")
     private Customer customer;
 
     private Date orderDate;

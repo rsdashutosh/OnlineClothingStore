@@ -36,7 +36,7 @@ public class Address {
 	private int pinCode;
 	
 	@ManyToOne
-	@JoinColumn(name="customer_id")
+	@JoinColumn(name="customer_id_whose_address_this_is")
 	private Customer customer;
 }
 

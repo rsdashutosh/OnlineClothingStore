@@ -1,11 +1,14 @@
 package com.app.pojos;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -27,10 +30,9 @@ public class WishList {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id_customer_who_wishes_this_product")
     private Customer customer;
 	
-    //@ManyToOne
-    //@JoinColumn(name = "product_id", referencedColumnName = "productId")
-    private Long productid;
+    @OneToMany(mappedBy = "wishList")
+    private List<Product> products;
 }

@@ -26,10 +26,12 @@ public class AddressController {
 		return ResponseEntity.status(HttpStatus.OK).body(addressService.addAddress(addressDto));
 	}
 	
-	@GetMapping("/{customerId}")
-	public ResponseEntity<?> getAddress(@PathVariable Integer customerId){
-		return ResponseEntity.status(HttpStatus.FOUND).body(addressService.getAddressById(customerId));
-	}
+	/*
+	 * @GetMapping("/{customerId}") public ResponseEntity<?>
+	 * getAddress(@PathVariable Integer customerId){ return
+	 * ResponseEntity.status(HttpStatus.FOUND).body(addressService.getAddressById(
+	 * customerId)); }
+	 */
 	
 	@PutMapping("/{addressId}")
 	public ResponseEntity<?> updateAddress(@PathVariable Integer addressId,@RequestBody AddressDto addressDto){
