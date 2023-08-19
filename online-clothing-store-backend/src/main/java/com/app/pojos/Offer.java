@@ -3,6 +3,8 @@ package com.app.pojos;
 import java.sql.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.app.enums.Category;
+import com.app.enums.CategoryType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,7 +38,8 @@ public class Offer {
 	private String promoCode;
 	private Date startDate;
 	private Date endDate;
-	private Category category;
+	@Enumerated(EnumType.STRING)
+	private CategoryType category;
 	private double minimumPurchaseAmount;
 	
 	@ManyToOne
