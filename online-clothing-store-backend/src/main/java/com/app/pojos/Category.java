@@ -20,7 +20,7 @@ public class Category {
 	private String categoryName;
 	private Gender categoryGender;
 	private CategoryType categoryType;
-	@ManyToMany(mappedBy="categories")
+	@ManyToMany
 	private List<Product> products;
 	
 	
