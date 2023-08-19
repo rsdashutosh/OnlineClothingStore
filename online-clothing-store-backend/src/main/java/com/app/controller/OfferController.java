@@ -2,6 +2,8 @@ package com.app.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,7 +26,7 @@ public class OfferController {
 	private OfferService offerService;
 
 	@PostMapping("/")
-	public ResponseEntity<OfferDto> addOffer(@RequestBody OfferDto offerDto) {
+	public ResponseEntity<OfferDto> addOffer(@Valid @RequestBody OfferDto offerDto) {
 		OfferDto craetedOffer = offerService.addOffer(offerDto);
 		return ResponseEntity.ok(craetedOffer);
 
@@ -44,7 +46,7 @@ public class OfferController {
 	}
 
 	@PutMapping("/{offerId}")
-	public ResponseEntity<OfferDto> updateOffer(@RequestBody OfferDto offerDto, @PathVariable Integer offerId) {
+	public ResponseEntity<OfferDto> updateOffer(@Valid @RequestBody OfferDto offerDto, @PathVariable Integer offerId) {
 		OfferDto updatedOfferDto = offerService.updateOffer(offerDto, offerId);
 		return ResponseEntity.ok(updatedOfferDto);
 	}

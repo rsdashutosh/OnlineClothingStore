@@ -1,6 +1,8 @@
 package com.app.controller;
 
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,7 @@ public class WishListController {
 	    WishListService wishlistService;
 
 	    @PostMapping("/")
-	    public ResponseEntity<?> addToWishlist(@RequestBody WishListDto wishlistDto) {
+	    public ResponseEntity<?> addToWishlist(@Valid @RequestBody WishListDto wishlistDto) {
 	        return ResponseEntity.status(HttpStatus.OK).body(wishlistService.addToWishlist(wishlistDto));
 	    }
 
@@ -34,7 +36,7 @@ public class WishListController {
 	    }
 
 	    @PutMapping("/{wishlistId}")
-	    public ResponseEntity<?> updateWishlistItem(@PathVariable Long wishlistId, @RequestBody WishListDto wishlistDto) {
+	    public ResponseEntity<?> updateWishlistItem(@Valid @PathVariable Long wishlistId, @RequestBody WishListDto wishlistDto) {
 	        return ResponseEntity.status(HttpStatus.OK).body(wishlistService.updateWishlistItem(wishlistId, wishlistDto));
 	    }
 

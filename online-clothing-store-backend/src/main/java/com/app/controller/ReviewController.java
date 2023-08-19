@@ -1,5 +1,7 @@
 package com.app.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,7 @@ public class ReviewController {
 	@Autowired
 	ReviewService reviewService;
 	@PostMapping("/")
-	public ResponseEntity<?> addReview(@PathVariable ReviewDto reviewdto)
+	public ResponseEntity<?> addReview(@Valid @PathVariable ReviewDto reviewdto)
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(reviewService.addReview(reviewdto));
 	}
@@ -38,7 +40,7 @@ public class ReviewController {
 		return ResponseEntity.status(HttpStatus.OK).body(reviewService.deleteReview(reviewId));
 	}
     @PutMapping("/reviewId")
-    public ResponseEntity<?> editReview(@PathVariable Integer reviewId,@RequestBody ReviewDto reviewdto)
+    public ResponseEntity<?> editReview(@Valid @PathVariable Integer reviewId,@RequestBody ReviewDto reviewdto)
     {
     	return ResponseEntity.status(HttpStatus.OK).body(reviewService.editReview(reviewId, reviewdto));
     }

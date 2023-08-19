@@ -1,5 +1,7 @@
 package com.app.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +28,7 @@ public class AdministratorController {
 	
 	// POST
 	@PostMapping
-	public ResponseEntity<?> addAdministrator(@RequestHeader AdministratorDto administratorDto)
+	public ResponseEntity<?> addAdministrator(@Valid @RequestHeader AdministratorDto administratorDto)
 	{
 		return ResponseEntity.status(HttpStatus.CREATED).body(adminService.addAdministrator(administratorDto));
 	}
@@ -47,7 +49,7 @@ public class AdministratorController {
 	
 	// UPDATE details of an administrator
 	@PutMapping("/{administratorId}")
-	public ResponseEntity<?> updateAdministrator(@PathVariable Integer administratorId,@RequestBody AdministratorDto administratorDto)
+	public ResponseEntity<?> updateAdministrator(@Valid @PathVariable Integer administratorId,@RequestBody AdministratorDto administratorDto)
 	{
 		return ResponseEntity.status(HttpStatus.CREATED).body(adminService.updateAdministratorDetails(administratorId, administratorDto));
 	}

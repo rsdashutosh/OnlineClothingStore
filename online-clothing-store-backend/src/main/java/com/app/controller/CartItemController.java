@@ -1,5 +1,7 @@
 package com.app.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +29,7 @@ public class CartItemController {
 	
 	// POST
 	@PostMapping
-	public ResponseEntity<?> addCartItem(@RequestBody CartItemDto cartItemDto)
+	public ResponseEntity<?> addCartItem(@Valid @RequestBody CartItemDto cartItemDto)
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(cartItemService.addCartItem(cartItemDto));
 	}
@@ -49,7 +51,7 @@ public class CartItemController {
 	
 	// UPDATE 
 	@PutMapping("/{cartItemId}")
-	public ResponseEntity<?> updateCartItem(@PathVariable Integer cartItemId,@RequestBody CartItemDto cartItemDto)
+	public ResponseEntity<?> updateCartItem(@Valid @PathVariable Integer cartItemId,@RequestBody CartItemDto cartItemDto)
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(cartItemService.updateCartItem(cartItemId, cartItemDto));
 	}

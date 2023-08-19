@@ -1,5 +1,7 @@
 package com.app.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,7 @@ public class ProductController {
 	ProductService productService;
 	
 	@PostMapping("/")
-	public  ResponseEntity<?> addProducts(@RequestBody ProductDto productDto) {
+	public  ResponseEntity<?> addProducts(@Valid @RequestBody ProductDto productDto) {
 		return ResponseEntity.status(HttpStatus.OK).body(productService.addProduct(productDto));
 	}
 	
@@ -34,7 +36,7 @@ public class ProductController {
 	}
 	
 	@PutMapping("/{ProductId}")
-	public ResponseEntity<?> updateProductDetails(@PathVariable Integer productId, @RequestBody ProductDto productDto){
+	public ResponseEntity<?> updateProductDetails(@Valid @PathVariable Integer productId, @RequestBody ProductDto productDto){
 		return ResponseEntity.status(HttpStatus.OK).body(productService.updateProductDetails(productId, productDto));
 	}
 	

@@ -1,5 +1,7 @@
 package com.app.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,7 @@ public class OrderController {
 	    OrderService orderService;
 
 	    @PostMapping("/")
-	    public ResponseEntity<?> placeOrder(@RequestBody OrderDto orderDto) {
+	    public ResponseEntity<?> placeOrder(@Valid @RequestBody OrderDto orderDto) {
 	        return ResponseEntity.status(HttpStatus.OK).body(orderService.placeOrder(orderDto));
 	    }
 
@@ -32,7 +34,7 @@ public class OrderController {
 	    }
 
 	    @PutMapping("/{orderId}")
-	    public ResponseEntity<?> updateOrderDetails(@PathVariable Long orderId, @RequestBody OrderDto orderDto) {
+	    public ResponseEntity<?> updateOrderDetails(@Valid @PathVariable Long orderId, @RequestBody OrderDto orderDto) {
 	        return ResponseEntity.status(HttpStatus.OK).body(orderService.updateOrderDetails(orderId, orderDto));
 	    }
 

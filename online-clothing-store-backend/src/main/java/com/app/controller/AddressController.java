@@ -1,5 +1,7 @@
 package com.app.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,7 @@ public class AddressController {
 	AddressService addressService;
 	
 	@PostMapping("/")
-	public ResponseEntity<?> addAddress(@RequestBody AddressDto addressDto){
+	public ResponseEntity<?> addAddress(@Valid @RequestBody AddressDto addressDto){
 		return ResponseEntity.status(HttpStatus.OK).body(addressService.addAddress(addressDto));
 	}
 	
@@ -34,7 +36,7 @@ public class AddressController {
 	 */
 	
 	@PutMapping("/{addressId}")
-	public ResponseEntity<?> updateAddress(@PathVariable Integer addressId,@RequestBody AddressDto addressDto){
+	public ResponseEntity<?> updateAddress(@Valid @PathVariable Integer addressId,@RequestBody AddressDto addressDto){
 		return ResponseEntity.status(HttpStatus.OK).body(addressService.updateAddress(addressId,addressDto));
 	}
 	
