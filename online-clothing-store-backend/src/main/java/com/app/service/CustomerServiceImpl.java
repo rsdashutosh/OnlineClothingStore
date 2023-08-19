@@ -40,6 +40,14 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerDto;
 	}
 	
+	// GET customer by email
+	@Override
+	public CustomerDto getCustomerByEmail(String email) {
+		Optional<Customer> customer = customerRepo.findByEmail(email);
+		CustomerDto customerDto = mapper.map(customer.get(), CustomerDto.class);
+		return customerDto;
+	}
+	
 	// GET all customers
 	@Override
 	public List<CustomerDto> getAllCustomers() {
@@ -62,6 +70,9 @@ public class CustomerServiceImpl implements CustomerService {
 		customerRepo.deleteById(customerId);
 		return "Deleted successfully";
 	}
+
+	
+	
 	
 	
 	
