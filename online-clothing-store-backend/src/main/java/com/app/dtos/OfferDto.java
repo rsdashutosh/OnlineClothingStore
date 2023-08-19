@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-import com.app.enums.Category;
+import com.app.enums.CategoryType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,7 +42,7 @@ public class OfferDto {
     private Date endDate;
 
     @NotNull(message = "Category is required")
-    private Category category;
+    private CategoryType category;
 
     @Positive(message = "Minimum purchase amount must be positive")
     private double minimumPurchaseAmount;

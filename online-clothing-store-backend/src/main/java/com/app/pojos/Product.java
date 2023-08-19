@@ -9,11 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.app.enums.CategoryType;
+import com.app.enums.Gender;
 import com.app.enums.ColorOptions;
 import com.app.enums.SizeOptions;
 
@@ -48,7 +49,7 @@ public class Product {
 	private SizeOptions size;
 	
 	@Enumerated(EnumType.STRING)
-	private CategoryType category;
+	private Gender category;
 	//private byte[] image;
 	private Float discount;
 	private Float mrp;
@@ -66,4 +67,11 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name="wishlist_id")
 	private WishList wishList;
+	
+	@ManyToMany(mappedBy="products")
+	private List<Category> categories;
+	
+	@ManyToOne
+	@JoinColumn(name = "orderId")
+	private Order order;
 }

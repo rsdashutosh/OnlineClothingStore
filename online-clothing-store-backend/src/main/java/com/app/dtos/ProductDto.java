@@ -3,7 +3,7 @@ package com.app.dtos;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
-import com.app.enums.CategoryType;
+import com.app.enums.Gender;
 import com.app.enums.ColorOptions;
 import com.app.enums.SizeOptions;
 
@@ -33,7 +33,7 @@ public class ProductDto {
 	private SizeOptions size;
 	
 	@Enumerated(EnumType.STRING)
-	private CategoryType category;
+	private Gender category;
 	//private byte[] image;
 	private Float discount;
 	private Float mrp;
