@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.app.exception.ResourceNotFoundException;
 
+//RestControllerAdvice
 @ControllerAdvice
 public class MyControllerAdvice {
 
@@ -19,7 +20,6 @@ public class MyControllerAdvice {
 	public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException ex) {
 		return new ResponseEntity<String>(ex.getMessage(), HttpStatus.NOT_FOUND);
 	}
-	
 	
 	
 	 @ExceptionHandler(MethodArgumentNotValidException.class)
