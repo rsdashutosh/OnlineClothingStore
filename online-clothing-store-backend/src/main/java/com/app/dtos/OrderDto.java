@@ -1,6 +1,7 @@
 package com.app.dtos;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -37,6 +38,8 @@ public class OrderDto {
 
     @NotBlank(message = "shippingAddress is mandatory")
     private String shippingAddress;
+    
+    private List<ProductDto> products;
 	
 
 }

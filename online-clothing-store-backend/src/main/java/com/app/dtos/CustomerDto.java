@@ -7,6 +7,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
+import com.app.enums.Gender;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -52,5 +53,11 @@ public class CustomerDto {
     @Pattern(regexp = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}", message = "password must contain at least one uppercase letter, one lowercase letter, and one number")
     @JsonProperty(access = Access.WRITE_ONLY)
     private String password;
+    @NotNull(message = "gender is mandatory")
+    private Gender gender;
+    @Positive(message = "age must be a positive integer")
+    @NotNull(message = "age is mandatory")
+	private Integer age;
+	
 	
 }
