@@ -13,8 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import com.app.enums.ShippingStatus;
 import com.app.enums.ShippingType;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,7 +46,7 @@ public class Shipping {
 	private Address shippingAddress;
 	
 	@ManyToOne
-	@JoinColumn(name="customer_id_who_will_receive_this_shipment")
+	@JoinColumn(name="fk_customer_id")
 	//@JsonProperty(access = Access.WRITE_ONLY)
 	private User shippingRecipient;
 	

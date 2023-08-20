@@ -1,33 +1,29 @@
 package com.app.pojos;
 
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.app.enums.OrderStatus;
-import com.app.enums.PaymentStatus;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -46,18 +42,15 @@ public class Order {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "order_id")
     private Long orderId;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate orderDate;
 
     @ManyToOne
-    //@JoinColumn(name = "fk_user_id")
+    @JoinColumn(name = "fk_user_id")
     private User user;
-    
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-	//@JoinColumn(name = "fk_order_id")
-    private List<Product> products=new ArrayList<>();
     
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
@@ -75,8 +68,14 @@ public class Order {
     private ReturnAndExchange returnAndExchange;
     
     private Double tax;
-    
     private Double orderAmount;
+    
+	
+	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@JoinTable(joinColumns = {@JoinColumn(name = "order_id",referencedColumnName= "order_id")}, 
+	inverseJoinColumns = {@JoinColumn(name ="product_id",referencedColumnName = "product_id")}) 
+	private List<Product> products=new ArrayList<>();
+	 
     
 	
 

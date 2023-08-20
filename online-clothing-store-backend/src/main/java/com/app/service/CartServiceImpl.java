@@ -1,12 +1,11 @@
 package com.app.service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import javax.transaction.Transactional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.app.dtos.CartDTO;
 import com.app.pojos.Cart;
 import com.app.repository.CartRepository;

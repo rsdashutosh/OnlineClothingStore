@@ -25,9 +25,9 @@ public class OfferServiceImpl implements OfferService {
 	private OfferRepository offerRepo;
 
 	@Override
-	public OfferDTO addOffer(OfferDTO offerDto) {
+	public OfferDTO addOffer(OfferDTO offerDTO) {
 
-		Offer offer = mapper.map(offerDto, Offer.class);
+		Offer offer = mapper.map(offerDTO, Offer.class);
 		Offer persistantOffer = offerRepo.save(offer);
 
 		return mapper.map(persistantOffer, OfferDTO.class);
@@ -35,16 +35,11 @@ public class OfferServiceImpl implements OfferService {
 	}
 
 	@Override
-	public OfferDTO updateOffer(OfferDTO offerDto, Integer offerId) {
+	public OfferDTO updateOffer(OfferDTO offerDTO, Integer offerId) {
 		Offer offer = offerRepo.findById(offerId)
 				.orElseThrow(() -> new ResourceNotFoundException("Offer", "Id", offerId));
-<<<<<<< HEAD
-		OfferDTO updatedOfferDto = mapper.map(offer, OfferDTO.class);
-		return updatedOfferDto;
-=======
-			mapper.map(offerDto, offer);
-			return offerDto;
->>>>>>> 59fbfa4ea447ca4f61a5a725a90c341440bc5ef7
+		OfferDTO updatedOfferDTO = mapper.map(offer, OfferDTO.class);
+		return updatedOfferDTO;
 	}
 
 	@Override
@@ -57,16 +52,16 @@ public class OfferServiceImpl implements OfferService {
 	public OfferDTO getOffer(Integer offerId) {
 		Offer offer = offerRepo.findById(offerId)
 				.orElseThrow(() -> new ResourceNotFoundException("Offer", "Id", offerId));
-		OfferDTO offerDto = mapper.map(offer, OfferDTO.class);
-		return offerDto;
+		OfferDTO offerDTO = mapper.map(offer, OfferDTO.class);
+		return offerDTO;
 	}
 
 	@Override
 	public List<OfferDTO> getAllOffer() {
 		List<Offer> offers = offerRepo.findAll();
-		List<OfferDTO> offerDtos = offers.stream().map(offer -> mapper.map(offer, OfferDTO.class))
+		List<OfferDTO> offerDTOs = offers.stream().map(offer -> mapper.map(offer, OfferDTO.class))
 				.collect(Collectors.toList());
-		return offerDtos;
+		return offerDTOs;
 	}
 
 	@Override

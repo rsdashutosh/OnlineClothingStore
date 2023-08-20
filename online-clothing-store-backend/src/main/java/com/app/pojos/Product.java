@@ -2,21 +2,18 @@
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import com.app.enums.Gender;
 import com.app.enums.Material;
 import com.app.enums.Occasion;
@@ -24,7 +21,6 @@ import com.app.enums.CategoryType;
 import com.app.enums.ColorOptions;
 import com.app.enums.SizeOptions;
 import com.app.enums.Style;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,6 +39,7 @@ public class Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "product_id")
 	private Integer productId;
 	private String name;
 	private String description;
@@ -65,22 +62,20 @@ public class Product {
 	//@JoinColumn(name = "fk_product_id")
 	private List<Offer> offers=new ArrayList<>();
 	
-	@ManyToOne
-	//@JoinColumn(name="cart_id")
-	private Cart cart;
 	
-	@ManyToOne
-	//@JoinColumn(name="wishlist_id")
-	private WishList wishlist;
+	// Many to many for wish-list, cart ,and orders
+	
+	@ManyToMany(mappedBy = "products",fetch = FetchType.LAZY) private List<Cart>
+	carts=new ArrayList<>();
+	  
+	@ManyToMany(mappedBy = "products",fetch = FetchType.LAZY) private
+	List<Wishlist> wishlists=new ArrayList<>();
+	  
+	@ManyToMany(mappedBy = "products",fetch = FetchType.LAZY) private List<Order>
+	orders=new ArrayList<>();
 	
 	@Enumerated(EnumType.STRING)
 	private CategoryType category;
-	
-	//private List<Tag> tags=new ArrayList<>();
-	
-	@ManyToOne
-	//@JoinColumn(name = "order_id")
-	private Order order;
 	
 	@Enumerated(EnumType.STRING)
 	private Material material;

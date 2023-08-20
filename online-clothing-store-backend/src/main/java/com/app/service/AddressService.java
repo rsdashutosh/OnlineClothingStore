@@ -7,5 +7,5 @@ public interface AddressService {
 	//public List<AddressDto> getAddressById(Integer customerId);
 	public String updateAddress(Integer addressId,AddressDTO addressDto);
 	public String deleteAddress(Integer addressId);
-	public List<AddressDTO> getAddressesOfUserByUserId(Integer userId);
+	//public List<AddressDTO> getAddressesOfUserByUserId(Integer userId);
 }

@@ -39,7 +39,7 @@ import lombok.ToString;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Integer userId;
 	private String firstName;
 	private String lastName;
 	@Column(unique = true)
@@ -49,7 +49,6 @@ public class User {
 	private Integer coins;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	//@JoinColumn(name = "fk_user_id")
 	private List<Address> addresses=new ArrayList<>();
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -67,8 +66,8 @@ public class User {
 	private Cart cart;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="fk_user_id")
-	private WishList wishlist;
+	@JoinColumn(name="fk_wishlist_id")
+	private Wishlist wishlist;
 	
 	@Enumerated(EnumType.STRING)
 	private Gender gender;

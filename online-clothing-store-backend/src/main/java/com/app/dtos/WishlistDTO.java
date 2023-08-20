@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class WishListDTO {
+public class WishlistDTO {
 	
     @NotNull(message = "customerId is mandatory")
     private Long customerId;

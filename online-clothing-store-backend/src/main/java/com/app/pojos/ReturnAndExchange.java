@@ -27,7 +27,7 @@ import lombok.ToString;
 public class ReturnAndExchange {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Integer returnAndExchangeId;
 	private Integer orderId;
 	private Integer productId;
 	private String reasonForReturn;
@@ -35,7 +35,7 @@ public class ReturnAndExchange {
 	private ReturnStatus returnStatus;
 	
 	@ManyToOne
-	//@JoinColumn(name = "fk_customer_id")
+	@JoinColumn(name = "fk_customer_id")
 	private User user;
 	
 	@OneToOne(mappedBy = "returnAndExchange")

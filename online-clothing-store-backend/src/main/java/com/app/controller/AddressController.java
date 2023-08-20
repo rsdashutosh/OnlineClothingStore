@@ -32,12 +32,14 @@ public class AddressController {
 		return ResponseEntity.status(HttpStatus.OK).body(addressService.addAddress(addressDto));
 	}
 	
-	// Get all Addresses of a Customer
-	@GetMapping("/customer_id/{customerId}") 
-	public ResponseEntity<?> getAddress(@PathVariable Integer customerId)
-	{ 
-		return ResponseEntity.status(HttpStatus.FOUND).body(addressService.getAddressesOfUserByUserId(customerId)); 
-	}
+	/*
+	 * // Get all Addresses of a Customer
+	 * 
+	 * @GetMapping("/customer_id/{customerId}") public ResponseEntity<?>
+	 * getAddress(@PathVariable Integer customerId) { return
+	 * ResponseEntity.status(HttpStatus.FOUND).body(addressService.
+	 * getAddressesOfUserByUserId(customerId)); }
+	 */
 	 
 	
 	// Update an Address

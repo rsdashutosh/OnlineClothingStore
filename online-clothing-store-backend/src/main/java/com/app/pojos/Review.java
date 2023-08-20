@@ -10,9 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,12 +29,12 @@ public class Review {
 	private Integer rating;
 	
 	@ManyToOne
-	//@JoinColumn(name="fk_user_id")
+	@JoinColumn(name="fk_user_id")
 	//@JsonProperty(access = Access.WRITE_ONLY)
 	private User user;
 	
 	@ManyToOne
-	//@JoinColumn(name="product_id")
+	@JoinColumn(name="fk_product_id")
 	//@JsonProperty(access = Access.WRITE_ONLY)
 	private Product product;
 	
