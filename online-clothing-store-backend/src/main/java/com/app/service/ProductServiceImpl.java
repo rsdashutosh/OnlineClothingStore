@@ -1,18 +1,12 @@
 package com.app.service;
 
 import javax.transaction.Transactional;
-
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.app.dtos.ProductDto;
+import com.app.dtos.ProductDTO;
 import com.app.pojos.Product;
 import com.app.repository.ProductRepository;
 
@@ -28,7 +22,7 @@ public class ProductServiceImpl implements ProductService {
 
 	// POST
 	@Override
-	public String addProduct(ProductDto productDto) {
+	public String addProduct(ProductDTO productDto) {
 		Product product = mapper.map(productDto, Product.class);
 		Product persistantProduct = productRepo.save(product);
 		return persistantProduct.getName();
@@ -36,24 +30,23 @@ public class ProductServiceImpl implements ProductService {
 
 	// GET product by Id
 	@Override
-	public ProductDto getProduct(Integer productId) {
-		Optional<Product> product = productRepo.findById(productId);
-		ProductDto productDto = mapper.map(product.get(), ProductDto.class);
+	public ProductDTO getProduct(Integer productId) {
+		Product product = productRepo.findById(productId).get();
+		ProductDTO productDto = mapper.map(product, ProductDTO.class);
 		return productDto;
 	}
 
 	// Upadte all products
 	@Override
-	public List<ProductDto> getAllProducts() {
+	public List<ProductDTO> getAllProducts() {
 		List<Product> productList = productRepo.findAll();
-		return productList.stream().map(product -> mapper.map(product, ProductDto.class)).collect(Collectors.toList());
+		return productList.stream().map(product -> mapper.map(product, ProductDTO.class)).collect(Collectors.toList());
 	}
 
 	//PUT
 	@Override
-	public String updateProductDetails(Integer productId, ProductDto productDto) {
-		Optional<Product> product = productRepo.findById(productId);
-		Product persistentProduct = product.get();
+	public String updateProductDetails(Integer productId, ProductDTO productDto) {
+		Product persistentProduct = productRepo.findById(productId).get();
 		mapper.map(productDto, persistentProduct);
 		return persistentProduct.getName()+"Updated";
 	}

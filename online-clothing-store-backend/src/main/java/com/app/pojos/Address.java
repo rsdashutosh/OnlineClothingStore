@@ -3,11 +3,16 @@ package com.app.pojos;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,21 +27,25 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name="addresses")
-
 public class Address {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="address_id")
 	private Integer addressId;
+	@Column(length = 100)
 	private String line1;
+	@Column(length = 100)
+	private String line2;
 	private String street;
 	private String town;
 	private String city;
 	private String country;
-	private int pinCode;
+	private Integer pinCode;
 	
+	//@JsonProperty(access = Access.WRITE_ONLY)
 	@ManyToOne
-	@JoinColumn(name="customer_id_whose_address_this_is")
-	private Customer customer;
+	private User user;
+	
+	@OneToOne(mappedBy="shippingAddress")
+	private Shipping shipping;
 }
 

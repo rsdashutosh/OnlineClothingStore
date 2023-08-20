@@ -2,18 +2,16 @@ package com.app.advice;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.app.exception.ResourceNotFoundException;
 
-//RestControllerAdvice
-@ControllerAdvice
+@RestControllerAdvice
 public class MyControllerAdvice {
 
 	@ExceptionHandler(ResourceNotFoundException.class)
@@ -30,10 +28,7 @@ public class MyControllerAdvice {
 	        bindingResult.getFieldErrors().forEach(fieldError ->
 	            errors.put(fieldError.getField(), fieldError.getDefaultMessage())
 	        );
-
 	        return ResponseEntity.badRequest().body(errors);
 	    }
 	
-	
-
 }

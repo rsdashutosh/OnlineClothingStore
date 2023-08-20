@@ -8,6 +8,6 @@ import com.app.pojos.Address;
 
 public interface AddressRepository extends JpaRepository<Address, Integer> {
 
-	//Optional<List<Address>> findByCustomerId(Integer customerId);
+	List<Address> findAllByUserId(Integer user_id_whose_address_this_is);
 
 }

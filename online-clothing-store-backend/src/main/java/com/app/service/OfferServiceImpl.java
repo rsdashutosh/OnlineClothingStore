@@ -9,7 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.app.dtos.OfferDto;
+import com.app.dtos.OfferDTO;
 import com.app.exception.ResourceNotFoundException;
 import com.app.pojos.Offer;
 import com.app.repository.OfferRepository;
@@ -25,20 +25,20 @@ public class OfferServiceImpl implements OfferService {
 	private OfferRepository offerRepo;
 
 	@Override
-	public OfferDto addOffer(OfferDto offerDto) {
+	public OfferDTO addOffer(OfferDTO offerDto) {
 
 		Offer offer = mapper.map(offerDto, Offer.class);
 		Offer persistantOffer = offerRepo.save(offer);
 
-		return mapper.map(persistantOffer, OfferDto.class);
+		return mapper.map(persistantOffer, OfferDTO.class);
 
 	}
 
 	@Override
-	public OfferDto updateOffer(OfferDto offerDto, Integer offerId) {
+	public OfferDTO updateOffer(OfferDTO offerDto, Integer offerId) {
 		Offer offer = offerRepo.findById(offerId)
 				.orElseThrow(() -> new ResourceNotFoundException("Offer", "Id", offerId));
-		OfferDto updatedOfferDto = mapper.map(offer, OfferDto.class);
+		OfferDTO updatedOfferDto = mapper.map(offer, OfferDTO.class);
 		return updatedOfferDto;
 	}
 
@@ -49,17 +49,17 @@ public class OfferServiceImpl implements OfferService {
 	}
 
 	@Override
-	public OfferDto getOffer(Integer offerId) {
+	public OfferDTO getOffer(Integer offerId) {
 		Offer offer = offerRepo.findById(offerId)
 				.orElseThrow(() -> new ResourceNotFoundException("Offer", "Id", offerId));
-		OfferDto offerDto = mapper.map(offer, OfferDto.class);
+		OfferDTO offerDto = mapper.map(offer, OfferDTO.class);
 		return offerDto;
 	}
 
 	@Override
-	public List<OfferDto> getAllOffer() {
+	public List<OfferDTO> getAllOffer() {
 		List<Offer> offers = offerRepo.findAll();
-		List<OfferDto> offerDtos = offers.stream().map(offer -> mapper.map(offer, OfferDto.class))
+		List<OfferDTO> offerDtos = offers.stream().map(offer -> mapper.map(offer, OfferDTO.class))
 				.collect(Collectors.toList());
 		return offerDtos;
 	}

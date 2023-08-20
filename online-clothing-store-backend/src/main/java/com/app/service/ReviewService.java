@@ -1,16 +1,14 @@
 package com.app.service;
 
-import java.sql.Blob;
 import java.util.List;
-
-import com.app.dtos.ReviewDto;
+import com.app.dtos.ReviewDTO;
 
 public interface ReviewService
 {
-	public String addReview(ReviewDto reviewdto);
-	public ReviewDto getReview(Integer reviewId);
-	public List<ReviewDto> getAllReviews();
+	public String addReview(ReviewDTO reviewdto);
+	public ReviewDTO getReview(Integer reviewId);
+	public List<ReviewDTO> getAllReviews();
 	public String deleteReview(Integer reviewId);
-	public String editReview(Integer reviewId,ReviewDto reviewdto);
+	public String editReview(Integer reviewId,ReviewDTO reviewdto);
 
 }
