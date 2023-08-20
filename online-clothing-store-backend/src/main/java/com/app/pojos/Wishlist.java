@@ -43,5 +43,16 @@ public class Wishlist {
 	@JoinTable(joinColumns = {@JoinColumn(name ="wishlist_id",referencedColumnName = "wishlist_id")}, 
 	inverseJoinColumns ={@JoinColumn(name = "product_id",referencedColumnName = "product_id")})
 	private Set<Product> products=new HashSet<>();
+	
+	
+	// as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
+	public void addProduct(Product product) {
+		products.add(product);
+		product.addWishlist(this);
+	}
+	public void removeProduct(Product product) {
+		products.remove(product);
+		product.getWishlists().remove(this);
+	}
 	 
 }

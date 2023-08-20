@@ -51,15 +51,44 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Address> addresses=new ArrayList<>();
 	
+    // as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
+ 	public void addAddress(Address address) {
+ 		addresses.add(address);
+ 		address.setUser(this);
+ 	}
+ 	public void removeAddress(Address address) {
+ 		addresses.remove(address);
+ 		address.setUser(null);
+ 	}
+ 	
+	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	//@JoinColumn(name = "fk_user_id")
 	private List<Order> orders=new ArrayList<>();
+	
+    // as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
+ 	public void addOrder(Order order) {
+ 		orders.add(order);
+ 		order.setUser(this);
+ 	}
+ 	public void removeOrder(Order order) {
+ 		orders.remove(order);
+ 		order.setUser(null);
+ 	}
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	//@JoinColumn(name = "fk_user_id")
 	private List<Review> reviews=new ArrayList<>();
 	
-	
+    // as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
+ 	public void addReviews(Review review) {
+ 		reviews.add(review);
+ 		review.setUser(this);
+ 	}
+ 	public void removeReview(Review review) {
+ 		reviews.remove(review);
+ 		review.setUser(null);
+ 	}
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="fk_cart_id")
@@ -81,9 +110,29 @@ public class User {
     //@JoinColumn(name="fk_user_id")
 	private List<Payment> payments=new ArrayList<>();
     
+    // as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
+ 	public void addPayment(Payment payment) {
+ 		payments.add(payment);
+ 		payment.setUser(this);;
+ 	}
+ 	public void removePayment(Payment payment) {
+ 		payments.remove(payment);
+ 		payment.setUser(null);
+ 	}
+    
     // returns mapping
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ReturnAndExchange> returnAndExchanges=new ArrayList<>();
+    
+    // as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
+ 	public void addReturnAndExchange(ReturnAndExchange returnAndExchange) {
+ 		returnAndExchanges.add(returnAndExchange);
+ 		returnAndExchange.setUser(this);
+ 	}
+ 	public void removeReturnAndExchange(ReturnAndExchange returnAndExchange) {
+ 		returnAndExchanges.remove(returnAndExchange);
+ 		returnAndExchange.setUser(null);;
+ 	}
 	
 	@Column(length = 20)
 	@NotNull(message = "Role must be supplied")

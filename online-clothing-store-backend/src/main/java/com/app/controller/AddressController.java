@@ -25,7 +25,8 @@ public class AddressController {
 	@Autowired
 	AddressService addressService;
 	
-	// Add an Address of a Customer
+
+	//Endpoint adds a new Address
 	@PostMapping("/")
 	public ResponseEntity<?> addAddress(@Valid @RequestBody AddressDTO addressDto)
 	{
@@ -42,13 +43,13 @@ public class AddressController {
 	 */
 	 
 	
-	// Update an Address
+	// Endpoint to update the details of an Address
 	@PutMapping("/{addressId}")
 	public ResponseEntity<?> updateAddress(@PathVariable Integer addressId,@Valid @RequestBody AddressDTO addressDto){
 		return ResponseEntity.status(HttpStatus.OK).body(addressService.updateAddress(addressId,addressDto));
 	}
 	
-	// Delete an Address
+	// Endpoint to delete an Address
 	@DeleteMapping("/{addressId}")
 	public ResponseEntity<?> deleteAddress(@PathVariable Integer addressId){
 		return ResponseEntity.status(HttpStatus.OK).body(addressService.deleteAddress(addressId));

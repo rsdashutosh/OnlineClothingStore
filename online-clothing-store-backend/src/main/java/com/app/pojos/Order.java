@@ -69,12 +69,22 @@ public class Order {
     
     private Double tax;
     private Double orderAmount;
-    
 	
 	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinTable(joinColumns = {@JoinColumn(name = "order_id",referencedColumnName= "order_id")}, 
 	inverseJoinColumns = {@JoinColumn(name ="product_id",referencedColumnName = "product_id")}) 
 	private List<Product> products=new ArrayList<>();
+	
+	
+	// as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
+	public void addProduct(Product product) {
+		products.add(product);
+		product.getOrders().add(this);
+	}
+	public void removeProduct(Product product) {
+		products.remove(product);
+		product.getOrders().remove(this);
+	}
 	 
     
 	

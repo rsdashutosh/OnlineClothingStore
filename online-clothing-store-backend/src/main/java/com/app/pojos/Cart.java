@@ -42,11 +42,17 @@ public class Cart {
 	@JoinTable(joinColumns = {@JoinColumn(name = "cart_id",referencedColumnName ="cart_id")}, 
 	inverseJoinColumns = {@JoinColumn(name ="product_id",referencedColumnName = "product_id")}) 
 	private List<Product> products=new ArrayList<>();
+	
+	
+	// as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
+	public void addProduct(Product product) {
+		products.add(product);
+		product.getCarts().add(this);
+	}
+	public void removeProduct(Product product) {
+		products.remove(product);
+		product.getCarts().remove(this);
+	}
 	 
-	/*
-	 * public void addProduct(Product product) { carts.add(product);
-	 * //product.setCarts(this); } public void removeProduct(Product product) {
-	 * carts.remove(product); //product.setCarts(null); }
-	 */
 	
 }

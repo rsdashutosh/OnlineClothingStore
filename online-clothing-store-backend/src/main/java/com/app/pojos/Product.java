@@ -47,32 +47,13 @@ public class Product {
 	private Gender gender;
 	private int stockQuantity;
 	private Float discount;
+	private Float price;
 	
 	@Enumerated(EnumType.STRING)
 	private ColorOptions color;
 	
 	@Enumerated(EnumType.STRING)
 	private SizeOptions size;
-	
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-	//@JoinColumn(name = "fk_product_id")
-	private List<Review> reviews=new ArrayList<>();
-	
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-	//@JoinColumn(name = "fk_product_id")
-	private List<Offer> offers=new ArrayList<>();
-	
-	
-	// Many to many for wish-list, cart ,and orders
-	
-	@ManyToMany(mappedBy = "products",fetch = FetchType.LAZY) private List<Cart>
-	carts=new ArrayList<>();
-	  
-	@ManyToMany(mappedBy = "products",fetch = FetchType.LAZY) private
-	List<Wishlist> wishlists=new ArrayList<>();
-	  
-	@ManyToMany(mappedBy = "products",fetch = FetchType.LAZY) private List<Order>
-	orders=new ArrayList<>();
 	
 	@Enumerated(EnumType.STRING)
 	private CategoryType category;
@@ -86,9 +67,93 @@ public class Product {
 	@Enumerated(EnumType.STRING)
 	private Occasion occasion;
 	
+	
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+	//@JoinColumn(name = "fk_product_id")
+	private List<Review> reviews=new ArrayList<>();
+	
+	// as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
+	public void addReview(Review review) {
+		reviews.add(review);
+		review.setProduct(this);
+	}
+	public void removeReview(Review review) {
+		reviews.remove(review);
+		review.setProduct(null);
+	}
+	
+	
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+	//@JoinColumn(name = "fk_product_id")
+	private List<Offer> offers=new ArrayList<>();
+	
+	// as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
+	public void addOffer(Offer offer) {
+		offers.add(offer);
+		offer.setProduct(this);
+	}
+	public void removeOffer(Offer offer) {
+		offers.remove(offer);
+		offer.setProduct(null);
+	}
+	
+	
+	// Many to many for wish-list, cart ,and orders
+	@ManyToMany(mappedBy = "products",fetch = FetchType.LAZY) 
+	private List<Cart> carts=new ArrayList<>();
+	
+	// as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
+	public void addCart(Cart cart) {
+		carts.add(cart);
+		cart.addProduct(this);
+	}
+	public void removeCart(Cart cart) {
+		carts.remove(cart);
+		cart.removeProduct(this);
+	}
+	
+	  
+	@ManyToMany(mappedBy = "products",fetch = FetchType.LAZY) private
+	List<Wishlist> wishlists=new ArrayList<>();
+	
+	// as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
+	public void addWishlist(Wishlist wishlist) {
+		wishlists.add(wishlist);
+		wishlist.getProducts().add(this);
+	}
+	public void removeWishlist(Wishlist wishlist) {
+		wishlists.remove(wishlist);
+		wishlist.getProducts().remove(this);
+	}
+	
+	  
+	@ManyToMany(mappedBy = "products",fetch = FetchType.LAZY) 
+	private List<Order>	orders=new ArrayList<>();
+	
+	// as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
+	public void addOrders(Order order) {
+		orders.add(order);
+		order.addProduct(this);
+	}
+	public void removeOrder(Order order) {
+		orders.remove(order);
+		order.getProducts().remove(this);
+	}
+	
+	
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 	//@JoinColumn(name = "fk_product_id")
 	private List<ProductImage> productImages=new ArrayList<ProductImage>();
 	
-	private Float price;
+	// as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
+	public void addProductImage(ProductImage productImage) {
+		productImages.add(productImage);
+		productImage.setProduct(this);
+	}
+	public void removeProductImage(ProductImage productImage) {
+		productImages.remove(productImage);
+		productImage.setProduct(null);
+	}
+	
+	
 }
