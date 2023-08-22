@@ -2,6 +2,7 @@ package com.app.pojos;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,11 +20,12 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @ToString
 @Entity
 @Table(name="addresses")
 public class Address {
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer addressId;
@@ -38,11 +40,25 @@ public class Address {
 	private Integer pinCode;
 	
 	//@JsonProperty(access = Access.WRITE_ONLY)
-	@ManyToOne
-	@JoinColumn(name = "fk_user_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
 	private User user;
 	
 	@OneToOne(mappedBy="shippingAddress")
 	private Shipping shipping;
+	
+	
+	public Address(Integer addressId, String line1, String line2, String street, String town, String city,
+			String country, Integer pinCode) {
+		super();
+		this.addressId = addressId;
+		this.line1 = line1;
+		this.line2 = line2;
+		this.street = street;
+		this.town = town;
+		this.city = city;
+		this.country = country;
+		this.pinCode = pinCode;
+	}
 }
 

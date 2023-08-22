@@ -1,7 +1,10 @@
 package com.app.dtos;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -29,22 +32,26 @@ public class OfferDTO {
     private String offerDescription;
 
     @Positive(message = "Discount amount must be positive")
-    private double discountAmount;
+    private Double discountAmount;
 
     @NotBlank(message = "Promo code is required")
     private String promoCode;
 
     @NotNull(message = "Start date is required")
-    private Date startDate;
-
+    private LocalDate startDate;
+  
     @NotNull(message = "End date is required")
     @Future		// Promotional code should expire on a date in the future
-    private Date endDate;
+    private LocalDate endDate;
 
     @NotNull(message = "Category is required")
+    @Enumerated(EnumType.STRING)
     private CategoryType category;
 
     @Positive(message = "Minimum purchase amount must be positive")
-    private double minimumPurchaseAmount;
+    private Double minimumPurchaseAmount;
+    
+    // On 
+    private Integer productId;
 
 }

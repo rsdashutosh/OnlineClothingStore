@@ -28,19 +28,18 @@ public class AddressController {
 
 	//Endpoint adds a new Address
 	@PostMapping("/")
-	public ResponseEntity<?> addAddress(@Valid @RequestBody AddressDTO addressDto)
+	public ResponseEntity<?> addAddress(@Valid @RequestBody AddressDTO addressDTO)
 	{
-		return ResponseEntity.status(HttpStatus.OK).body(addressService.addAddress(addressDto));
+		return ResponseEntity.status(HttpStatus.OK).body(addressService.addAddress(addressDTO));
 	}
 	
-	/*
-	 * // Get all Addresses of a Customer
-	 * 
-	 * @GetMapping("/customer_id/{customerId}") public ResponseEntity<?>
-	 * getAddress(@PathVariable Integer customerId) { return
-	 * ResponseEntity.status(HttpStatus.FOUND).body(addressService.
-	 * getAddressesOfUserByUserId(customerId)); }
-	 */
+	
+    // Get all Addresses of a User
+    @GetMapping("/user_id/{userId}") 
+    public ResponseEntity<?> getAddress(@PathVariable Integer userId) 
+    { 
+    	return ResponseEntity.status(HttpStatus.FOUND).body(addressService.getAddressesOfUserByUserId(userId)); }
+	 
 	 
 	
 	// Endpoint to update the details of an Address

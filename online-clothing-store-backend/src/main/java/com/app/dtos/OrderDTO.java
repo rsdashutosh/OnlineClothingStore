@@ -1,5 +1,6 @@
 package com.app.dtos;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -7,6 +8,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import com.app.enums.OrderStatus;
+import com.app.pojos.ReturnAndExchange;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -22,28 +25,27 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class OrderDTO {
+	
+	@NotNull(message = "orderDate is mandatory")
+    private LocalDate orderDate;
 
-    @NotNull(message = "customerId is mandatory")
-    private Long customerId;
+    @NotNull(message = "userId is mandatory")
+    private Integer userId;
+    
+    private String orderStatus;
 
-    @NotNull(message = "orderDate is mandatory")
-    private Date orderDate;
-
-    @NotNull(message = "totalAmount is mandatory")
-    @Positive(message = "totalAmount must be a positive number")
-    private Double totalAmount;
-
-    @NotNull(message = "paymentMethod is mandatory")
-    private String paymentMethod;
-
-    @NotNull(message = "paymentStatus is mandatory")
-    private String paymentStatus;
+    private Integer paymentId;
 
     @NotBlank(message = "shippingAddress is mandatory")
     @JsonProperty(access = Access.WRITE_ONLY)
     private String shippingAddress;
     
-    private List<ProductDTO> products;
+    private Integer returnAndExchangeId;
+    
+    private Double tax;
+    private Double orderAmount;
+    
+    private List<Integer> products;
 	
 
 }

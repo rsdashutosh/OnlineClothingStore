@@ -30,7 +30,7 @@ public class ReviewServiceImpl implements ReviewService
 	{
 		Review review=mapper.map(reviewdto, Review.class);
 		Review persistentReview=reviewRepo.save(review);
-		return persistentReview.getReviewId()+" "+persistentReview.getText();
+		return persistentReview.getReviewId()+" "+persistentReview.getReviewText();
 	}
 	
 	@Override

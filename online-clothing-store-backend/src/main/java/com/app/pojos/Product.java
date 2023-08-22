@@ -11,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -45,9 +47,9 @@ public class Product {
 	private String description;
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
-	private int stockQuantity;
-	private Float discount;
-	private Float price;
+	private Integer stock;
+	private Double discount;
+	private Double price;
 	
 	@Enumerated(EnumType.STRING)
 	private ColorOptions color;
@@ -83,18 +85,20 @@ public class Product {
 	}
 	
 	
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-	//@JoinColumn(name = "fk_product_id")
+	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@JoinTable(name="product_offer",
+	joinColumns = { @JoinColumn(name="product_id", referencedColumnName = "product_id")},
+	inverseJoinColumns = { @JoinColumn(name="offer_id", referencedColumnName = "offer_id") })
 	private List<Offer> offers=new ArrayList<>();
 	
 	// as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
 	public void addOffer(Offer offer) {
 		offers.add(offer);
-		offer.setProduct(this);
+		offer.getProducts().add(this);
 	}
 	public void removeOffer(Offer offer) {
 		offers.remove(offer);
-		offer.setProduct(null);
+		offer.getProducts().remove(this);
 	}
 	
 	
@@ -113,8 +117,8 @@ public class Product {
 	}
 	
 	  
-	@ManyToMany(mappedBy = "products",fetch = FetchType.LAZY) private
-	List<Wishlist> wishlists=new ArrayList<>();
+	@ManyToMany(mappedBy = "products",fetch = FetchType.LAZY)
+	private List<Wishlist> wishlists=new ArrayList<>();
 	
 	// as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
 	public void addWishlist(Wishlist wishlist) {

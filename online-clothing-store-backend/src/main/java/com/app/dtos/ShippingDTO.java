@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import com.app.enums.ShippingStatus;
 import com.app.enums.ShippingType;
 import com.app.pojos.Address;
+import com.app.pojos.Order;
 import com.app.pojos.User;
 
 import lombok.AllArgsConstructor;
@@ -23,10 +24,11 @@ public class ShippingDTO {
 	private LocalDate shippingDate;
 	private ShippingStatus shippingStatus;
 	private Address shippingAddress;
-	private Integer shippingTime;
 	
 	//@JsonProperty(access = Access.WRITE_ONLY)
 	private User shippingRecipient;
+	
+	private Order order;
 	
 
 }

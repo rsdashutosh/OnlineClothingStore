@@ -1,11 +1,24 @@
 package com.app.dtos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 import com.app.enums.Gender;
+import com.app.enums.Material;
+import com.app.enums.Occasion;
+import com.app.enums.CategoryType;
 import com.app.enums.ColorOptions;
 import com.app.enums.SizeOptions;
+import com.app.enums.Style;
+import com.app.pojos.Cart;
+import com.app.pojos.Offer;
+import com.app.pojos.Order;
+import com.app.pojos.ProductImage;
+import com.app.pojos.Review;
+import com.app.pojos.Wishlist;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,10 +34,15 @@ import lombok.ToString;
 
 public class ProductDTO {
 
-	private String Name;
+	private String name;
 	private String description;
-	private Float price;
-	private int stock;
+	
+	@Enumerated(EnumType.STRING)
+	private Gender gender;
+	
+	private Integer stock;
+	private Double discount;
+	private Double price;
 	
 	@Enumerated(EnumType.STRING)
 	private ColorOptions color;
@@ -33,8 +51,29 @@ public class ProductDTO {
 	private SizeOptions size;
 	
 	@Enumerated(EnumType.STRING)
-	private Gender category;
-	//private byte[] image;
-	private Float discount;
-	private Float mrp;
+	private CategoryType category;
+	
+	@Enumerated(EnumType.STRING)
+	private Material material;
+	
+	@Enumerated(EnumType.STRING)
+	private Style style;
+	
+	@Enumerated(EnumType.STRING)
+	private Occasion occasion;
+	
+	
+	private List<Integer> reviews;
+	
+	private List<Integer> offers;
+	
+	private List<Integer> carts;
+	
+	private List<Integer> wishlists;
+	
+	private List<Integer> orders;
+	
+	private List<Integer> productImages;
+	
+	
 }

@@ -30,14 +30,15 @@ public class AddressServiceImpl implements AddressService {
 		return "New address with id : "+persistanceAddress.getAddressId()+ " added successfully!!!";
 	}
 
-	/*
-	 * //GET all addresses by User Id
-	 * 
-	 * @Override public List<AddressDTO> getAddressesOfUserByUserId(Integer userId)
-	 * { List<Address> addresses=addressRepo.findAllByUserId(userId); return
-	 * addresses.stream().map(address->mapper.map(address,
-	 * AddressDTO.class)).collect(Collectors.toList()); }
-	 */
+	
+	  //GET all addresses by User Id
+	@Override 
+	public List<AddressDTO> getAddressesOfUserByUserId(Integer userId)
+	{ 
+	    List<Address> addresses=addressRepo.findAllByUserUserId(userId); 
+	    return addresses.stream().map(address->mapper.map(address, AddressDTO.class)).collect(Collectors.toList()); 
+	}
+	 
 
 	//PUT
 	@Override

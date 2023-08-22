@@ -1,7 +1,12 @@
 package com.app.dtos;
 
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+
+import com.app.pojos.Product;
+import com.app.pojos.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import lombok.AllArgsConstructor;
@@ -19,12 +24,8 @@ public class CartDTO {
 	  
 	@JsonProperty(access = Access.WRITE_ONLY)
     @NotNull(message = "customerId is mandatory")
-    private Integer customerId;
+    private Integer userId;
     
-	@NotNull(message = "productId is mandatory")
-	private Integer productId;
-    
-    @NotNull(message = "quantity is mandatory")
-    @Positive(message = "quantity must be greater than 0")
-    private Integer quantity;
+	// Optional as Cart may or may contain products
+	private List<Integer> products;
 }

@@ -1,7 +1,12 @@
 package com.app.dtos;
 
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.validation.constraints.NotNull;
+
+import com.app.pojos.Product;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,10 +23,11 @@ import lombok.ToString;
 public class WishlistDTO {
 	
     @NotNull(message = "customerId is mandatory")
-    private Long customerId;
-
-    @NotNull(message = "productId is mandatory")
-    private Long productId;
+    private Integer customerId;
+    
+    private Set<Product> products=new HashSet<>();
+    
+    
 }
 	
 
