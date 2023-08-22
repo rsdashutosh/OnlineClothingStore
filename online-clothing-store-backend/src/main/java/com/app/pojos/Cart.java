@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.app.pojos.BaseEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,19 +30,23 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Table(name = "shopping_cart")
-public class Cart {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "cart_id")
-	private Integer CartId;
+public class Cart extends BaseEntity {
+	/*
+	 * @Id
+	 * 
+	 * @GeneratedValue(strategy = GenerationType.IDENTITY)
+	 * 
+	 * @Column(name = "cart_id") private Integer CartId;
+	 */
 	
-	@OneToOne(mappedBy = "cart")
+	@OneToOne
+	@JoinColumn(name="user_id")
 	private User user;
 
 	
 	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	@JoinTable(joinColumns = {@JoinColumn(name = "cart_id",referencedColumnName ="cart_id")}, 
-	inverseJoinColumns = {@JoinColumn(name ="product_id",referencedColumnName = "product_id")}) 
+	@JoinTable(joinColumns = {@JoinColumn(name = "cart_id",referencedColumnName ="id")}, 
+	inverseJoinColumns = {@JoinColumn(name ="product_id",referencedColumnName = "id")}) 
 	private List<Product> products=new ArrayList<>();
 	
 	

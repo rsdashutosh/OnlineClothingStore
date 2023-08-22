@@ -26,11 +26,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name="reviews")
-public class Review {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="review_id")
-	private Integer reviewId;
+public class Review extends BaseEntity {
+	/*
+	 * @Id
+	 * 
+	 * @GeneratedValue(strategy = GenerationType.IDENTITY)
+	 * 
+	 * @Column(name="review_id") private Integer reviewId;
+	 */
     
     // Textual review of the associated product
 	private String reviewText;
@@ -44,13 +47,13 @@ public class Review {
 	
 	// User who wrote this review
 	@ManyToOne
-	@JoinColumn(name="fk_user_id")
+	@JoinColumn(name="user_id")
 	//@JsonProperty(access = Access.WRITE_ONLY)
 	private User user;
 	
 	// Product that the review is associated with
 	@ManyToOne
-	@JoinColumn(name="fk_product_id")
+	@JoinColumn(name="product_id")
 	//@JsonProperty(access = Access.WRITE_ONLY)
 	private Product product;
 	

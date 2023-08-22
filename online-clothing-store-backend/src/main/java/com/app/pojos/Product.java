@@ -37,12 +37,15 @@ import lombok.ToString;
 @Entity
 @Table(name = "products")
 
-public class Product {
+public class Product extends BaseEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "product_id")
-	private Integer productId;
+	/*
+	 * @Id
+	 * 
+	 * @GeneratedValue(strategy = GenerationType.IDENTITY)
+	 * 
+	 * @Column(name = "product_id") private Integer productId;
+	 */
 	private String name;
 	private String description;
 	@Enumerated(EnumType.STRING)
@@ -87,8 +90,8 @@ public class Product {
 	
 	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinTable(name="product_offer",
-	joinColumns = { @JoinColumn(name="product_id", referencedColumnName = "product_id")},
-	inverseJoinColumns = { @JoinColumn(name="offer_id", referencedColumnName = "offer_id") })
+	joinColumns = { @JoinColumn(name="product_id", referencedColumnName = "id")},
+	inverseJoinColumns = { @JoinColumn(name="offer_id", referencedColumnName = "id") })
 	private List<Offer> offers=new ArrayList<>();
 	
 	// as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child

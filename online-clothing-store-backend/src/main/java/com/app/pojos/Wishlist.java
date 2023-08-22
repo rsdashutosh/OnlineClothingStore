@@ -29,19 +29,23 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "wishlist")
-public class Wishlist {
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "wishlist_id")
-	private Integer wishlistId;
+public class Wishlist extends BaseEntity {
+	/*
+	 * @Id
+	 * 
+	 * @GeneratedValue(strategy = GenerationType.IDENTITY)
+	 * 
+	 * @Column(name = "wishlist_id") private Integer wishlistId;
+	 */
 
-    @OneToOne(mappedBy = "wishlist")
-    private User user;
+    @OneToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 	
 	
 	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-	@JoinTable(joinColumns = {@JoinColumn(name ="wishlist_id",referencedColumnName = "wishlist_id")}, 
-	inverseJoinColumns ={@JoinColumn(name = "product_id",referencedColumnName = "product_id")})
+	@JoinTable(joinColumns = {@JoinColumn(name ="wishlist_id",referencedColumnName = "id")}, 
+	inverseJoinColumns ={@JoinColumn(name = "product_id",referencedColumnName = "id")})
 	private Set<Product> products=new HashSet<>();
 	
 	

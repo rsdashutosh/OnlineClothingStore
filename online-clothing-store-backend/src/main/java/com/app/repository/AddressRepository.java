@@ -5,9 +5,10 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.app.pojos.Address;
+import com.app.pojos.User;
 
 public interface AddressRepository extends JpaRepository<Address, Integer> {
 	
-	public List<Address> findAllByUserUserId(Integer userId);
-
+	public List<Address> findAll();
+	public List<Address> findAllByUserEmail(String email);
 }

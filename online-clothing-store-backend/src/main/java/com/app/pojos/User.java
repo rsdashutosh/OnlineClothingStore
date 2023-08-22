@@ -1,4 +1,4 @@
-package com.app.pojos;
+ package com.app.pojos;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -36,11 +36,15 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "users")
-public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "user_id")
-	private Integer userId;
+public class User extends BaseEntity {
+	/*
+	 * @Id
+	 * 
+	 * @GeneratedValue(strategy = GenerationType.IDENTITY)
+	 * 
+	 * @Column(name = "user_id")
+	 */
+	//private Integer userId;
 	private String firstName;
 	private String lastName;
 	@Column(unique = true)
@@ -91,12 +95,12 @@ public class User {
  		review.setUser(null);
  	}
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="fk_cart_id")
+	@OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
+	//@JoinColumn(name="fk_cart_id")
 	private Cart cart;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="fk_wishlist_id")
+	@OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
+	//@JoinColumn(name="fk_wishlist_id")
 	private Wishlist wishlist;
 	
 	@Enumerated(EnumType.STRING)
@@ -135,9 +139,8 @@ public class User {
  		returnAndExchange.setUser(null);;
  	}
 	
-	@Column(length = 20)
-	@NotNull(message = "Role must be supplied")
-	@Enumerated(EnumType.STRING)
+	//@Column(length = 20)
+	//@Enumerated(EnumType.STRING)
 	private Role role;
 	
 	@JsonProperty(access = Access.WRITE_ONLY)

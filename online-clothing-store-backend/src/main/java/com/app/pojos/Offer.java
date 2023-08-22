@@ -19,6 +19,7 @@ import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.app.pojos.BaseEntity;
 import com.app.enums.CategoryType;
 
 import lombok.AllArgsConstructor;
@@ -34,12 +35,15 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "offers")
-public class Offer {
+public class Offer extends BaseEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="offer_id")
-	private Integer offerId;
+	/*
+	 * @Id
+	 * 
+	 * @GeneratedValue(strategy = GenerationType.IDENTITY)
+	 * 
+	 * @Column(name="offer_id") private Integer offerId;
+	 */
 	private String offerName;
 	private String offerDescription;
 	private Double discountAmount;

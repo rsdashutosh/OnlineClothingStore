@@ -27,15 +27,15 @@ public class AddressServiceImpl implements AddressService {
 	public String addAddress(AddressDTO addressDto) {
 		Address address=mapper.map(addressDto, Address.class);
 		Address persistanceAddress=	addressRepo.save(address);
-		return "New address with id : "+persistanceAddress.getAddressId()+ " added successfully!!!";
+		return "New address with id : "+persistanceAddress.getId()+ " added successfully!!!";
 	}
 
 	
 	  //GET all addresses by User Id
 	@Override 
-	public List<AddressDTO> getAddressesOfUserByUserId(Integer userId)
+	public List<AddressDTO> getAllAddressesByUserEmail(String email)
 	{ 
-	    List<Address> addresses=addressRepo.findAllByUserUserId(userId); 
+	    List<Address> addresses=addressRepo.findAllByUserEmail(email); 
 	    return addresses.stream().map(address->mapper.map(address, AddressDTO.class)).collect(Collectors.toList()); 
 	}
 	 
@@ -45,7 +45,7 @@ public class AddressServiceImpl implements AddressService {
 	public String updateAddress(Integer addressId, AddressDTO addressDto) {
 		Address persistantAddress=addressRepo.findById(addressId).get();	// finding the Address by Id, and fetching it from the Optional container through .get()
 		mapper.map(addressDto, persistantAddress);
-		return "Address with id:"+persistantAddress.getAddressId()+"updated successfully!!!";
+		return "Address with id:"+persistantAddress.getId()+"updated successfully!!!";
 	}
 
 	//Put

@@ -24,21 +24,24 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-public class ReturnAndExchange {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer returnAndExchangeId;
-	private Integer orderId;
+public class ReturnAndExchange extends BaseEntity {
+	/*
+	 * @Id
+	 * 
+	 * @GeneratedValue(strategy = GenerationType.IDENTITY) private Integer
+	 * returnAndExchangeId;
+	 */
 	private Integer productId;
 	private String reasonForReturn;
 	@Enumerated(EnumType.STRING)
 	private ReturnStatus returnStatus;
 	
 	@ManyToOne
-	@JoinColumn(name = "fk_customer_id")
+	@JoinColumn(name = "user_id")
 	private User user;
 	
-	@OneToOne(mappedBy = "returnAndExchange")
+	@OneToOne
+	@JoinColumn(name="order_id")
 	private Order order;
 
 }

@@ -24,7 +24,7 @@ public class OrderServiceImpl implements OrderService {
 	    public String placeOrder(OrderDTO orderDto) {
 	        Order order = mapper.map(orderDto, Order.class);
 	        Order persistedOrder = orderRepo.save(order);
-	        return "Order placed with ID: " + persistedOrder.getOrderId();
+	        return "Order placed with ID: " + persistedOrder.getId();
 	    }
 
 	    // GET order by ID

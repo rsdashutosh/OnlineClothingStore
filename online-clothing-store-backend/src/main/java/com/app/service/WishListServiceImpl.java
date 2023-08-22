@@ -21,7 +21,7 @@ public class WishListServiceImpl implements WishListService {
 	    public String addToWishlist(WishlistDTO wishlistDTO) {
 	        Wishlist wishlistItem = mapper.map(wishlistDTO, Wishlist.class);
 	        Wishlist persistedItem = wishlistRepo.save(wishlistItem);
-	        return "Added to wishlist with ID: " + persistedItem.getWishlistId();
+	        return "Added to wishlist with ID: " + persistedItem.getId();
 	    }
 
 	    @Override

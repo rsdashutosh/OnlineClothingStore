@@ -22,16 +22,18 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "product_images")
-public class ProductImage {
+public class ProductImage extends BaseEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@Column(name = "image_id")
-	private Integer imageId;
+	/*
+	 * @Id
+	 * 
+	 * @GeneratedValue(strategy = GenerationType.IDENTITY) //@Column(name =
+	 * "image_id") private Integer imageId;
+	 */
 	private String name;
 	
 	@ManyToOne
-	@JoinColumn(name = "fk_product_id")
+	@JoinColumn(name = "product_id")
 	private Product product;
 	
 	@Lob // large object :col : longblob

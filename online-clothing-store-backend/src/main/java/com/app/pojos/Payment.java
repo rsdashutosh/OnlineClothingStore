@@ -16,6 +16,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.app.enums.PaymentMethod;
 import com.app.enums.PaymentStatus;
+import com.fasterxml.jackson.databind.deser.Deserializers.Base;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,11 +30,15 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Entity
-public class Payment {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer paymentId;
-	private Integer orderId;
+public class Payment extends BaseEntity {
+	
+	/*
+	 * @Id
+	 * 
+	 * @GeneratedValue(strategy = GenerationType.IDENTITY) private Integer
+	 * paymentId;
+	 */
+	
 	private Double amount;
 	@Enumerated(EnumType.STRING)
 	private PaymentMethod paymentMethod;
@@ -44,9 +49,10 @@ public class Payment {
 	private LocalDate paymentTimestamp;
 	
 	@ManyToOne
-	@JoinColumn(name = "fk_user_id")
+	@JoinColumn(name = "user_id")
 	private User user;
 	
-	@OneToOne(mappedBy = "payment")
+	@OneToOne
+	//@JoinColumn(name="order_id")
 	private Order order;
 }

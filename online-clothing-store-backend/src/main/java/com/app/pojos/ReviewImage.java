@@ -19,16 +19,19 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor 
 @ToString
 @Entity
-@Table(name = "review_images")
-public class ReviewImage {
+@Table(name = "review_images") 
+public class ReviewImage extends BaseEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "review_image_id")
-	private Integer reviewImageId;
+	/*
+	 * @Id
+	 * 
+	 * @GeneratedValue(strategy = GenerationType.IDENTITY)
+	 * 
+	 * @Column(name = "review_image_id") private Integer reviewImageId;
+	 */
 	
 	// Name given to the review image
 	private String name;
@@ -39,7 +42,7 @@ public class ReviewImage {
 	
 	// Review that the review image is associated with
 	@ManyToOne
-	@JoinColumn(name = "fk_review_id",referencedColumnName = "review_id")
+	@JoinColumn(name = "review_id",referencedColumnName = "id")
 	private Review review;
 	
 	

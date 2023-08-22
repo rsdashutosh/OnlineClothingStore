@@ -24,7 +24,7 @@ public class CartServiceImpl implements CartService{
 	public String addCart(CartDTO cartDto) {
 		Cart cart=mapper.map(cartDto,Cart.class);
 		Cart persistantCart=cartRepo.save(cart);
-		return "Cart item with id : "+persistantCart.getCartId()+"added successfully!";
+		return "Cart item with id : "+persistantCart.getId()+"added successfully!";
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class CartServiceImpl implements CartService{
 	public String updateCart(Integer cartId,CartDTO cartDto) {
 		Cart persistantCart=cartRepo.findById(cartId).get();
 		mapper.map(cartDto, persistantCart);
-		return "Cart with"+persistantCart.getCartId()+" updated!";
+		return "Cart with"+persistantCart.getId()+" updated!";
 	}
 
 	@Override

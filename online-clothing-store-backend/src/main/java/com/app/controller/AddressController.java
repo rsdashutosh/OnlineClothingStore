@@ -36,9 +36,9 @@ public class AddressController {
 	
     // Get all Addresses of a User
     @GetMapping("/user_id/{userId}") 
-    public ResponseEntity<?> getAddress(@PathVariable Integer userId) 
+    public ResponseEntity<?> getAddress(@PathVariable String email) 
     { 
-    	return ResponseEntity.status(HttpStatus.FOUND).body(addressService.getAddressesOfUserByUserId(userId)); }
+    	return ResponseEntity.status(HttpStatus.FOUND).body(addressService.getAllAddressesByUserEmail(email)); }
 	 
 	 
 	

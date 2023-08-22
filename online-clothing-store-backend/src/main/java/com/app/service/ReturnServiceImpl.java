@@ -29,7 +29,7 @@ public class ReturnServiceImpl implements ReturnService {
 	public String addReturn(ReturnAndExchangeDTO returnAndExchangeDto) {
 		ReturnAndExchange returnObject = mapper.map(returnAndExchangeDto, ReturnAndExchange.class);
 		ReturnAndExchange persistantReturn = returnRepo.save(returnObject);
-		return persistantReturn.getOrderId()+" return added";
+		return persistantReturn.getId()+" return added";
 	}
 
 	// GET return by ID
@@ -52,7 +52,7 @@ public class ReturnServiceImpl implements ReturnService {
 	public String updateReturnDetails(Integer returnId,ReturnAndExchangeDTO returnAndExchangeDto) {
 		ReturnAndExchange persistantReturn=returnRepo.findById(returnId).get();
 		mapper.map(returnAndExchangeDto, persistantReturn);
-		return persistantReturn.getOrderId()+" updated!";
+		return persistantReturn.getId()+" updated!";
 	}
 
 	// DELETE End-point to delete a Return

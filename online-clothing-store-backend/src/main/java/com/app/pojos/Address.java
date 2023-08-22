@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.app.pojos.BaseEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,11 +26,8 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name="addresses")
-public class Address {
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer addressId;
+public class Address extends BaseEntity {
+	
 	@Column(length = 100)
 	private String line1;
 	@Column(length = 100)
@@ -41,24 +40,10 @@ public class Address {
 	
 	//@JsonProperty(access = Access.WRITE_ONLY)
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
+	//@JoinColumn(name = "user_id")
 	private User user;
 	
 	@OneToOne(mappedBy="shippingAddress")
 	private Shipping shipping;
-	
-	
-	public Address(Integer addressId, String line1, String line2, String street, String town, String city,
-			String country, Integer pinCode) {
-		super();
-		this.addressId = addressId;
-		this.line1 = line1;
-		this.line2 = line2;
-		this.street = street;
-		this.town = town;
-		this.city = city;
-		this.country = country;
-		this.pinCode = pinCode;
-	}
 }
 

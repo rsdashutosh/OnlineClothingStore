@@ -25,7 +25,7 @@ public class PaymentServiceImpl implements PaymentService {
 	public String addPayment(PaymentDTO paymentDto) {
 		Payment payment = mapper.map(paymentDto, Payment.class);
 		Payment persistantPayment = paymentRepo.save(payment);
-		return "payment with payment id: "+persistantPayment.getPaymentId()+"received";
+		return "payment with payment id: "+persistantPayment.getId()+"received";
 	}
 
 	// GET payment by Id
@@ -48,7 +48,7 @@ public class PaymentServiceImpl implements PaymentService {
 	public String updatePaymentDetails(Integer paymentId, PaymentDTO paymentDto) {
 		Payment persistentPayment = paymentRepo.findById(paymentId).get();
 		mapper.map(paymentDto, persistentPayment);
-		return "Payment : "+persistentPayment.getPaymentId()+"Updated";
+		return "Payment : "+persistentPayment.getId()+"Updated";
 	}
 	
 

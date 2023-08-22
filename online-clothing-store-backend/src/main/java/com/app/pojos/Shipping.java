@@ -27,10 +27,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name="Shipping_info")
-public class Shipping {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer shippingId;
+public class Shipping extends BaseEntity {
+	/*
+	 * @Id
+	 * @GeneratedValue(strategy = GenerationType.IDENTITY) 
+	 * private Integer shippingId;
+	 */
     @Enumerated(EnumType.STRING)
     private ShippingType shippingMethod;
 	private Double shippingCost;
@@ -42,16 +44,17 @@ public class Shipping {
 	private ShippingStatus shippingStatus;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "fk_add_id")
+	@JoinColumn(name = "add_id")
 	private Address shippingAddress;
 	
 	@ManyToOne
-	@JoinColumn(name="fk_customer_id")
+	@JoinColumn(name="user_id")
 	//@JsonProperty(access = Access.WRITE_ONLY)
 	private User shippingRecipient;
 	
 	
-	@OneToOne(mappedBy = "shippingDetails")
+	@OneToOne
+	//@JoinColumn(name="order_id")
 	private Order order;
 	
 

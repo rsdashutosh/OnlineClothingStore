@@ -23,6 +23,7 @@ import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.app.pojos.BaseEntity;
 import com.app.enums.OrderStatus;
 
 import lombok.AllArgsConstructor;
@@ -38,41 +39,44 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "orders")
-public class Order {
+public class Order extends BaseEntity {
 	
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "order_id")
-    private Long orderId;
+	/*
+	 * @Id
+	 * 
+	 * @GeneratedValue(strategy = GenerationType.IDENTITY)
+	 * 
+	 * @Column(name = "order_id") private Long orderId;
+	 */
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate orderDate;
 
     @ManyToOne
-    @JoinColumn(name = "fk_user_id")
+    @JoinColumn(name = "user_id")
     private User user;
     
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
     
-    @OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="fk_payment_id")
+    @OneToOne(mappedBy="order",cascade = CascadeType.ALL)
+	//@JoinColumn(name="fk_payment_id")
     private Payment payment;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_shipping_id")
+    @OneToOne(mappedBy="order",cascade = CascadeType.ALL)
+    //@JoinColumn(name = "fk_shipping_id")
     private Shipping shippingDetails;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_return_and_exchange_id")
+    @OneToOne(mappedBy="order",cascade = CascadeType.ALL)
+    //@JoinColumn(name = "fk_return_and_exchange_id")
     private ReturnAndExchange returnAndExchange;
     
     private Double tax;
     private Double orderAmount;
 	
 	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	@JoinTable(joinColumns = {@JoinColumn(name = "order_id",referencedColumnName= "order_id")}, 
-	inverseJoinColumns = {@JoinColumn(name ="product_id",referencedColumnName = "product_id")}) 
+	@JoinTable(joinColumns = {@JoinColumn(name = "order_id",referencedColumnName= "id")}, 
+	inverseJoinColumns = {@JoinColumn(name ="product_id",referencedColumnName = "id")}) 
 	private List<Product> products=new ArrayList<>();
 	
 	

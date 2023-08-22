@@ -46,7 +46,7 @@ public class AddressDTO {
     //@Size(min = 6,max = 6,message = "pincode should be of 6 digits")
     private Integer pinCode;
 
-    //@NotNull
+    @NotNull
     @JsonProperty(access = Access.WRITE_ONLY)
     private Integer userId;
 	

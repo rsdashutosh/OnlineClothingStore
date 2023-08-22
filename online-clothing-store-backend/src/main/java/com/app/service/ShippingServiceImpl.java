@@ -30,7 +30,7 @@ public class ShippingServiceImpl implements ShippingService
 	{
 		Shipping shipping=mapper.map(shippingDTO, Shipping.class);
 		Shipping persistentShipping=shippingRepo.save(shipping);
-		return "shipping with id : "+persistentShipping.getShippingId()+" added successfully";
+		return "shipping with id : "+persistentShipping.getId()+" added successfully";
 	}
 	
 	@Override
@@ -58,7 +58,7 @@ public class ShippingServiceImpl implements ShippingService
 	{
 		Shipping persistentShipping=shippingRepo.findById(shippingId).get();
 		mapper.map(shippingDTO,persistentShipping);
-		return "shipping with id : "+persistentShipping.getShippingId()+"updated";
+		return "shipping with id : "+persistentShipping.getId()+"updated";
 	}
 	
 	public ShippingServiceImpl() {
