@@ -27,12 +27,15 @@ public class Review {
 	private String text;
 	private Blob image;
 	private Integer rating;
-	@ManyToOne
-	@JoinColumn(name="customer_id_who_wrote_this_review")
-	private Customer customer;
 	
 	@ManyToOne
-	@JoinColumn(name="product_id")
+	@JoinColumn(name="fk_user_id")
+	//@JsonProperty(access = Access.WRITE_ONLY)
+	private User user;
+	
+	@ManyToOne
+	@JoinColumn(name="fk_product_id")
+	//@JsonProperty(access = Access.WRITE_ONLY)
 	private Product product;
 	
 

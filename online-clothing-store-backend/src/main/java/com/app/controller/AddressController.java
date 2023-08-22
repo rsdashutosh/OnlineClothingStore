@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,32 +15,41 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.dtos.AddressDto;
+import com.app.dtos.AddressDTO;
 import com.app.service.AddressService;
 
 @RestController
 @RequestMapping("/address")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AddressController {
 	@Autowired
 	AddressService addressService;
 	
+
+	//Endpoint adds a new Address
 	@PostMapping("/")
-	public ResponseEntity<?> addAddress(@Valid @RequestBody AddressDto addressDto){
+	public ResponseEntity<?> addAddress(@Valid @RequestBody AddressDTO addressDto)
+	{
 		return ResponseEntity.status(HttpStatus.OK).body(addressService.addAddress(addressDto));
 	}
 	
 	/*
-	 * @GetMapping("/{customerId}") public ResponseEntity<?>
-	 * getAddress(@PathVariable Integer customerId){ return
-	 * ResponseEntity.status(HttpStatus.FOUND).body(addressService.getAddressById(
-	 * customerId)); }
+	 * // Get all Addresses of a Customer
+	 * 
+	 * @GetMapping("/customer_id/{customerId}") public ResponseEntity<?>
+	 * getAddress(@PathVariable Integer customerId) { return
+	 * ResponseEntity.status(HttpStatus.FOUND).body(addressService.
+	 * getAddressesOfUserByUserId(customerId)); }
 	 */
+	 
 	
+	// Endpoint to update the details of an Address
 	@PutMapping("/{addressId}")
-	public ResponseEntity<?> updateAddress(@Valid @PathVariable Integer addressId,@RequestBody AddressDto addressDto){
+	public ResponseEntity<?> updateAddress(@PathVariable Integer addressId,@Valid @RequestBody AddressDTO addressDto){
 		return ResponseEntity.status(HttpStatus.OK).body(addressService.updateAddress(addressId,addressDto));
 	}
 	
+	// Endpoint to delete an Address
 	@DeleteMapping("/{addressId}")
 	public ResponseEntity<?> deleteAddress(@PathVariable Integer addressId){
 		return ResponseEntity.status(HttpStatus.OK).body(addressService.deleteAddress(addressId));

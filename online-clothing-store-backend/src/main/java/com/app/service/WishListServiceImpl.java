@@ -1,15 +1,12 @@
 package com.app.service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.app.dtos.WishListDto;
-import com.app.pojos.WishList;
-import com.app.repository.WishListRepository;
+import com.app.dtos.WishlistDTO;
+import com.app.pojos.Wishlist;
+import com.app.repository.WishlistRepository;
 
 @Service
 @Transactional
@@ -18,26 +15,25 @@ public class WishListServiceImpl implements WishListService {
 	    private ModelMapper mapper;
 
 	    @Autowired
-	    private WishListRepository wishlistRepo;
+	    private WishlistRepository wishlistRepo;
 
 	    @Override
-	    public String addToWishlist(WishListDto wishlistDto) {
-	        WishList wishlistItem = mapper.map(wishlistDto, WishList.class);
-	        WishList persistedItem = wishlistRepo.save(wishlistItem);
-	        return "Added to wishlist with ID: " + persistedItem.getId();
+	    public String addToWishlist(WishlistDTO wishlistDTO) {
+	        Wishlist wishlistItem = mapper.map(wishlistDTO, Wishlist.class);
+	        Wishlist persistedItem = wishlistRepo.save(wishlistItem);
+	        return "Added to wishlist with ID: " + persistedItem.getWishlistId();
 	    }
 
 	    @Override
-	    public WishListDto getWishlist(Long wishlistId) {
-	        Optional<WishList> wishlistItem = wishlistRepo.findById(wishlistId);
-	        WishListDto wishlistDto = mapper.map(wishlistItem.get(), WishListDto.class);
+	    public WishlistDTO getWishlist(Long wishlistId) {
+	        Wishlist wishlistItem = wishlistRepo.findById(wishlistId).get();
+	        WishlistDTO wishlistDto = mapper.map(wishlistItem, WishlistDTO.class);
 	        return wishlistDto;
 	    }
 
 	    @Override
-	    public String updateWishlistItem(Long wishlistId, WishListDto wishlistDto) {
-	        Optional<WishList> wishlistItem = wishlistRepo.findById(wishlistId);
-	        WishList persistentWishList=wishlistItem.get();
+	    public String updateWishlistItem(Long wishlistId, WishlistDTO wishlistDto) {
+	        Wishlist persistentWishList = wishlistRepo.findById(wishlistId).get();
 	        mapper.map(wishlistDto, persistentWishList);
 	        return "Wishlist item updated with ID: " + wishlistId;
 	        

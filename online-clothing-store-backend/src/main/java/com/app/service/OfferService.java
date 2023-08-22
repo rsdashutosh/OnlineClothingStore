@@ -2,19 +2,19 @@ package com.app.service;
 
 import java.util.List;
 
-import com.app.dtos.OfferDto;
+import com.app.dtos.OfferDTO;
 
 public interface OfferService {
 
-	public OfferDto addOffer(OfferDto offerDto);
+	public OfferDTO addOffer(OfferDTO offerDto);
 
-	public OfferDto updateOffer(OfferDto offerDto, Integer offerId);
+	public OfferDTO updateOffer(OfferDTO offerDto, Integer offerId);
 
 	public String deleteOffer(Integer offerId);
 
-	public OfferDto getOffer(Integer offerId);
+	public OfferDTO getOffer(Integer offerId);
 
-	public List<OfferDto> getAllOffer();
+	public List<OfferDTO> getAllOffer();
 
 	public double getDiscountByPromoCode(String promoCode);
 	
