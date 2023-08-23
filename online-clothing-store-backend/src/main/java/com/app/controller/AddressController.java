@@ -20,27 +20,24 @@ import com.app.service.AddressService;
 
 @RestController
 @RequestMapping("/address")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")     
 public class AddressController {
 	@Autowired
 	AddressService addressService;
 	
 
 	//Endpoint adds a new Address
-	@PostMapping("/")
-	public ResponseEntity<?> addAddress(@Valid @RequestBody AddressDTO addressDTO)
+	@PostMapping("/user_id/{userId}")
+	public ResponseEntity<?> addAddress(@PathVariable String email,@Valid @RequestBody AddressDTO addressDTO)
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(addressService.addAddress(addressDTO));
 	}
-	
 	
     // Get all Addresses of a User
     @GetMapping("/user_id/{userId}") 
     public ResponseEntity<?> getAddress(@PathVariable String email) 
     { 
     	return ResponseEntity.status(HttpStatus.FOUND).body(addressService.getAllAddressesByUserEmail(email)); }
-	 
-	 
 	
 	// Endpoint to update the details of an Address
 	@PutMapping("/{addressId}")

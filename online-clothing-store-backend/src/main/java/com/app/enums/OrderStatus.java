@@ -1,9 +1,9 @@
 package com.app.enums;
 
 public enum OrderStatus {
-	CREATED,
-	COMPLETED,
-	CANCElLED,
+	PLACED,
+	CONFIRMED,
+	SHIPPED,
 	RETURNED,
 	EXCHANGED
 

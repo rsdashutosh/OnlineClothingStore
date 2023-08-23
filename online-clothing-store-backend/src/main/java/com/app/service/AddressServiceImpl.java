@@ -1,14 +1,10 @@
 package com.app.service;
-
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.app.dtos.AddressDTO;
 import com.app.pojos.Address;
 import com.app.repository.AddressRepository;
@@ -29,7 +25,6 @@ public class AddressServiceImpl implements AddressService {
 		Address persistanceAddress=	addressRepo.save(address);
 		return "New address with id : "+persistanceAddress.getId()+ " added successfully!!!";
 	}
-
 	
 	  //GET all addresses by User Id
 	@Override 
@@ -38,7 +33,6 @@ public class AddressServiceImpl implements AddressService {
 	    List<Address> addresses=addressRepo.findAllByUserEmail(email); 
 	    return addresses.stream().map(address->mapper.map(address, AddressDTO.class)).collect(Collectors.toList()); 
 	}
-	 
 
 	//PUT
 	@Override
@@ -54,7 +48,4 @@ public class AddressServiceImpl implements AddressService {
 		addressRepo.deleteById(addressId);
 		return "Address with address id :"+addressId+" deleted successfully!!!";
 	}
-
-	
-
 }

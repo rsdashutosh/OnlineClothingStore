@@ -59,7 +59,7 @@ public class User extends BaseEntity {
     // as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
  	public void addAddress(Address address) {
  		addresses.add(address);
- 		address.setUser(this);
+ 		//address.setUser(this);
  	}
  	public void removeAddress(Address address) {
  		addresses.remove(address);

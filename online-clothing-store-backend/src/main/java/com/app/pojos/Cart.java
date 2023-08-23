@@ -39,18 +39,18 @@ public class Cart extends BaseEntity {
 	 * @Column(name = "cart_id") private Integer CartId;
 	 */
 	
+	// User who owns the cart
 	@OneToOne
 	@JoinColumn(name="user_id")
 	private User user;
 
-	
+	// List of products that the cart contains
 	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinTable(joinColumns = {@JoinColumn(name = "cart_id",referencedColumnName ="id")}, 
 	inverseJoinColumns = {@JoinColumn(name ="product_id",referencedColumnName = "id")}) 
 	private List<Product> products=new ArrayList<>();
 	
-	
-	// as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
+	// Helper methods to add/remove child i.e. Products
 	public void addProduct(Product product) {
 		products.add(product);
 		product.getCarts().add(this);
