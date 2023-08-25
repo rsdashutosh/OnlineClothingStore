@@ -38,7 +38,7 @@ public class ReviewImage extends BaseEntity {
 	
 	// Review image stored in Byte array
 	@Lob // large object :col : longblob
-	private Byte[] image;
+	private byte[] image;
 	
 	// Review that the review image is associated with
 	@ManyToOne

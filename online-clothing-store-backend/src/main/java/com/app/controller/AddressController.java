@@ -27,14 +27,14 @@ public class AddressController {
 	
 
 	//Endpoint adds a new Address
-	@PostMapping("/user_id/{userId}")
-	public ResponseEntity<?> addAddress(@PathVariable String email,@Valid @RequestBody AddressDTO addressDTO)
+	@PostMapping("/")
+	public ResponseEntity<?> addAddress(@Valid @RequestBody AddressDTO addressDTO)
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(addressService.addAddress(addressDTO));
 	}
 	
     // Get all Addresses of a User
-    @GetMapping("/user_id/{userId}") 
+    @GetMapping("/email/{email}") 
     public ResponseEntity<?> getAddress(@PathVariable String email) 
     { 
     	return ResponseEntity.status(HttpStatus.FOUND).body(addressService.getAllAddressesByUserEmail(email)); }

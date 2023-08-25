@@ -22,10 +22,10 @@ import lombok.ToString;
 @ToString
 public class WishlistDTO {
 	
-    @NotNull(message = "customerId is mandatory")
-    private Integer customerId;
+    @NotNull(message = "userId is mandatory")
+    private Integer userId;
     
-    private Set<Product> products=new HashSet<>();
+    //private Integer productId;
     
     
 }

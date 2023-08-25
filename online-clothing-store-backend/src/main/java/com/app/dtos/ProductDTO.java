@@ -63,17 +63,17 @@ public class ProductDTO {
 	private Occasion occasion;
 	
 	
-	private List<Integer> reviews;
+	//private List<Integer> reviews;
 	
-	private List<Integer> offers;
+	//private List<Integer> offers;
 	
-	private List<Integer> carts;
+	//private List<Integer> carts;
 	
-	private List<Integer> wishlists;
+	//private List<Integer> wishlists;
 	
-	private List<Integer> orders;
+	//private List<Integer> orders;
 	
-	private List<Integer> productImages;
+	//private List<Integer> productImages;
 	
 	
 }

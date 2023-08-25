@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.app.dtos.AddressDTO;
 import com.app.pojos.Address;
+import com.app.pojos.User;
 import com.app.repository.AddressRepository;
+import com.app.repository.UserRepository;
 
 @Service
 @Transactional
@@ -15,13 +17,23 @@ public class AddressServiceImpl implements AddressService {
 
 	@Autowired
 	private ModelMapper mapper;
+	
 	@Autowired
 	private AddressRepository addressRepo;
 	
+	@Autowired
+	private UserRepository userRepo;
+	
 	//Post
 	@Override
-	public String addAddress(AddressDTO addressDto) {
-		Address address=mapper.map(addressDto, Address.class);
+	public String addAddress(AddressDTO addressDTO) {
+		// Get the user whose address is to be added 
+		User user=userRepo.findById(addressDTO.getUserId()).get();
+		// Mapping the DTO into Address class object
+		Address address=mapper.map(addressDTO, Address.class);
+		// Adding the address to the user
+		user.addAddress(address);
+		// Saving the address into the DB
 		Address persistanceAddress=	addressRepo.save(address);
 		return "New address with id : "+persistanceAddress.getId()+ " added successfully!!!";
 	}
@@ -30,7 +42,10 @@ public class AddressServiceImpl implements AddressService {
 	@Override 
 	public List<AddressDTO> getAllAddressesByUserEmail(String email)
 	{ 
-	    List<Address> addresses=addressRepo.findAllByUserEmail(email); 
+		User user=userRepo.findByEmail(email).get();
+		Integer userId=user.getId();
+		List<Address> addresses=user.getAddresses();
+	    //List<Address> addresses=addressRepo.findAll(email); 
 	    return addresses.stream().map(address->mapper.map(address, AddressDTO.class)).collect(Collectors.toList()); 
 	}
 

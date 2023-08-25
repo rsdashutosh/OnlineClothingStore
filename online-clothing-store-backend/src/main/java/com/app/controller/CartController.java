@@ -1,5 +1,6 @@
 package com.app.controller;
 
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,43 +19,39 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.dtos.CartDTO;
 import com.app.service.CartService;
 
-
-
 @RestController
 @RequestMapping("/cart")
 @CrossOrigin(origins = "http://localhost:3000")
 public class CartController {
+	
+	 @Autowired
+	    CartService cartService;
 
-	@Autowired
-	CartService cartService;
-	
-	
-	// POST
-	@PostMapping("/")
-	public ResponseEntity<?> addCart(@Valid @RequestBody CartDTO cartDto)
-	{
-		return ResponseEntity.status(HttpStatus.OK).body(cartService.addCart(cartDto));
+	    @PostMapping("/")
+	    public ResponseEntity<?> addToCart(@Valid @RequestBody CartDTO cartDto) {
+	        return ResponseEntity.status(HttpStatus.OK).body(cartService.addCart(cartDto));
+	    }
+
+	    @GetMapping("/{cartId}")
+	    public ResponseEntity<CartDTO> getCartById(@PathVariable Integer cartId) {
+	        return new ResponseEntity<CartDTO>(cartService.getCart(cartId), HttpStatus.OK);
+	    }
+
+	    @PutMapping("/user_id/{userId}/add_product/{productId}")
+	    public ResponseEntity<?> addCartItem(@Valid @PathVariable Integer userId,@PathVariable Integer productId) {
+	        return ResponseEntity.status(HttpStatus.OK).body(cartService.addItemToCart(userId, productId));
+	    }
+	    
+	    @PutMapping("/user_id/{userId}/remove_product/{productId}")
+	    public ResponseEntity<?> removeCartItem(@Valid @PathVariable Integer userId,@PathVariable Integer productId) {
+	        return ResponseEntity.status(HttpStatus.OK).body(cartService.removeItemFromCart(userId, productId));
+	    }
+	    
+	    @DeleteMapping("/{cartId}")  
+	    public ResponseEntity<?> removeFromCart(@PathVariable Integer cartId) {
+	        return ResponseEntity.status(HttpStatus.OK).body(cartService.removeCart(cartId));
+	    }
 	}
 	
-	// 
-	@GetMapping("/{cartId}")
-	public ResponseEntity<?> getCart(@PathVariable Integer cartId)
-	{
-		return ResponseEntity.status(HttpStatus.FOUND).body(cartService.getCart(cartId));
-	}
-	
-	// UPDATE 
-	@PutMapping("/{cartId}")
-	public ResponseEntity<?> updateCart(@Valid @PathVariable Integer cartId,@RequestBody CartDTO cartDto)
-	{
-		return ResponseEntity.status(HttpStatus.OK).body(cartService.updateCart(cartId, cartDto));
-	}
-	
-	// DELETE
-	@DeleteMapping("/{cartId}")
-	public ResponseEntity<?> deleteCart(@PathVariable Integer cartId)
-	{
-		return ResponseEntity.status(HttpStatus.OK).body(cartService.deleteCart(cartId));
-	}
-	
-}
+
+

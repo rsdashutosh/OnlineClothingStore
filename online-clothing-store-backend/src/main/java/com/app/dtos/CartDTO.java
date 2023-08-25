@@ -22,10 +22,10 @@ import lombok.ToString;
 @ToString
 public class CartDTO {
 	  
-	@JsonProperty(access = Access.WRITE_ONLY)
+	//@JsonProperty(access = Access.WRITE_ONLY)
     @NotNull(message = "customerId is mandatory")
     private Integer userId;
     
 	// Optional as Cart may or may contain products
-	private List<Integer> products;
+	//private List<Integer> products ;
 }

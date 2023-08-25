@@ -48,16 +48,6 @@ public class Address extends BaseEntity {
 	@JoinColumn(name = "user_id",referencedColumnName = "id")
 	private User user;
 	
-	public void setUser(Integer userId)
-	{
-		
-	}
-	
-	public User getUser()
-	{
-		return this.getUser();
-	}
-	
 	// Shipping Info that the given address is associated with
 	@OneToOne(mappedBy="shippingAddress")
 	private Shipping shipping;

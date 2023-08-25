@@ -31,17 +31,17 @@ public class ProductController {
 		return ResponseEntity.status(HttpStatus.OK).body(productService.addProduct(productDto));
 	}
 	
-	@GetMapping("/{ProductId}")
+	@GetMapping("/{productId}")
 	public ResponseEntity<?> getProductById(@PathVariable Integer productId){
 		return new ResponseEntity<ProductDTO>(productService.getProduct(productId), HttpStatus.FOUND);
 	}
 	
-	@PutMapping("/{ProductId}")
+	@PutMapping("/{productId}")
 	public ResponseEntity<?> updateProductDetails(@Valid @PathVariable Integer productId, @RequestBody ProductDTO productDto){
 		return ResponseEntity.status(HttpStatus.OK).body(productService.updateProductDetails(productId, productDto));
 	}
 	
-	@DeleteMapping("/ProductId")
+	@DeleteMapping("/{productId}")
 	public ResponseEntity<?> deleteProduct(@PathVariable Integer productId){
 		return ResponseEntity.status(HttpStatus.OK).body(productService.deleteProduct(productId));
 	}

@@ -31,17 +31,23 @@ public class ReturnAndExchange extends BaseEntity {
 	 * @GeneratedValue(strategy = GenerationType.IDENTITY) private Integer
 	 * returnAndExchangeId;
 	 */
-	private Integer productId;
-	private String reasonForReturn;
-	@Enumerated(EnumType.STRING)
-	private ReturnStatus returnStatus;
+	//private Integer productId;
+	
+	@OneToOne
+	@JoinColumn(name="order_id")
+	private Order order;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
 	
-	@OneToOne
-	@JoinColumn(name="order_id")
-	private Order order;
+	private String reasonForReturn;
+	
+	@Enumerated(EnumType.STRING)
+	private ReturnStatus returnStatus;
+	
+	
+	
+	
 
 }

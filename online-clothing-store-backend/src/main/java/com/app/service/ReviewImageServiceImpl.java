@@ -1,14 +1,19 @@
 package com.app.service;
 
 import javax.transaction.Transactional;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.app.dtos.ReviewImageDTO;
+import com.app.pojos.Review;
 import com.app.pojos.ReviewImage;
 import com.app.repository.ReviewImageRepository;
+import com.app.repository.ReviewRepository;
 
 @Service
 @Transactional
@@ -19,44 +24,70 @@ public class ReviewImageServiceImpl implements ReviewImageService {
 
 	@Autowired
 	private ReviewImageRepository reviewImageRepo;
+	
+	@Autowired
+	private ReviewRepository reviewRepo;
 
 	// POST
 	@Override
-	public String addReviewImage(ReviewImageDTO ReviewImageDto) {
-		ReviewImage ReviewImage = mapper.map(ReviewImageDto, ReviewImage.class);
-		ReviewImage persistantReviewImage = reviewImageRepo.save(ReviewImage);
-		return persistantReviewImage.getName();
+	public String addReviewImage(ReviewImageDTO reviewImageDTO) throws IOException {
+		// fetching the review
+		Review review=reviewRepo.findById(reviewImageDTO.getReviewId()).get();
+		
+		// Mapping the DTO to object of ReviewImage class 
+		ReviewImage reviewImage=mapper.map(reviewImageDTO, ReviewImage.class);	
+		ReviewImage persistentReviewImage=reviewImageRepo.save(reviewImage);
+		
+		// linking 
+		persistentReviewImage.setImage(reviewImageDTO.getImage().getBytes());
+		persistentReviewImage.setReview(review);
+		review.addReviewImage(persistentReviewImage);
+		
+		return persistentReviewImage.getName()+" image added!";
 	}
 
-	// GET ReviewImage by Id
+	// Get reviewImage by Id
 	@Override
-	public ReviewImageDTO getReviewImage(Integer ReviewImageId) {
-		ReviewImage ReviewImage = reviewImageRepo.findById(ReviewImageId).get();
-		ReviewImageDTO ReviewImageDTO = mapper.map(ReviewImage, ReviewImageDTO.class);
-		return ReviewImageDTO;
+	public byte[] getReviewImage(Integer reviewId,Integer ImageId) {
+		ReviewImage reviewImage = reviewImageRepo.findById(ImageId).get();
+		//ReviewImageDTO reviewImageDto = mapper.map(reviewImage, ReviewImageDTO.class);
+		return reviewImage.getImage();
 	}
 
-	// Update all ReviewImages
+	// Get all reviewImages
 	@Override
-	public List<ReviewImageDTO> getAllReviewImages() {
-		List<ReviewImage> ReviewImageList = reviewImageRepo.findAll();
-		return ReviewImageList.stream().map(ReviewImage -> mapper.map(ReviewImage, ReviewImageDTO.class)).collect(Collectors.toList());
+	public List<byte[]> getAllReviewImages(Integer reviewId) {
+		//finding the review by review id
+		Review review=reviewRepo.findById(reviewId).get();
+		// fetching all the images of a review
+		List<ReviewImage> reviewImages=reviewImageRepo.findByReview(review);
+		//returning all the images of a review in a List<byte[]>
+		return reviewImages.stream().map(reviewImage->reviewImage.getImage()).collect(Collectors.toList());
 	}
 
-	//PUT
+	// Update review image
 	@Override
-	public String updateReviewImageDetails(Integer ReviewImageId, ReviewImageDTO ReviewImageDTO) {
-		ReviewImage persistentReviewImage = reviewImageRepo.findById(ReviewImageId).get();
-		mapper.map(ReviewImageDTO, persistentReviewImage);
-		return persistentReviewImage.getName()+"Updated";
+	public String updateReviewImageDetails(Integer reviewImageId, ReviewImageDTO reviewImageDTO) throws IOException {
+		ReviewImage persistentReviewImage = reviewImageRepo.findById(reviewImageId).get();
+		mapper.map(reviewImageDTO, persistentReviewImage);
+		
+		persistentReviewImage.setImage(reviewImageDTO.getImage().getBytes());
+		return persistentReviewImage.getName()+" Updated!";
 	}
 	
 
-	//Delete
+	//Delete a review image
 	@Override
-	public String deleteReviewImage(Integer ReviewImageId) {
-		reviewImageRepo.deleteById(ReviewImageId);
-		return "ReviewImage deleted Successfully";
+	public String deleteReviewImage(Integer reviewImageId) {
+		// fetching the image
+		ReviewImage reviewImage=reviewImageRepo.findById(reviewImageId).get();
+		// fetching the review
+		Review review=reviewRepo.findById(reviewImage.getReview().getId()).get();
+		review.getReviewImages().remove(reviewImage);
+		reviewImage.setReview(null);
+		
+		reviewImageRepo.deleteById(reviewImageId);
+		return "ReviewImage : "+reviewImageId+" deleted Successfully!";
 	}
 
 }

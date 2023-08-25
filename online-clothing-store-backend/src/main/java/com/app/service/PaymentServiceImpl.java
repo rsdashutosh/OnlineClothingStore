@@ -7,8 +7,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.app.dtos.PaymentDTO;
+import com.app.pojos.Order;
 import com.app.pojos.Payment;
+import com.app.pojos.User;
+import com.app.repository.OrderRepository;
 import com.app.repository.PaymentRepository;
+import com.app.repository.UserRepository;
 
 @Service
 @Transactional
@@ -19,24 +23,47 @@ public class PaymentServiceImpl implements PaymentService {
 
 	@Autowired
 	private PaymentRepository paymentRepo;
+	
+	@Autowired
+	private UserRepository userRepo;
+	
+	@Autowired
+	private OrderRepository orderRepo;
 
-	// POST
+	// Method to store the payment details in the DB and link it to a order and a user
 	@Override
-	public String addPayment(PaymentDTO paymentDto) {
-		Payment payment = mapper.map(paymentDto, Payment.class);
+	public String addPayment(PaymentDTO paymentDTO) {
+		// mapping the payment dto to object to payment entity
+		Payment payment = mapper.map(paymentDTO, Payment.class);
+		
+		// persisting the received data in the DB
 		Payment persistantPayment = paymentRepo.save(payment);
-		return "payment with payment id: "+persistantPayment.getId()+"received";
+		
+		// fetching the user by user id
+		User user=userRepo.findById(paymentDTO.getUserId()).get();
+		// fetching the order by order id
+		Order order=orderRepo.findById(paymentDTO.getOrderId()).get();
+		
+		// associate the payment with a user
+		persistantPayment.setUser(user);
+		user.addPayment(persistantPayment);
+		
+		// associate the payment with an order
+		persistantPayment.setOrder(order);
+		order.setPayment(persistantPayment);
+
+		return "payment with payment id: "+persistantPayment.getId()+"received!";
 	}
 
-	// GET payment by Id
+	// Fetching the details of a payment by payment id
 	@Override
 	public PaymentDTO getPayment(Integer paymentId) {
 		Payment payment = paymentRepo.findById(paymentId).get();
-		PaymentDTO paymentDto = mapper.map(payment, PaymentDTO.class);
-		return paymentDto;
+		PaymentDTO paymentDTO = mapper.map(payment, PaymentDTO.class);
+		return paymentDTO;
 	}
 
-	// Upadte all payments
+	// Get all payments 
 	@Override
 	public List<PaymentDTO> getAllPayments() {
 		List<Payment> paymentList = paymentRepo.findAll();
@@ -55,6 +82,19 @@ public class PaymentServiceImpl implements PaymentService {
 	//Delete
 	@Override
 	public String deletePayment(Integer paymentId) {
+		Payment payment=paymentRepo.findById(paymentId).get();
+		
+		// fetching the user by user id
+		User user=userRepo.findById(payment.getUser().getId()).get();
+		// fetching the order by order id
+		Order order=orderRepo.findById(payment.getOrder().getId()).get();
+		
+		// removing all links of payment with user and order
+		user.removePayment(payment);
+		order.setPayment(null);
+		payment.setUser(null);
+		payment.setOrder(null);
+		
 		paymentRepo.deleteById(paymentId);
 		return "Payment deleted Successfully";
 	}

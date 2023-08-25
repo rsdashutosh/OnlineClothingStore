@@ -28,24 +28,12 @@ public class OrderDTO {
 	
 	@NotNull(message = "orderDate is mandatory")
     private LocalDate orderDate;
-
-    @NotNull(message = "userId is mandatory")
-    private Integer userId;
-    
-    private String orderStatus;
-
-    private Integer paymentId;
-
-    @NotBlank(message = "shippingAddress is mandatory")
-    @JsonProperty(access = Access.WRITE_ONLY)
-    private String shippingAddress;
-    
-    private Integer returnAndExchangeId;
-    
+    private OrderStatus orderStatus;
     private Double tax;
     private Double orderAmount;
     
-    private List<Integer> products;
+    @NotNull(message = "userId is mandatory")
+    private Integer userId;
 	
 
 }

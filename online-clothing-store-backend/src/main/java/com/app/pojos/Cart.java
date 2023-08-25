@@ -43,6 +43,7 @@ public class Cart extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name="user_id")
 	private User user;
+	
 
 	// List of products that the cart contains
 	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
@@ -53,7 +54,7 @@ public class Cart extends BaseEntity {
 	// Helper methods to add/remove child i.e. Products
 	public void addProduct(Product product) {
 		products.add(product);
-		product.getCarts().add(this);
+		product.getCarts().add(this); 
 	}
 	public void removeProduct(Product product) {
 		products.remove(product);

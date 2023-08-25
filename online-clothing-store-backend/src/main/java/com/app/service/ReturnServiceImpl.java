@@ -1,65 +1,102 @@
 package com.app.service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.transaction.Transactional;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.app.dtos.ReturnAndExchangeDTO;
+import com.app.pojos.Order;
 import com.app.pojos.ReturnAndExchange;
+import com.app.pojos.User;
+import com.app.repository.OrderRepository;
 import com.app.repository.ReturnRepository;
+import com.app.repository.UserRepository;
 
 @Service
 @Transactional
 public class ReturnServiceImpl implements ReturnService {
 
-
 	@Autowired
 	private ModelMapper mapper;
+
+	@Autowired
+	private ReturnRepository returnAndExchangeRepo;
 	
 	@Autowired
-	private ReturnRepository returnRepo;
+	private UserRepository userRepo;
+	
+	@Autowired
+	private OrderRepository orderRepo;
 
-	// POST EndPoint to Add a Return
+	// Method to store the returnAndExchange details in the DB and link it to a order and a user
 	@Override
-	public String addReturn(ReturnAndExchangeDTO returnAndExchangeDto) {
-		ReturnAndExchange returnObject = mapper.map(returnAndExchangeDto, ReturnAndExchange.class);
-		ReturnAndExchange persistantReturn = returnRepo.save(returnObject);
-		return persistantReturn.getId()+" return added";
+	public String addReturnAndExchange(ReturnAndExchangeDTO returnAndExchangeDTO) {
+		// mapping the returnAndExchange dto to object to returnAndExchange entity
+		ReturnAndExchange returnAndExchange = mapper.map(returnAndExchangeDTO, ReturnAndExchange.class);
+		
+		// persisting the received data in the DB
+		ReturnAndExchange persistantReturnAndExchange = returnAndExchangeRepo.save(returnAndExchange);
+		
+		// fetching the user by user id
+		User user=userRepo.findById(returnAndExchangeDTO.getUserId()).get();
+		// fetching the order by order id
+		Order order=orderRepo.findById(returnAndExchangeDTO.getOrderId()).get();
+		
+		// associate the returnAndExchange with a user
+		persistantReturnAndExchange.setUser(user);
+		user.addReturnAndExchange(persistantReturnAndExchange);
+		
+		// associate the returnAndExchange with an order
+		persistantReturnAndExchange.setOrder(order);
+		order.setReturnAndExchange(persistantReturnAndExchange);
+
+		return "returnAndExchange with returnAndExchange id: "+persistantReturnAndExchange.getId()+"received!";
 	}
 
-	// GET return by ID
+	// Fetching the details of a returnAndExchange by returnAndExchange id
 	@Override
-	public ReturnAndExchangeDTO getReturn(Integer returnId) {
-		ReturnAndExchange returnObject = returnRepo.findById(returnId).get();
-		ReturnAndExchangeDTO returnAndExchangeDto = mapper.map(returnObject, ReturnAndExchangeDTO.class);
-		return returnAndExchangeDto;
+	public ReturnAndExchangeDTO getReturnAndExchange(Integer returnAndExchangeId) {
+		ReturnAndExchange returnAndExchange = returnAndExchangeRepo.findById(returnAndExchangeId).get();
+		ReturnAndExchangeDTO returnAndExchangeDTO = mapper.map(returnAndExchange, ReturnAndExchangeDTO.class);
+		return returnAndExchangeDTO;
+	}
+
+	// Get all returnAndExchanges 
+	@Override
+	public List<ReturnAndExchangeDTO> getAllReturnAndExchanges() {
+		List<ReturnAndExchange> returnAndExchangeList = returnAndExchangeRepo.findAll();
+		return returnAndExchangeList.stream().map(returnAndExchange -> mapper.map(returnAndExchange, ReturnAndExchangeDTO.class)).collect(Collectors.toList());
+	}
+
+	//PUT
+	@Override
+	public String updateReturnAndExchangeDetails(Integer returnAndExchangeId, ReturnAndExchangeDTO returnAndExchangeDto) {
+		ReturnAndExchange persistentReturnAndExchange = returnAndExchangeRepo.findById(returnAndExchangeId).get();
+		mapper.map(returnAndExchangeDto, persistentReturnAndExchange);
+		return "ReturnAndExchange : "+persistentReturnAndExchange.getId()+"Updated";
 	}
 	
-	// GET End-point to fetch all categories 
-	@Override
-	public List<ReturnAndExchangeDTO> getAllCategories() {
-		List<ReturnAndExchange> returnAndExchanges = returnRepo.findAll();
-		return returnAndExchanges.stream().map(returnObj->mapper.map(returnObj, ReturnAndExchangeDTO.class)).collect(Collectors.toList());
-	}
 
-	// PUT End-point to update a Return
+	//Delete
 	@Override
-	public String updateReturnDetails(Integer returnId,ReturnAndExchangeDTO returnAndExchangeDto) {
-		ReturnAndExchange persistantReturn=returnRepo.findById(returnId).get();
-		mapper.map(returnAndExchangeDto, persistantReturn);
-		return persistantReturn.getId()+" updated!";
-	}
-
-	// DELETE End-point to delete a Return
-	@Override
-	public String deleteReturn(Integer returnId) {
-		returnRepo.deleteById(returnId);
-		return "return with id:"+returnId+"Deleted successfully";
+	public String deleteReturnAndExchange(Integer returnAndExchangeId) {
+		ReturnAndExchange returnAndExchange=returnAndExchangeRepo.findById(returnAndExchangeId).get();
+		
+		// fetching the user by user id
+		User user=userRepo.findById(returnAndExchange.getUser().getId()).get();
+		// fetching the order by order id
+		Order order=orderRepo.findById(returnAndExchange.getOrder().getId()).get();
+		
+		// removing all links of returnAndExchange with user and order
+		user.removeReturnAndExchange(returnAndExchange);
+		order.setReturnAndExchange(null);
+		returnAndExchange.setUser(null);
+		returnAndExchange.setOrder(null);
+		
+		returnAndExchangeRepo.deleteById(returnAndExchangeId);
+		return "ReturnAndExchange deleted Successfully";
 	}
 
 }

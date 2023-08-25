@@ -27,7 +27,7 @@ public class ShippingController {
 	ShippingService shippingService;
 	
 	@PostMapping("/")
-	public ResponseEntity<?> addShipping(@Valid @PathVariable ShippingDTO shippingDTO)
+	public ResponseEntity<?> addShipping(@Valid @RequestBody ShippingDTO shippingDTO)
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(shippingService.addShipping(shippingDTO));
 	}

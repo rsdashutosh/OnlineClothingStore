@@ -60,19 +60,19 @@ public class UserDTO {
     private Integer coins;
 
     //@NotBlank(message = "shippingAddresses is mandatory")
-    private List<Address> addresses=new ArrayList<>();
+    //private List<Address> addresses=new ArrayList<>();
 
-    private List<Order> orders=new ArrayList<>();
+    //private List<Order> orders=new ArrayList<>();
 
-    private List<Review> reviews=new ArrayList<>();
+    //private List<Review> reviews=new ArrayList<>();
     
-    private Cart cart;
+    //private Cart cart;
     
-    private Wishlist wishlist;
+    //private Wishlist wishlist;
     
-    private List<Payment> payments=new ArrayList<>();
+    //private List<Payment> payments=new ArrayList<>();
     
-    private List<ReturnAndExchange> returnAndExchanges=new ArrayList<>();
+    //private List<ReturnAndExchange> returnAndExchanges=new ArrayList<>();
     
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -90,8 +90,8 @@ public class UserDTO {
     //@NotNull(message = "age is mandatory")
 	private LocalDate dateOfBirth;
     
-    @CreationTimestamp
-    private LocalDate dateOfJoining;
+    //@CreationTimestamp
+    //private LocalDate dateOfJoining;
 	
 	
 }

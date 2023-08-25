@@ -1,25 +1,19 @@
 package com.app.pojos;
-
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -34,9 +28,12 @@ public class Review extends BaseEntity {
 	 * 
 	 * @Column(name="review_id") private Integer reviewId;
 	 */
+	
+	// title of the review 
+	private String title;
     
     // Textual review of the associated product
-	private String reviewText;
+	private String description;
 	
 	// Rating given to the product by the customer 
 	private Integer rating;
@@ -44,6 +41,18 @@ public class Review extends BaseEntity {
 	// List of images associated with the Review
 	@OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
 	private List<ReviewImage> reviewImages=new ArrayList<>();
+	
+	// helper methods to add and remove Review Images from a review
+	public void addReviewImage(ReviewImage reviewImage) {
+		reviewImages.add(reviewImage);
+		reviewImage.setReview(this);
+	}
+	
+	public void removeReviewImage(ReviewImage reviewImage) {
+		reviewImages.remove(reviewImage);
+		reviewImage.setReview(null);
+	}
+	
 	
 	// User who wrote this review
 	@ManyToOne
@@ -56,6 +65,8 @@ public class Review extends BaseEntity {
 	@JoinColumn(name="product_id")
 	//@JsonProperty(access = Access.WRITE_ONLY)
 	private Product product;
+
+	
 	
 
 }

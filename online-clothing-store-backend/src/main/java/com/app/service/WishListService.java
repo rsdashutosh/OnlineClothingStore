@@ -1,11 +1,12 @@
 package com.app.service;
-
 import com.app.dtos.WishlistDTO;
 
 public interface WishListService {
 	
-	public String addToWishlist(WishlistDTO wishlistDto);
-    public WishlistDTO getWishlist(Long wishlistId);
-    public String updateWishlistItem(Long wishlistId, WishlistDTO wishlistDto);
-    public String removeFromWishlist(Long wishlistId);
+	public String addWishlist(WishlistDTO wishlistDTO);
+	public String addItemToWishlist(Integer userId, Integer productId);
+	public String removeItemFromWishlist(Integer userId, Integer productId);
+    public WishlistDTO getWishlist(Integer wishlistId);
+    public String updateWishlist(Integer wishlistId, WishlistDTO wishlistDTO);
+    public String removeWishlist(Integer wishlistId);
 }

@@ -1,6 +1,7 @@
 package com.app.pojos;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,11 +50,11 @@ public class Offer extends BaseEntity {
 	private Double discountAmount;
 	private String promoCode;
 	
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date startDate;
+	//@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate startDate;
 	
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date endDate;
+	//@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate endDate;
 	
 	@Enumerated(EnumType.STRING)
 	private CategoryType category;

@@ -5,8 +5,8 @@ import com.app.dtos.OrderDTO;
 public interface OrderService {
 	
 	public String placeOrder(OrderDTO orderDto);
-    public OrderDTO getOrder(Long orderId);
-    public String updateOrderDetails(Long orderId, OrderDTO orderDto);
-    public String cancelOrder(Long orderId);
+    public OrderDTO getOrder(Integer orderId);
+    public String updateOrderDetails(Integer orderId, OrderDTO orderDto);
+    public String cancelOrder(Integer orderId);
 
 }

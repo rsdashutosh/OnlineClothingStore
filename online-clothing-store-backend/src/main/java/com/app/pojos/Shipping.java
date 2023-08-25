@@ -52,6 +52,16 @@ public class Shipping extends BaseEntity {
 	//@JsonProperty(access = Access.WRITE_ONLY)
 	private User shippingRecipient;
 	
+	public void addUser(User user) {
+		this.shippingRecipient=user;
+		user.getShippings().add(this);
+	}
+	
+	public void removeUser(User user) {
+		this.shippingRecipient=null;
+		user.getShippings().remove(this);
+	}
+	
 	
 	@OneToOne
 	//@JoinColumn(name="order_id")

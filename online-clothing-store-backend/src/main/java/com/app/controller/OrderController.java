@@ -31,17 +31,17 @@ public class OrderController {
 	    }
 
 	    @GetMapping("/{orderId}")
-	    public ResponseEntity<OrderDTO> getOrderById(@PathVariable Long orderId) {
+	    public ResponseEntity<OrderDTO> getOrderById(@PathVariable Integer orderId) {
 	        return new ResponseEntity<OrderDTO>(orderService.getOrder(orderId), HttpStatus.OK);
 	    }
 
 	    @PutMapping("/{orderId}")
-	    public ResponseEntity<?> updateOrderDetails(@Valid @PathVariable Long orderId, @RequestBody OrderDTO orderDto) {
+	    public ResponseEntity<?> updateOrderDetails(@Valid @PathVariable Integer orderId, @RequestBody OrderDTO orderDto) {
 	        return ResponseEntity.status(HttpStatus.OK).body(orderService.updateOrderDetails(orderId, orderDto));
 	    }
 
 	    @DeleteMapping("/{orderId}")
-	    public ResponseEntity<?> cancelOrder(@PathVariable Long orderId) {
+	    public ResponseEntity<?> cancelOrder(@PathVariable Integer orderId) {
 	        return ResponseEntity.status(HttpStatus.OK).body(orderService.cancelOrder(orderId));
 	    }
 	

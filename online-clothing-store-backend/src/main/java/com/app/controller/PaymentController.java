@@ -19,16 +19,16 @@ import com.app.dtos.PaymentDTO;
 import com.app.service.PaymentService;
 
 @RestController
-@RequestMapping("/Payment")
+@RequestMapping("/payment")
 @CrossOrigin(origins = "http://localhost:3000")
 public class PaymentController {
 	@Autowired
 	PaymentService paymentService;
 
+	// Post end-point for adding a new payment
 	@PostMapping("/")
-	public ResponseEntity<?> addPayment(@Valid @RequestBody PaymentDTO paymentDto) {
-
-		return ResponseEntity.status(HttpStatus.OK).body(paymentService.addPayment(paymentDto));
+	public ResponseEntity<?> addPayment(@Valid @RequestBody PaymentDTO paymentDTO) {
+		return ResponseEntity.status(HttpStatus.OK).body(paymentService.addPayment(paymentDTO));
 	}
 
 	@GetMapping("/{paymentId}")

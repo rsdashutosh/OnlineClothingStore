@@ -1,6 +1,5 @@
  package com.app.dtos;
-
-import javax.persistence.Lob;
+import org.springframework.web.multipart.MultipartFile;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,8 +15,7 @@ public class ReviewImageDTO {
 
 	private String name;
 	
-	@Lob // large object :col : longblob
-	private Byte[] image;
+	private MultipartFile image;
 	
 	// review id
 	private Integer reviewId;

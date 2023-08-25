@@ -79,7 +79,6 @@ public class Order extends BaseEntity {
 	inverseJoinColumns = {@JoinColumn(name ="product_id",referencedColumnName = "id")}) 
 	private List<Product> products=new ArrayList<>();
 	
-	
 	// as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
 	public void addProduct(Product product) {
 		products.add(product);

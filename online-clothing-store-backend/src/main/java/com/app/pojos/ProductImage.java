@@ -9,6 +9,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,10 +34,14 @@ public class ProductImage extends BaseEntity {
 	 */
 	private String name;
 	
+	private String imagePath;
+	
+	@Lob // large object :col : longblob
+	private byte[] image;
+	
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
 	
-	@Lob // large object :col : longblob
-	private byte[] image;
+	
 }

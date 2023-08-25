@@ -1,23 +1,15 @@
 package com.app.pojos;
 
 import java.time.LocalDate;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-
 import org.hibernate.annotations.CreationTimestamp;
-
 import com.app.enums.PaymentMethod;
 import com.app.enums.PaymentStatus;
-import com.fasterxml.jackson.databind.deser.Deserializers.Base;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,8 +32,10 @@ public class Payment extends BaseEntity {
 	 */
 	
 	private Double amount;
+	
 	@Enumerated(EnumType.STRING)
 	private PaymentMethod paymentMethod;
+	
 	@Enumerated(EnumType.STRING)
 	private PaymentStatus paymentStatus;
 	

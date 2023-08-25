@@ -29,22 +29,27 @@ public class WishListController {
 
 	    @PostMapping("/")
 	    public ResponseEntity<?> addToWishlist(@Valid @RequestBody WishlistDTO wishlistDto) {
-	        return ResponseEntity.status(HttpStatus.OK).body(wishlistService.addToWishlist(wishlistDto));
+	        return ResponseEntity.status(HttpStatus.OK).body(wishlistService.addWishlist(wishlistDto));
 	    }
 
 	    @GetMapping("/{wishlistId}")
-	    public ResponseEntity<WishlistDTO> getWishlistById(@PathVariable Long wishlistId) {
+	    public ResponseEntity<WishlistDTO> getWishlistById(@PathVariable Integer wishlistId) {
 	        return new ResponseEntity<WishlistDTO>(wishlistService.getWishlist(wishlistId), HttpStatus.OK);
 	    }
 
-	    @PutMapping("/{wishlistId}")
-	    public ResponseEntity<?> updateWishlistItem(@Valid @PathVariable Long wishlistId, @RequestBody WishlistDTO wishlistDto) {
-	        return ResponseEntity.status(HttpStatus.OK).body(wishlistService.updateWishlistItem(wishlistId, wishlistDto));
+	    @PutMapping("/user_id/{userId}/add_product/{productId}")
+	    public ResponseEntity<?> addWishlistItem(@Valid @PathVariable Integer userId,@PathVariable Integer productId) {
+	        return ResponseEntity.status(HttpStatus.OK).body(wishlistService.addItemToWishlist(userId, productId));
 	    }
-
-	    @DeleteMapping("/{wishlistId}")
-	    public ResponseEntity<?> removeFromWishlist(@PathVariable Long wishlistId) {
-	        return ResponseEntity.status(HttpStatus.OK).body(wishlistService.removeFromWishlist(wishlistId));
+	    
+	    @PutMapping("/user_id/{userId}/remove_product/{productId}")
+	    public ResponseEntity<?> removeWishlistItem(@Valid @PathVariable Integer userId,@PathVariable Integer productId) {
+	        return ResponseEntity.status(HttpStatus.OK).body(wishlistService.removeItemFromWishlist(userId, productId));
+	    }
+	    
+	    @DeleteMapping("/{wishlistId}")  
+	    public ResponseEntity<?> removeFromWishlist(@PathVariable Integer wishlistId) {
+	        return ResponseEntity.status(HttpStatus.OK).body(wishlistService.removeWishlist(wishlistId));
 	    }
 	}
 	

@@ -10,5 +10,5 @@ import com.app.pojos.User;
 public interface AddressRepository extends JpaRepository<Address, Integer> {
 	
 	public List<Address> findAll();
-	public List<Address> findAllByUserEmail(String email);
+	//public List<Address> findAllByUserEmail(String email);
 }

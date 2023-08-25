@@ -19,16 +19,17 @@ import com.app.dtos.ReviewDTO;
 import com.app.service.ReviewService;
 
 @RestController
-@RequestMapping("/Review")
+@RequestMapping("/review")
 @CrossOrigin(origins = "http://localhost:3000")
 public class ReviewController {
 
 	@Autowired
 	ReviewService reviewService;
+	
 	@PostMapping("/")
-	public ResponseEntity<?> addReview(@Valid @PathVariable ReviewDTO reviewdto)
+	public ResponseEntity<?> addReview(@Valid @RequestBody ReviewDTO reviewDTO)
 	{
-		return ResponseEntity.status(HttpStatus.OK).body(reviewService.addReview(reviewdto));
+		return ResponseEntity.status(HttpStatus.OK).body(reviewService.addReview(reviewDTO));
 	}
 	@GetMapping("/{reviewId}")	
 	public ResponseEntity<?> getReview(@PathVariable Integer reviewId)
@@ -41,10 +42,10 @@ public class ReviewController {
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(reviewService.deleteReview(reviewId));
 	}
-    @PutMapping("/reviewId")
-    public ResponseEntity<?> editReview(@Valid @PathVariable Integer reviewId,@RequestBody ReviewDTO reviewdto)
+    @PutMapping("/{reviewId}")
+    public ResponseEntity<?> editReview(@Valid @PathVariable Integer reviewId,@RequestBody ReviewDTO reviewDTO)
     {
-    	return ResponseEntity.status(HttpStatus.OK).body(reviewService.editReview(reviewId, reviewdto));
+    	return ResponseEntity.status(HttpStatus.OK).body(reviewService.editReview(reviewId, reviewDTO));
     }
 	
 	

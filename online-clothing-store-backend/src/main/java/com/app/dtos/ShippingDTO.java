@@ -23,12 +23,14 @@ public class ShippingDTO {
 	private Long trackingNumber;
 	private LocalDate shippingDate;
 	private ShippingStatus shippingStatus;
-	private Address shippingAddress;
+	
+	// Foreign Keys from here
+	private Integer addressId;
 	
 	//@JsonProperty(access = Access.WRITE_ONLY)
-	private User shippingRecipient;
+	private Integer userId;
 	
-	private Order order;
+	private Integer orderId;
 	
 
 }

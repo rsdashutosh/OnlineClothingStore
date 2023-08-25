@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.app.enums.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -59,7 +62,7 @@ public class User extends BaseEntity {
     // as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
  	public void addAddress(Address address) {
  		addresses.add(address);
- 		//address.setUser(this);
+ 		address.setUser(this);
  	}
  	public void removeAddress(Address address) {
  		addresses.remove(address);
@@ -98,16 +101,38 @@ public class User extends BaseEntity {
 	@OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
 	//@JoinColumn(name="fk_cart_id")
 	private Cart cart;
+	public void addCart(Cart cart) {
+		this.setCart(cart);
+		cart.setUser(this);
+	}
+	
+	public void removeCart(Cart cart) {
+		this.setCart(null);
+		cart.setUser(null);
+	}
+	
 	
 	@OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
 	//@JoinColumn(name="fk_wishlist_id")
+	@ElementCollection
 	private Wishlist wishlist;
+	
+	public void addWishlist(Wishlist wishlist) {
+		this.setWishlist(wishlist);
+		wishlist.setUser(this);
+	}
+	
+	public void removeWishlist(Wishlist wishlist) {
+		this.setWishlist(null);
+		wishlist.setUser(null);
+	}
 	
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
 	
 	private LocalDate dateOfBirth;
     
+	@CreationTimestamp
     private LocalDate dateOfJoining;
     
     // payment mapping 
@@ -145,4 +170,22 @@ public class User extends BaseEntity {
 	
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
+	
+	
+	// shipping mapping
+    @OneToMany(mappedBy = "shippingRecipient", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Shipping> shippings=new ArrayList<>();
+    
+    // as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
+ 	public void addShipping(Shipping shipping) {
+ 		shippings.add(shipping);
+ 		shipping.setShippingRecipient(this);;
+ 	}
+ 	public void removeShipping(Shipping shipping) {
+ 		shippings.remove(shipping);
+ 		shipping.setShippingRecipient(null);;
+ 	}
+	
+	
+	
 }

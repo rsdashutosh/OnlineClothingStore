@@ -52,6 +52,6 @@ public class OfferDTO {
     private Double minimumPurchaseAmount;
     
     // On 
-    private Integer productId;
+    //private Integer productId;
 
 }

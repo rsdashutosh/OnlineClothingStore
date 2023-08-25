@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,29 +29,32 @@ public class OfferController {
 	private OfferService offerService;
 
 	@PostMapping("/")
-	public ResponseEntity<OfferDTO> addOffer(@Valid @RequestBody OfferDTO offerDto) {
-		OfferDTO craetedOffer = offerService.addOffer(offerDto);
-		return ResponseEntity.ok(craetedOffer);
-
+	public ResponseEntity<OfferDTO> addOffer(@Valid @RequestBody OfferDTO offerDTO) {
+		OfferDTO createdOffer = offerService.addOffer(offerDTO);
+		return ResponseEntity.ok(createdOffer);
 	}
 
 	@GetMapping("/")
 	public ResponseEntity<List<OfferDTO>> getAllOffers() {
 
-		List<OfferDTO> offerDtos = offerService.getAllOffer();
-		return ResponseEntity.ok(offerDtos);
+		List<OfferDTO> offerDTOs = offerService.getAllOffer();
+		return ResponseEntity.ok(offerDTOs);
 	}
 
 	@GetMapping("/{offerId}")
 	public ResponseEntity<OfferDTO> getOffer(@PathVariable Integer offerId) {
-		OfferDTO offerDto = offerService.getOffer(offerId);
-		return ResponseEntity.ok(offerDto);
+		OfferDTO offerDTO = offerService.getOffer(offerId);
+		return ResponseEntity.ok(offerDTO);
 	}
 
-	@PutMapping("/{offerId}")
-	public ResponseEntity<OfferDTO> updateOffer(@Valid @RequestBody OfferDTO offerDto, @PathVariable Integer offerId) {
-		OfferDTO updatedOfferDto = offerService.updateOffer(offerDto, offerId);
-		return ResponseEntity.ok(updatedOfferDto);
+	@PutMapping("/offer/{offerId}/add_product/{productId}")
+	public ResponseEntity<?> applyOfferToProduct(Integer offerId, Integer productId) {
+		return ResponseEntity.status(HttpStatus.OK).body(offerService.applyOfferToProduct(offerId,productId));
+	}
+	
+	@PutMapping("/offer/{offerId}/remove_product/{productId}")
+	public ResponseEntity<?> removeOfferFromProduct(Integer offerId, Integer productId) {
+		return ResponseEntity.status(HttpStatus.OK).body(offerService.removeOfferFromProduct(offerId,productId));
 	}
 
 	@DeleteMapping("/{offerId}")

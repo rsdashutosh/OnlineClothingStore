@@ -48,15 +48,14 @@ public class Wishlist extends BaseEntity {
 	inverseJoinColumns ={@JoinColumn(name = "product_id",referencedColumnName = "id")})
 	private Set<Product> products=new HashSet<>();
 	
-	
 	// as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
 	public void addProduct(Product product) {
-		products.add(product);
 		product.addWishlist(this);
+		products.add(product);
 	}
 	public void removeProduct(Product product) {
-		products.remove(product);
 		product.getWishlists().remove(this);
+		products.remove(product);
 	}
 	 
 }
