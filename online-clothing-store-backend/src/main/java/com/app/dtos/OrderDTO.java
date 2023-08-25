@@ -34,6 +34,8 @@ public class OrderDTO {
     
     @NotNull(message = "userId is mandatory")
     private Integer userId;
+    
+    private Integer productId;
 	
 
 }

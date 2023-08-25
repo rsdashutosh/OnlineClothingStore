@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.app.dtos.OrderDTO;
 import com.app.pojos.Order;
+import com.app.pojos.Product;
 import com.app.pojos.User;
 import com.app.repository.OrderRepository;
+import com.app.repository.ProductRepository;
 import com.app.repository.UserRepository;
 
 @Service
@@ -24,6 +26,9 @@ public class OrderServiceImpl implements OrderService {
 	    @Autowired
 	    private UserRepository userRepo;
 	    
+	    @Autowired
+	    private ProductRepository productRepo;
+	    
 	    // POST
 	    @Override
 	    public String placeOrder(OrderDTO orderDTO) {
@@ -36,6 +41,14 @@ public class OrderServiceImpl implements OrderService {
 	        // adding the links to both the sides 
 	        order.setUser(user);
 	        user.addOrder(order);
+	        
+	        // link product with order
+	        Product product=productRepo.findById(orderDTO.getProductId()).get();
+	        product.addOrders(order);
+	        order.addProduct(product);
+	        
+	        // decrementing the stock of a product
+	        product.setStock(product.getStock()-1);
 	        
 	        // persisting the received data into the database
 	        Order persistedOrder = orderRepo.save(order);
@@ -63,6 +76,22 @@ public class OrderServiceImpl implements OrderService {
 	    // DELETE
 	    @Override
 	    public String cancelOrder(Integer orderId) {
+	    	Order order=orderRepo.findById(orderId).get();
+	    	// fetching the user details using user's id
+	    	User user=userRepo.findById(order.getUser().getId()).get();
+	   	
+	    	// for user
+	    	// remove associated user from order
+	    	order.setUser(null);
+	    	// remove link from user to this order
+	    	user.getOrders().remove(order);
+	    	
+	    	/// for products
+	    	// remove link from products to this order
+	    	order.getProducts().stream().map(product->product.getOrders().remove(order));
+	    	// remove all products from order
+	    	order.setProducts(null);
+	   
 	        orderRepo.deleteById(orderId);
 	        return "Order cancelled with ID: " + orderId;
 	    }

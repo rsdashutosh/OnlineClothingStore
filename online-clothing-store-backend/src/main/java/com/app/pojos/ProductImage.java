@@ -36,7 +36,7 @@ public class ProductImage extends BaseEntity {
 	
 	private String imagePath;
 	
-	@Lob // large object :col : longblob
+	@Lob // large object :col : longblob - binary large object
 	private byte[] image;
 	
 	@ManyToOne

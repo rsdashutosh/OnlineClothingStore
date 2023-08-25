@@ -3,6 +3,7 @@ package com.app.service;
 import javax.transaction.Transactional;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
@@ -59,10 +60,19 @@ public class ProductImageServiceImpl implements ProductImageService {
 	public List<byte[]> getAllProductImages(Integer productId) {
 		//finding the product by product id
 		Product product=productRepo.findById(productId).get();
+		
 		// fetching all the images of a product
 		List<ProductImage> productImages=productImageRepo.findByProduct(product);
+		
 		//returning all the images of a product in a List<byte[]>
-		return productImages.stream().map(productImage->productImage.getImage()).collect(Collectors.toList());
+		List<byte[]> imageList=new ArrayList<>();
+		
+		for (ProductImage productImage : productImages) {
+			imageList.add(productImage.getImage());
+		}
+		
+		return imageList;
+		
 	}
 
 	// Update product image
