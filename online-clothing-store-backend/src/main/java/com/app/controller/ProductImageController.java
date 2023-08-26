@@ -54,9 +54,11 @@ public class ProductImageController {
 	
 	// Fetches one product image by product image id
 	@GetMapping(value = "/product_id/{productId}/image_id/{imageId}", produces = { IMAGE_GIF_VALUE, IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE })
-	public ResponseEntity<?> getProductImageById(@PathVariable Integer productId,@PathVariable Integer imageId){
+	public ResponseEntity<?> getProductImageById(@PathVariable Integer productId,@PathVariable Integer imageId) throws IOException{
 		return ResponseEntity.status(HttpStatus.OK).body(productImageService.getProductImage(productId, imageId));
 	}
+	
+	
 	
 	// Updating of image
 	@PutMapping(value="/product_image_id/{productImageId}" ,consumes = "multipart/form-data")
