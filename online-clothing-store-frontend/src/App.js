@@ -34,8 +34,10 @@ function App() {
         <Route path="/profile" element={<UserProfile/>}></Route>
         <Route path="/wishlist" element={<Wishlist/>}></Route>
         <Route path="/product" element={<ProductSearch/>}>
-              <Route path=":pid" element={<Product/>}></Route>
+        <Route path=":pid" element={<Product/>}></Route>
+        
         </Route>
+        <Route path='/productdtls/:id' element={<ProductDetails/>}></Route>
       </Routes>
     </div>
   );

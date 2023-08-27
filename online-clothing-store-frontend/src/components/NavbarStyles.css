@@ -1,0 +1,39 @@
+.container-fluid {
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    height: 40px;
+    text-decoration: none;
+    
+    
+}
+
+.navbar-nav{
+    display: grid;
+    grid-template-columns: repeat(6, auto);
+    grid-gap: 20px;
+    align-items: center;
+    text-align: center;
+    justify-content: end;
+    
+
+}
+
+.nav-links{
+    text-decoration: none;
+    color: powderblue;
+}
+
+.nav-links:hover{
+border-bottom: 2px solid white;
+}
+
+.active{
+    border-bottom: 1px solid;
+}
+.fixed-top{
+    position: fixed;
+}
+
+
+
