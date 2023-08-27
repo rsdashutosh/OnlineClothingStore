@@ -1,0 +1,32 @@
+
+.card_style{
+    margin-bottom: 20px;
+    margin-left: 35px;
+    
+
+}
+
+.image_style{
+    margin-top: 30px; 
+    width:"200px";
+    height: "400px";
+    display: block;
+    margin-left: auto;
+    margin-right: auto; 
+}
+
+.title_style{
+    text-transform: uppercase;
+}
+
+.text_style{
+ 
+}
+
+
+.container_product{
+    display: flex;
+    margin-top: 100px;
+    
+}
+
