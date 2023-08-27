@@ -1,0 +1,68 @@
+/* UserProfile.css */
+
+.user-profile-container {
+    display: flex;
+    gap: 20px;
+    margin: 20px;
+  }
+  
+  .user-profile-card {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .user-avatar img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  
+  .user-details {
+    flex: 1;
+  }
+  
+  .user-name {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .user-role {
+    margin: 5px 0;
+    color: #666;
+  }
+  
+  .edit-profile-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .user-navigation ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .user-navigation li {
+    margin-bottom: 10px;
+    color: #333;
+    cursor: pointer;
+  }
+  
+  .order-history {
+    flex: 1;
+  }
+  
+  .order-history h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
