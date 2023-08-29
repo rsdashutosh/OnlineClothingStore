@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -60,8 +61,8 @@ public class Product extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private SizeOptions size;
 	
-	@Enumerated(EnumType.STRING)
-	private CategoryType category;
+	//@Enumerated(EnumType.STRING)
+	private String category;
 	
 	@Enumerated(EnumType.STRING)
 	private Material material;
@@ -146,21 +147,23 @@ public class Product extends BaseEntity {
 		orders.remove(order);
 		order.getProducts().remove(this);
 	}
+
+	// storing the path of the image with the product
+	private String imagePath;
 	
-	
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-	//@JoinColumn(name = "fk_product_id")
-	private List<ProductImage> productImages=new ArrayList<ProductImage>();
-	
-	// as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
-	public void addProductImage(ProductImage productImage) {
-		productImages.add(productImage);
-		productImage.setProduct(this);
-	}
-	public void removeProductImage(ProductImage productImage) {
-		productImages.remove(productImage);
-		productImage.setProduct(null);
-	}
-	
+//	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+//	//@JoinColumn(name = "fk_product_id")
+//	private List<ProductImage> productImages=new ArrayList<ProductImage>();
+//	
+//	// as per Gavin King's IMPORTANT suggestion added helper methods to add/remove child
+//	public void addProductImage(ProductImage productImage) {
+//		productImages.add(productImage);
+//		productImage.setProduct(this);
+//	}
+//	public void removeProductImage(ProductImage productImage) {
+//		productImages.remove(productImage);
+//		productImage.setProduct(null);
+//	}
+//	
 	
 }

@@ -1,5 +1,7 @@
 package com.app.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.dtos.OrderDTO;
+import com.app.dtos.OrderResponseDTO;
 import com.app.service.OrderService;
 
 @RestController
@@ -30,6 +33,11 @@ public class OrderController {
 	        return ResponseEntity.status(HttpStatus.OK).body(orderService.placeOrder(orderDto));
 	    }
 
+	    @GetMapping
+	    public ResponseEntity<?> getAllOrders() {
+	        return new ResponseEntity<List<OrderResponseDTO>>(orderService.getAllOrders(), HttpStatus.OK);
+	    }
+	    
 	    @GetMapping("/{orderId}")
 	    public ResponseEntity<OrderDTO> getOrderById(@PathVariable Integer orderId) {
 	        return new ResponseEntity<OrderDTO>(orderService.getOrder(orderId), HttpStatus.OK);

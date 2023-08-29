@@ -1,9 +1,18 @@
 import axios from 'axios';
 class ProductService{
-    baseurl="https://reactfirst-66a03-default-rtdb.firebaseio.com/";
+
+    baseurl="http://localhost:8080/products";
 
     getAllProducts(){
-        return axios.get(this.baseurl+"Product.json")
+        return axios.get(this.baseurl)
+    }
+
+    getProductsByCategory(cat){
+        return axios.get(this.baseurl+"/category", {
+            params: {
+             category: cat
+            }
+          });
     }
 
     deleteProduct(id){

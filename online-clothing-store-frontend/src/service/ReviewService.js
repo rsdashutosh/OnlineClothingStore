@@ -1,6 +1,6 @@
 import axios from 'axios';
 class ReviewService{
-    baseurl="https://reactfirst-66a03-default-rtdb.firebaseio.com/";
+    baseurl="http://localhost:8080";
 
     getAllReviews(){
         return axios.get(this.baseurl+"Review.json")

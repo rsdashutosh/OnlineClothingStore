@@ -1,12 +1,18 @@
 package com.app.service;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.app.dtos.ProductDTO;
+import com.app.dtos.ProductResponseDTO;
 import com.app.pojos.Product;
 import com.app.repository.ProductRepository;
 
@@ -14,15 +20,18 @@ import com.app.repository.ProductRepository;
 @Transactional
 public class ProductServiceImpl implements ProductService {
 
+	
 	@Autowired
 	private ModelMapper mapper;
 
 	@Autowired
 	private ProductRepository productRepo;
+	
+	// ENDPOINTS
 
 	// POST
 	@Override
-	public String addProduct(ProductDTO productDto) {
+	public String addProduct(ProductDTO productDto) throws IOException {
 		Product product = mapper.map(productDto, Product.class);
 		Product persistantProduct = productRepo.save(product);
 		return persistantProduct.getName();
@@ -30,17 +39,18 @@ public class ProductServiceImpl implements ProductService {
 
 	// GET product by Id
 	@Override
-	public ProductDTO getProduct(Integer productId) {
+	public ProductResponseDTO getProduct(Integer productId) {
 		Product product = productRepo.findById(productId).get();
-		ProductDTO productDto = mapper.map(product, ProductDTO.class);
-		return productDto;
+		ProductResponseDTO productResponseDTO = mapper.map(product, ProductResponseDTO.class);
+		//productDto.setImage(product.getImage());
+		return productResponseDTO;
 	}
 
-	// Upadte all products
+	// Get All products
 	@Override
-	public List<ProductDTO> getAllProducts() {
+	public List<ProductResponseDTO> getAllProducts() {
 		List<Product> productList = productRepo.findAll();
-		return productList.stream().map(product -> mapper.map(product, ProductDTO.class)).collect(Collectors.toList());
+		return productList.stream().map(product -> mapper.map(product, ProductResponseDTO.class)).collect(Collectors.toList());
 	}
 
 	//PUT
@@ -57,6 +67,12 @@ public class ProductServiceImpl implements ProductService {
 	public String deleteProduct(Integer productId) {
 		productRepo.deleteById(productId);
 		return "Product deleted Successfully";
+	}
+
+	@Override
+	public List<ProductResponseDTO> getProductsByCategory(String category) {
+		List<Product> productList = productRepo.findByCategory(category);
+		return productList.stream().map(product -> mapper.map(product, ProductResponseDTO.class)).collect(Collectors.toList());
 	}
 
 }

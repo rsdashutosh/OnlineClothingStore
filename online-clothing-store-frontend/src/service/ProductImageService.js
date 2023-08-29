@@ -1,9 +1,11 @@
 import axios from 'axios';
 class ProductImageService{
-    baseurl="https://reactfirst-66a03-default-rtdb.firebaseio.com/";
+    baseurl="http://localhost:8080";
+
+    
 
     getAllProductImages(){
-        return axios.get(this.baseurl+"ProductImage.json")
+        return axios.get(this.baseurl+"/product_images/product_id/3/image_id/1")
     }
 
     deleteProductImage(id){

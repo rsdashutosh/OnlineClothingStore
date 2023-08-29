@@ -1,15 +1,43 @@
 import React from 'react';
 import { Container, Row, Col, Card, Button, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import styles from './userProfile.css';
+import styles from '../styles/userProfile.css';
+import { Table } from "react-bootstrap";
+import { useState } from 'react';
+import { useNavigate , Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import UserService from '../service/UserService';
+import OrderHistory from './OrderHistory';
+import OrderService from '../service/OrderService';
 
 const UserProfile = () => {
+
+  const [userData,setUserData]= useState([]);
+
+  const navigate=useNavigate();
+
+  useEffect(()=>{
+      console.log("in useeffect initialization");
+      handleRequestForUsers();
+  },[])  
+
+const handleRequestForUsers=()=>{
+    console.log("in handle request for product");
+    OrderService.getAllOrdersOfACustomer()
+    .then(result=>{
+        setUserData(result.data)
+    })
+}
+  
+
+
+
   return (
     <Container className="mt-4">
       <Row>
         <Col md={3}>
           <Card className={styles.profileCard}>
-            <Card.Img variant="top" src="user-profile-image.jpg" alt="User Profile Image" />
+            <Card.Img variant="top" src={require('../images/user.png')} alt="User Profile Image" thumbnail fluid/>
             <Card.Body>
               <Card.Title>Pratik</Card.Title>
               <Card.Text>Fashion Enthusiast</Card.Text>
@@ -18,21 +46,43 @@ const UserProfile = () => {
             <Nav className={`${styles.navLinks} flex-column`}>
               <Nav.Link href="#">Orders</Nav.Link>
               <Nav.Link href="#">Wishlist</Nav.Link>
-              <Nav.Link href="#">Contact Us</Nav.Link>
-              <Nav.Link href="#">New Credit</Nav.Link>
-              <Nav.Link href="#">Coupons</Nav.Link>
               <Nav.Link href="#">Saved Addresses</Nav.Link>
               <Nav.Link href="#">Logout</Nav.Link>
             </Nav>
           </Card>
         </Col>
         <Col md={9}>
-          <h2>Order History</h2>
-          <ul className="list-group">
-            <li className="list-group-item">Order 1 - Total: $150.00</li>
-            <li className="list-group-item">Order 2 - Total: $99.99</li>
-            {/* Add more order items here */}
-          </ul>
+          <h2>Order history</h2>
+        <Table striped bordered hover>
+          <thead>
+              <tr>
+              <th>Payment Id</th>
+              <th>Amount</th>
+              <th>Payment Method</th>
+              <th>Payment Status</th>
+              <th>Payment Timestamp</th>
+              <th>Order Id</th>
+              <th>User Id</th>
+              </tr>
+          </thead>
+          <tbody>
+              { 
+                  userData.map(
+                      (payment)=>(
+                      <tr key={payment.id}>
+                          <td>{payment.id}</td>
+                          <td>{payment.amount}</td>
+                          <td>{payment.paymentMethod}</td>
+                          <td>{payment.paymentStatus}</td>
+                          <td>{payment.paymentTimestamp}</td>
+                          <td>{payment.orderId}</td>
+                          <td>{payment.userId}</td>
+                      </tr>))
+              
+              }
+          </tbody>
+          </Table>
+          
         </Col>
       </Row>
     </Container>

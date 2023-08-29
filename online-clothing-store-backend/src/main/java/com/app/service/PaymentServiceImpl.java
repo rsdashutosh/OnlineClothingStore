@@ -1,12 +1,15 @@
 package com.app.service;
 
 import javax.transaction.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.app.dtos.PaymentDTO;
+import com.app.dtos.PaymentResponseDTO;
 import com.app.pojos.Order;
 import com.app.pojos.Payment;
 import com.app.pojos.User;
@@ -65,9 +68,16 @@ public class PaymentServiceImpl implements PaymentService {
 
 	// Get all payments 
 	@Override
-	public List<PaymentDTO> getAllPayments() {
+	public List<PaymentResponseDTO> getAllPayments() {
 		List<Payment> paymentList = paymentRepo.findAll();
-		return paymentList.stream().map(payment -> mapper.map(payment, PaymentDTO.class)).collect(Collectors.toList());
+		List<PaymentResponseDTO> paymentResponseDTOs=new ArrayList<PaymentResponseDTO>();
+		for (Payment payment : paymentList) {
+			PaymentResponseDTO paymentResponseDTO=mapper.map(payment, PaymentResponseDTO.class);
+			paymentResponseDTO.setOrderId(payment.getOrder().getId());
+			paymentResponseDTO.setUserId(payment.getUser().getId());
+			paymentResponseDTOs.add(paymentResponseDTO);
+		}
+		return paymentResponseDTOs;
 	}
 
 	//PUT

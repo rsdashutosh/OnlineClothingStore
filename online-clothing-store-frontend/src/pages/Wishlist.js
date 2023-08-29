@@ -1,52 +1,50 @@
-import React from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import styles from './wishlist.css';
+import React from 'react'
+import { useState } from 'react';
+import WishlistService from '../service/WishlistService';
+import { Card,Button, Container, Row, Col } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { MOVE_TO_CART,REMOVE_FROM_WISHLIST } from '../redux/actions/actions';
 
-const Wishlist = () => {
-  const products = [
-    { id: 1, name: 'Product 1', price: 2000, image: 'product1.jpg' },
-    { id: 2, name: 'Product 2', price: 3000, image: 'product2.jpg' },
-    { id: 3, name: 'Product 3', price: 4000, image: 'product3.jpg' },
-    // Add more products here
-  ];
+export default function Wishlist() {
 
-  const handleMoveToBag = (productId) => {
-    // Implement the move to bag functionality here
-    console.log(`Product ${productId} moved to bag`);
-  };
+  const dispatch = useDispatch();
 
-  const handleRemove = (productId) => {
-    // Implement the remove functionality here
-    console.log(`Product ${productId} removed from wishlist`);
-  };
+    const getdata = useSelector((state) => state.cartreducer.wishlists);
+    console.log("wishlist: ",getdata);
+
+    const moveToCart = (id)=>{
+      dispatch(MOVE_TO_CART(id))
+    }
+
+    const removeFromWishlist = (id)=>{
+      dispatch(REMOVE_FROM_WISHLIST(id))
+    }
+
 
   return (
-    <Container className="mt-4">
-      <h2>Your Wishlist</h2>
-      <Row>
-        {products.map(product => (
-          <Col key={product.id} md={4} className="mb-4">
-            <Card>
-              <Card.Img variant="top" src={product.image} alt={product.name} />
-              <Card.Body>
-                <Card.Title>{product.name}</Card.Title>
-                <Card.Text>Rs.{product.price}</Card.Text>
-                <div className="d-flex flex-column align-items-center">
-                  <Button variant="primary" className={styles.moveButton} onClick={() => handleMoveToBag(product.id)}>
-                    Move to Bag
-                  </Button>
-                  <Button variant="danger" className={`${styles.removeButton} mt-2`} onClick={() => handleRemove(product.id)}>
-                    Remove
-                  </Button>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    </Container>
-  );
-};
 
-export default Wishlist;
+        <div className="container_product d-flex">
+          <div className="row center justify-content-center align-content-center align-items-md-center">
+            {getdata.map((element) => {
+              return (
+                <>
+                  
+                  <Card style={{ width: "25rem", borderWidth:'2.5px', borderColor:'grey'}} className="card_style" id={element.id}>
+                    <Card.Img variant="top" src={"http://localhost:8080/products/images/"+element.id} className="image_style" style={{width:"300px", height:"350px"}}/>
+                    <Card.Body>
+                    <Card.Title className="title_style">{element.name}</Card.Title>
+                    <Card.Text className="text_style">Price: ₹{element.price}</Card.Text>
+                    <div className="button_div">
+                    <Button variant="primary" className='col-4 btn-success mx-4' onClick={()=>moveToCart(element.id)}>Move to Cart</Button>
+                    <Button variant="primary" className='col-4 btn-danger mx-4' onClick={()=>removeFromWishlist(element.id)}>Remove</Button>
+                    </div>
+                    </Card.Body>
+                  </Card>
+                </>
+              );
+              })}
+            </div>
+          </div>
+  )
+}

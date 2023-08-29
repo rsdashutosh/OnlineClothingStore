@@ -5,19 +5,22 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import {NavLink} from 'react-router-dom';
-import Badge, { BadgeProps } from "@mui/material/Badge";
+import {NavLink, useNavigate} from 'react-router-dom';
+import Badge from "@mui/material/Badge";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { DELETE } from "../redux/actions/actions";
 import {useSelector} from "react-redux";
 import {useDispatch} from "react-redux";
 import {useEffect} from 'react'
+import '../styles/NavbarStyles.css'
 // import { NavLink } from "react-bootstrap";
 
-function NavScrollExample() {
+function MyNavbar() {
   const getdata = useSelector((state) => state.cartreducer.carts);
   console.log(getdata);
+
+  const navigate= useNavigate();
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -49,6 +52,8 @@ function NavScrollExample() {
 
   useEffect(() => { total(); }, [total])
 
+  
+
   return (
     <Navbar
       expand="lg"
@@ -56,7 +61,7 @@ function NavScrollExample() {
       style={{ height: 80 }}
     >
       <Container fluid>
-        <Navbar.Brand href="#">Online clothing Store</Navbar.Brand>
+        <Navbar.Brand href="#" onClick={()=>{navigate("/home")}}>Online Clothing Store</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -75,7 +80,7 @@ function NavScrollExample() {
             >
               <i
                 class="fa fa-shopping-cart"
-                aria-hidden="true"
+                aria-hidden="false"
                 style={{ fontSize: 40, cursor: "pointer" , color:"lightslategray"}}
               ></i>
             </Badge>
@@ -232,4 +237,4 @@ function NavScrollExample() {
   );
 }
 
-export default NavScrollExample;
+export default MyNavbar;

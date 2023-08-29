@@ -1,9 +1,9 @@
 import axios from 'axios';
 class PaymentService{
-    baseurl="https://reactfirst-66a03-default-rtdb.firebaseio.com/";
+    baseurl="http://localhost:8080/payments";
 
     getAllPayments(){
-        return axios.get(this.baseurl+"Payment.json")
+        return axios.get(this.baseurl)
     }
 
     deletePayment(id){

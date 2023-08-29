@@ -1,9 +1,15 @@
 import axios from 'axios';
+
 class UserService{
-    baseurl="https://reactfirst-66a03-default-rtdb.firebaseio.com/";
+    baseurl="http://localhost:8080/users";
 
     getAllUsers(){
-        return axios.get(this.baseurl+"User.json")
+        return axios.get(this.baseurl)
+    }
+
+    userAuth(email,password){
+        var response=axios.get("/login/"+email+"/"+password)
+        return response;
     }
 
     deleteUser(id){
@@ -21,5 +27,6 @@ class UserService{
     }
 
 }
+
 
 export default new UserService();

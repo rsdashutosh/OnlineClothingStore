@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.dtos.UserDTO;
+import com.app.dtos.UserLoginDTO;
+import com.app.dtos.UserResponseDTO;
+import com.app.exception.ResourceNotFoundException;
 import com.app.pojos.User;
 import com.app.repository.UserRepository;
 
@@ -39,19 +42,21 @@ public class UserServiceImpl implements UserService {
 		return userDto;
 	}
 	
-	// GET user by email
+	// User Authentication
 	@Override
-	public UserDTO getUserByEmail(String email) {
-		User user = userRepo.findByEmail(email).get();
-		UserDTO userDto = mapper.map(user, UserDTO.class);
-		return userDto;
+	public String userLogin(String email,String password) {
+		User user = userRepo.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("user not registered!"));
+		if(user.getPassword().equals(password))
+			return "login successful";
+		else
+			return "login failed";
 	}
 	
 	// GET all users
 	@Override
-	public List<UserDTO> getAllUsers() {
+	public List<UserResponseDTO> getAllUsers() {
 		List<User> users = userRepo.findAll();
-		return users.stream().map(user->mapper.map(user, UserDTO.class)).collect(Collectors.toList());
+		return users.stream().map(user->mapper.map(user, UserResponseDTO.class)).collect(Collectors.toList());
 	}
 
 	// PUT

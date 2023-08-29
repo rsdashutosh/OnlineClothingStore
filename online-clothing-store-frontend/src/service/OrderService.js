@@ -1,9 +1,13 @@
 import axios from 'axios';
 class OrderService{
-    baseurl="https://reactfirst-66a03-default-rtdb.firebaseio.com/";
+    baseurl="http://localhost:8080/orders";
 
     getAllOrders(){
-        return axios.get(this.baseurl+"Order.json")
+        return axios.get(this.baseurl)
+    }
+
+    getAllOrdersOfACustomer(){
+        return axios.get(this.baseurl)
     }
 
     deleteOrder(id){

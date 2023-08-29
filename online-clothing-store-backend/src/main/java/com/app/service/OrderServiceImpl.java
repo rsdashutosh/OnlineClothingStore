@@ -1,5 +1,9 @@
 package com.app.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
@@ -7,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.dtos.OrderDTO;
+import com.app.dtos.OrderResponseDTO;
+import com.app.dtos.PaymentResponseDTO;
 import com.app.pojos.Order;
+import com.app.pojos.Payment;
 import com.app.pojos.Product;
 import com.app.pojos.User;
 import com.app.repository.OrderRepository;
@@ -36,22 +43,21 @@ public class OrderServiceImpl implements OrderService {
 	    	User user=userRepo.findById(orderDTO.getUserId()).get();
 	    	
 	    	// mapping the order DTO into object of order entity class
-	        Order order = mapper.map(orderDTO, Order.class);	        
+	        Order order = mapper.map(orderDTO, Order.class);
+	     // persisting the received data into the database
+	        Order persistedOrder = orderRepo.save(order);
 	        
 	        // adding the links to both the sides 
-	        order.setUser(user);
-	        user.addOrder(order);
+	        user.addOrder(persistedOrder);
 	        
 	        // link product with order
 	        Product product=productRepo.findById(orderDTO.getProductId()).get();
-	        product.addOrders(order);
-	        order.addProduct(product);
+	        product.addOrders(persistedOrder);
 	        
 	        // decrementing the stock of a product
 	        product.setStock(product.getStock()-1);
 	        
 	        // persisting the received data into the database
-	        Order persistedOrder = orderRepo.save(order);
 	        return "Order placed with ID: " + persistedOrder.getId();
 	    }
 
@@ -95,6 +101,21 @@ public class OrderServiceImpl implements OrderService {
 	        orderRepo.deleteById(orderId);
 	        return "Order cancelled with ID: " + orderId;
 	    }
+
+		@Override
+		public List<OrderResponseDTO> getAllOrders() {
+			List<Order> orders = orderRepo.findAll();
+			
+			List<OrderResponseDTO> orderResponseDTOs=new ArrayList<OrderResponseDTO>();
+			for (Order order : orders) {
+				OrderResponseDTO orderResponseDTO=mapper.map(order, OrderResponseDTO.class);
+				orderResponseDTO.setUserId(order.getUser().getId());
+				orderResponseDTOs.add(orderResponseDTO);
+			}
+			return orderResponseDTOs;
+			
+		
+		}
 	
 	
 

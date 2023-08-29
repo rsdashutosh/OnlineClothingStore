@@ -1,11 +1,7 @@
-const Checkout=()=>{
+import React from 'react'
 
-    
-    
-    return(
-        <h1>This is the Checkout</h1>
-    )
+export default function Checkout() {
+  return (
+    <div>Checkout</div>
+  )
 }
-
-
-export default Checkout;

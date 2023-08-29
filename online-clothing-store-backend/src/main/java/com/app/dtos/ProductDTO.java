@@ -1,11 +1,7 @@
 package com.app.dtos;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-
 import com.app.enums.Gender;
 import com.app.enums.Material;
 import com.app.enums.Occasion;
@@ -13,13 +9,6 @@ import com.app.enums.CategoryType;
 import com.app.enums.ColorOptions;
 import com.app.enums.SizeOptions;
 import com.app.enums.Style;
-import com.app.pojos.Cart;
-import com.app.pojos.Offer;
-import com.app.pojos.Order;
-import com.app.pojos.ProductImage;
-import com.app.pojos.Review;
-import com.app.pojos.Wishlist;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -61,19 +50,5 @@ public class ProductDTO {
 	
 	@Enumerated(EnumType.STRING)
 	private Occasion occasion;
-	
-	
-	//private List<Integer> reviews;
-	
-	//private List<Integer> offers;
-	
-	//private List<Integer> carts;
-	
-	//private List<Integer> wishlists;
-	
-	//private List<Integer> orders;
-	
-	//private List<Integer> productImages;
-	
 	
 }

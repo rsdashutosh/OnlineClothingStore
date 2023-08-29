@@ -1,5 +1,7 @@
 package com.app.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.dtos.PaymentDTO;
+import com.app.dtos.PaymentResponseDTO;
 import com.app.service.PaymentService;
 
 @RestController
-@RequestMapping("/payment")
+@RequestMapping("/payments")
 @CrossOrigin(origins = "http://localhost:3000")
 public class PaymentController {
 	@Autowired
@@ -29,6 +32,11 @@ public class PaymentController {
 	@PostMapping("/")
 	public ResponseEntity<?> addPayment(@Valid @RequestBody PaymentDTO paymentDTO) {
 		return ResponseEntity.status(HttpStatus.OK).body(paymentService.addPayment(paymentDTO));
+	}
+	
+	@GetMapping
+	public ResponseEntity<?> getAllPayments() {
+		return new ResponseEntity<List<PaymentResponseDTO>>(paymentService.getAllPayments(), HttpStatus.OK);
 	}
 
 	@GetMapping("/{paymentId}")

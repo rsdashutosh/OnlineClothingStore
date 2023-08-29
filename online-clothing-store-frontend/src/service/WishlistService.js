@@ -2,8 +2,8 @@ import axios from 'axios';
 class WishlistService{
     baseurl="https://reactfirst-66a03-default-rtdb.firebaseio.com/";
 
-    getAllWishlists(){
-        return axios.get(this.baseurl+"Wishlist.json")
+    getWishlist(){
+        return axios.get(this.baseurl)
     }
 
     deleteWishlist(id){
