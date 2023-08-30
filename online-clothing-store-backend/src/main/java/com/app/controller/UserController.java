@@ -1,12 +1,8 @@
 package com.app.controller;
-
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,9 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.app.dtos.UserDTO;
 import com.app.dtos.UserLoginDTO;
 import com.app.dtos.UserResponseDTO;
@@ -33,7 +27,7 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
-	@PostMapping("/")
+	@PostMapping
 	public ResponseEntity<?> addUser(@Valid @RequestBody UserDTO userDTO) {
 
 		return ResponseEntity.status(HttpStatus.OK).body(userService.addUser(userDTO));
@@ -50,9 +44,9 @@ public class UserController {
 	}
 	
 	// authorizing the user details by username/email
-	@GetMapping(value="/login/{email}/{password}")
-	public ResponseEntity<String> getUserByEmail(@PathVariable String email, @PathVariable String password) {
-		return new ResponseEntity<String>(userService.userLogin(email,password), HttpStatus.OK);
+	@PostMapping(value="/login")
+	public ResponseEntity<String> getUserByEmail(@Valid @RequestBody UserLoginDTO userLoginDTO) {
+		return new ResponseEntity<String>(userService.userLogin(userLoginDTO.getEmail(),userLoginDTO.getPassword()), HttpStatus.OK);
 	}
 	
 	@PutMapping("/{userId}")

@@ -2,8 +2,12 @@ import React, { useState } from 'react'
 import UserService from '../service/UserService';
 import { Alert } from 'bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { LOGIN } from '../redux/actions/actions';
 
 export default function Login() {
+
+  const dispatch = useDispatch();
 
   const navigate=useNavigate();
 
@@ -12,14 +16,22 @@ export default function Login() {
   //const [auth, setAuth]= useState(false)
 
   const submitHandler=()=>{
-    UserService.userAuth(email,password)
+    const user={
+      "email":email,
+      "password":password
+    }
+
+    UserService.userAuth(user)
       .then(response=>{
         if(response.data==="login successful")
         {
           console.log("success")
           // if role == user then navigate to home , if role == admin navigate to admin dashboard
           navigate('/home');
-          
+
+          // set the loggedIn state as true
+          dispatch(LOGIN(true));
+
           alert("login successful!")
         }
         else
@@ -64,7 +76,7 @@ export default function Login() {
                 <input type="password" class="form-control" id="password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
               </div>
               
-                <button type="button" class="btn btn-primary" onClick={submitHandler}>Submit</button>
+                <button type="button" class="btn btn-primary mx-2" onClick={submitHandler}>Submit</button>
                 <button type="button" class="btn btn-primary" onClick={()=>{navigate("/register")}}>Register</button>
                 
             </form>

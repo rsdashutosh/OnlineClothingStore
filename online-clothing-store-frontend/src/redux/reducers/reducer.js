@@ -1,5 +1,5 @@
 const INIT_STATE = {
-    username:"",
+    email:"",
     password:"",
     carts: [],
     wishlists: [],
@@ -55,14 +55,6 @@ export const cartreducer = (state = INIT_STATE, action) => {
                 wishlists: wishData
             }
 
-
-        case "ADD_TO_FETCHED_PRODUCTS":
-            const products=action.payload;
-            return {
-                ...state,
-                products:products
-            }
-
         default:
             return state
     }
@@ -70,14 +62,33 @@ export const cartreducer = (state = INIT_STATE, action) => {
 
 
 //reducers/isLogged.js
-const loggedReducer = (state=false, action) => {
+export const loggedReducer = (state=false, action) => {
     switch(action.type){
-        case "SIGNIN":
+        case "LOGIN":
             return !state;
         default:
             return state;
         }
     }
-    export default loggedReducer;
+
+
+//reducers/isLogged.js
+export const searchReducer = (state=INIT_STATE, action) => {
+    switch(action.type){
+        case "SEARCH_RESULT":
+        const products=action.payload;
+        return {
+            ...state,
+            products:products
+        }
+        default:
+            return state;
+        }
+    }
+
+
+
+
+    
 
 

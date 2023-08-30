@@ -1,3 +1,21 @@
+// for user login check
+export const LOGIN = (x) =>{
+  return{
+      type : "LOGIN",
+      payload : x
+  }
+}
+
+export const LOGOUT = (x) =>{
+  return{
+      type : "LOGOUT",
+      payload : x
+  }
+}
+
+
+
+// for cart
 export const ADD = (item) =>{
   return{
       type : "ADD_CART",
@@ -34,9 +52,11 @@ export const REMOVE_FROM_WISHLIST = (id) =>{
 }
 
 
-export const ADD_TO_FETCHED_PRODUCTS = (id) =>{
+export const SEARCH_RESULT = (products) =>{
   return{
-      type : "ADD_TO_FETCHED_PRODUCTS",
-      payload : id
+      type : "SEARCH_RESULT",
+      payload : products
   }
 }
+
+

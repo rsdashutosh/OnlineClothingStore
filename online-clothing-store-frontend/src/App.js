@@ -22,7 +22,7 @@ function App() {
     <div className="App">
       <Header/>
         <Routes>
-          <Route path="/" element={<Navigate replace to="/home"/>}></Route>
+          <Route path="/" element={<Navigate replace to="/login"/>}></Route>
           <Route path="/admin" element={<Admin/>}></Route>
           <Route path="/login" element={<Login/>}></Route>
           <Route path="/register" element={<Register/>}></Route>

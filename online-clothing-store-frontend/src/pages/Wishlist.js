@@ -25,6 +25,7 @@ export default function Wishlist() {
   return (
 
         <div className="container_product d-flex">
+          
           <div className="row center justify-content-center align-content-center align-items-md-center">
             {getdata.map((element) => {
               return (

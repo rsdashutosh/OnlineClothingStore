@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.app.dtos.UserDTO;
 import com.app.dtos.UserLoginDTO;
 import com.app.dtos.UserResponseDTO;
+import com.app.enums.Role;
 import com.app.exception.ResourceNotFoundException;
 import com.app.pojos.User;
 import com.app.repository.UserRepository;
@@ -31,7 +32,9 @@ public class UserServiceImpl implements UserService {
 	public String addUser(UserDTO userDto) {
 		User user = mapper.map(userDto, User.class);
 		User persistantUser = userRepo.save(user);
-		return persistantUser.getFirstName()+" "+persistantUser.getLastName();
+		if(persistantUser.getRole()==null)
+			persistantUser.setRole(Role.ROLE_USER);
+		return "success";
 	}
 
 	// GET user by ID

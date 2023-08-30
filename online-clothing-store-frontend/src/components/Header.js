@@ -10,7 +10,8 @@ import { useNavigate } from "react-router-dom";
 import ProductService from "../service/ProductService";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { ADD_TO_FETCHED_PRODUCTS } from "../redux/actions/actions";
+import { ADD_TO_FETCHED_PRODUCTS, LOGIN, LOGOUT,SEARCH_RESULT } from "../redux/actions/actions";
+import { useSelector } from "react-redux";
 
 const Header=()=> {
 
@@ -20,22 +21,25 @@ const Header=()=> {
 
   const dispatch = useDispatch();
 
+  const isLogged = useSelector(state => state.loggedReducer);
+
+
+
+
   const handleLogout=()=>{
+    dispatch(LOGIN())
     alert("logged out successfully!")
     navigate('/login')
   }
 
-
+  const getdata =useSelector((state) => state.searchReducer.products);
   
 
 
   const fetchShirts=()=>{
-    ProductService.getProductsByCategory("SHIRT").then(result=>{setData(result.data)})
-    // store in the redux store
-    dispatch(ADD_TO_FETCHED_PRODUCTS(data))
-    console.log("fetched data : ",data)
-    // navigate to products page
-    navigate("/product_search")
+    ProductService.getProductsByCategory("SHIRT").then(result=>{dispatch(SEARCH_RESULT(result.data))})
+    // navigate to another page
+    
   }
 
 
@@ -65,16 +69,8 @@ const Header=()=> {
             <NavDropdown title="Women" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Saree</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
-                Tops
+                Dress
               </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Shirts</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Pants
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.4">
-                  Dress
-                </NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="Kids" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Shirts</NavDropdown.Item>
@@ -98,6 +94,8 @@ const Header=()=> {
             <Button className="mx-3" variant="outline-success" onClick={()=>navigate('/product')}>Search</Button>
             <Navbar.Text className="mx-2"></Navbar.Text>
             
+            {isLogged ? 
+            <>
             <img class="ml-3" src={require('../images/icons8-cart-pastel-glyph-32.png')} alt="not found" onClick={()=>navigate('/cart')}/>
             <Navbar.Text className="mx-2"></Navbar.Text>
             <NavDropdown title={<img src={require('../images/icons8-user-ios-16-filled-32.png')} alt="not found"/>} id="basic-nav-dropdown" drop="start">
@@ -107,6 +105,8 @@ const Header=()=> {
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
             </NavDropdown>
+            </>
+            : ''}
           </Form>
         </Navbar.Collapse>
       </Container>

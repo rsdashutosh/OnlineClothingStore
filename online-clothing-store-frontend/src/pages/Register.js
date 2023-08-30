@@ -1,115 +1,110 @@
-import React from "react";
-import {
-  Card,
-  Container,
-  CardHeader,
-  CardBody,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Button,
-  Row,
-  Col,
-} from "reactstrap";
+import React, { useState } from 'react'
+import UserService from '../service/UserService';
+import { Alert } from 'bootstrap';
+import { useNavigate } from 'react-router-dom';
 
-const Register = () => {
+export default function Register() {
+
+  const navigate=useNavigate();
+
+  const [firstName, setFirstName]= useState("Enter First name")
+  const [lastName, setLastName]= useState("enter Last name")
+  const [email, setEmail]= useState("Enter email")
+  const [phoneNumber, setPhoneNumber]= useState("enter phone number")
+  const [password, setPassword]= useState("Enter password")
+  const [gender, setGender]= useState("enter gender")
+  const [dateOfBirth, setDateOfBirth]= useState("enter dob")
+  //const [auth, setAuth]= useState(false)
+
+  const submitHandler=()=>{
+    // construct the json here
+    const user={
+      "firstName":firstName,
+      "lastName":lastName,
+      "email":email,
+      "phoneNumber":phoneNumber,
+      "password":password,
+      "gender":gender,
+      "dateOfBirth":dateOfBirth
+    }
+
+
+    UserService.addUser(user)
+      .then(response=>{
+        if(response.data==="success")
+        {
+          alert("registration successful!")
+          console.log("registration successful")
+          // if role == user then navigate to home , if role == admin navigate to admin dashboard
+          navigate('/login');
+        }
+        else
+        {
+          console.log("failure")
+          alert("registration failed!")
+        }
+      }
+    )
+  }
+
+  
+
   return (
-    <div style={{ backgroundImage: "url('https://i.pinimg.com/564x/0c/32/20/0c3220f3a764b4629be937f81ada2cda.jpg')" }} >
-   <Container className="py-5" >
-      <Row className="justify-content-center">
-        <Col md="6">
-          <Card>
-            <CardHeader className="bg-dark text-light text-center">
-              <h3>Register Yourself</h3>
-            </CardHeader>
-            <CardBody>
-              <Form>
-                <FormGroup>
-                  <Label for="fname">First Name:</Label>
-                  <Input
-                    id="fname"
-                    type="text"
-                    placeholder="Enter your first name"
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="lname">Last Name:</Label>
-                  <Input
-                    id="lname"
-                    type="text"
-                    placeholder="Enter your last name"
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="email">Email:</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email"
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="password">Password:</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    placeholder="Enter your password"
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="cno">Contact No:</Label>
-                  <Input
-                    id="cno"
-                    type="tel"
-                    placeholder="Enter your contact number"
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="gender">Gender:</Label>
-                  <div>
-                    <Label className="me-3">
-                      <Input
-                        type="radio"
-                        name="gender"
-                        value="male"
-                      />
-                      Male
-                    </Label>
-                    <Label className="me-3">
-                      <Input
-                        type="radio"
-                        name="gender"
-                        value="female"
-                      />
-                      Female
-                    </Label>
-                    <Label>
-                      <Input
-                        type="radio"
-                        name="gender"
-                        value="other"
-                      />
-                      Other
-                    </Label>
-                  </div>
-                </FormGroup>
-                <div className="d-grid">
-                  <Button color="secondary" className="mt-2">Back to Login</Button>
-                  <Button color="dark" className="mt-2">Register</Button>
-                  <Button color="secondary" className="mt-2" type="reset">
-                    Reset
-                  </Button>
-                </div>
-              </Form>
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
-    </div>
-  );
-};
+    
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <form mt-5>
+              <br></br>
+              
+              <div class="mb-3">
+                <label for="firstName" class="form-label">FirstName</label>
+                <input type="text" class="form-control" id="firstName" aria-describedby="emailHelp" value={firstName} onChange={(e)=>setFirstName(e.target.value)}/>
+              </div>
 
-export default Register;
+              <div class="mb-3">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lastName" aria-describedby="emailHelp" value={lastName} onChange={(e)=>setLastName(e.target.value)}/>
+              </div>
 
+              <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+              </div>
+
+              <div class="mb-3">
+                <label for="phoneNumber" class="form-label">Phone Number</label>
+                <input type="text" class="form-control" id="phoneNumber" aria-describedby="emailHelp" value={phoneNumber} onChange={(e)=>setPhoneNumber(e.target.value)}/>
+              </div>
+
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
+              </div>
+
+              <div class="mb-3">
+                
+                <label for="gender" class="form-label">Gender</label>
+                <input type="text" class="form-control" id="gender" aria-describedby="emailHelp" value={gender} onChange={(e)=>setGender(e.target.value)}/>
+              
+              </div>
+
+              <div class="mb-3">
+                <label for="dateOfBirth" class="form-label">Date Of Birth</label>
+                <input type="date" class="form-control" id="dateOfBirth" aria-describedby="emailHelp" value={dateOfBirth} onChange={(e)=>setDateOfBirth(e.target.value)}/>
+              </div>
+                <button type="button" class="btn btn-primary mx-1" onClick={()=>{navigate("/login")}}>Back to Login</button>
+                <button type="button" class="btn btn-primary mx-1" onClick={submitHandler}>Register</button>
+                <button type="button" class="btn btn-primary mx-1" onClick={()=>{navigate("/register")}}>Reset</button>
+            </form>
+          </div>
+          <div class="col-md-8">
+            <img class="h-100 img-fluid float-right object-fit-cover border rounded" src={require('../images/clothing-rak.avif')} alt='not found'/>
+          </div>
+          
+
+        </div>
+     </div>
+  )
+}

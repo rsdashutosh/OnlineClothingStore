@@ -7,18 +7,21 @@ class UserService{
         return axios.get(this.baseurl)
     }
 
-    userAuth(email,password){
-        var response=axios.get("/login/"+email+"/"+password)
-        return response;
+    userAuth(user){
+        return axios.post(this.baseurl+"/login",user,
+            {headers:{'content-type':'application/json'}})
+
     }
 
     deleteUser(id){
-        return axios.delete(this.baseurl+"User/"+id+".json")
+        return axios.delete(this.baseurl+"/User/"+id+".json")
     }
+
     addUser(user){
-        return axios.post(this.baseurl+"User.json",user,
+        return axios.post(this.baseurl,user,
         {headers:{'content-type':'application/json'}})
     }
+
     updateUser(user){
         console.log("in service update",user);
 
