@@ -7,6 +7,7 @@ import com.app.pojos.User;
 
 public interface UserRepository extends JpaRepository<User, Integer>  {
 
+	// Finder method to find a user by email
 	Optional<User> findByEmail(String email);
 
 }

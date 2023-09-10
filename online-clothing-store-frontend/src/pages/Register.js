@@ -60,22 +60,22 @@ export default function Register() {
               
               <div class="mb-3">
                 <label for="firstName" class="form-label">FirstName</label>
-                <input type="text" class="form-control" id="firstName" aria-describedby="emailHelp" value={firstName} onChange={(e)=>setFirstName(e.target.value)}/>
+                <input type="text" class="form-control" id="firstName" value={firstName} onChange={(e)=>setFirstName(e.target.value)}/>
               </div>
 
               <div class="mb-3">
                 <label for="lastName" class="form-label">Last Name</label>
-                <input type="text" class="form-control" id="lastName" aria-describedby="emailHelp" value={lastName} onChange={(e)=>setLastName(e.target.value)}/>
+                <input type="text" class="form-control" id="lastName" value={lastName} onChange={(e)=>setLastName(e.target.value)}/>
               </div>
 
               <div class="mb-3">
                 <label for="email" class="form-label">Email Address</label>
-                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+                <input type="email" class="form-control" id="email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
               </div>
 
               <div class="mb-3">
                 <label for="phoneNumber" class="form-label">Phone Number</label>
-                <input type="text" class="form-control" id="phoneNumber" aria-describedby="emailHelp" value={phoneNumber} onChange={(e)=>setPhoneNumber(e.target.value)}/>
+                <input type="text" class="form-control" id="phoneNumber" value={phoneNumber} onChange={(e)=>setPhoneNumber(e.target.value)}/>
               </div>
 
               <div class="mb-3">

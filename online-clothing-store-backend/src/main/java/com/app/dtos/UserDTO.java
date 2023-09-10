@@ -44,13 +44,13 @@ public class UserDTO {
 	@NotBlank(message = "firstName is mandatory")
     private String firstName;
 
-    //@NotBlank(message = "lastName is mandatory")
+    @NotBlank(message = "lastName is mandatory")
     private String lastName;
 
     @Email(message = "email is not a valid email address")
     private String email;
 
-    //@NotNull(message = "phoneNumber is mandatory")
+    @NotNull(message = "phoneNumber is mandatory")
     @Positive(message = "phoneNumber must be a positive integer")
     //@Size(min = 10,max = 10,message = "phone number should be of 10 digits")
     private Long phoneNumber;
@@ -62,17 +62,6 @@ public class UserDTO {
     //@NotBlank(message = "shippingAddresses is mandatory")
     //private List<Address> addresses=new ArrayList<>();
 
-    //private List<Order> orders=new ArrayList<>();
-
-    //private List<Review> reviews=new ArrayList<>();
-    
-    //private Cart cart;
-    
-    //private Wishlist wishlist;
-    
-    //private List<Payment> payments=new ArrayList<>();
-    
-    //private List<ReturnAndExchange> returnAndExchanges=new ArrayList<>();
     
     //@NotNull
     @Enumerated(EnumType.STRING)

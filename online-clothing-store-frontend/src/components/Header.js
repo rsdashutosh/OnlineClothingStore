@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { Dropdown } from "react-bootstrap";
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from "react-router-dom";
 import ProductService from "../service/ProductService";
@@ -13,9 +14,10 @@ import { useDispatch } from "react-redux";
 import { ADD_TO_FETCHED_PRODUCTS, LOGIN, LOGOUT,SEARCH_RESULT } from "../redux/actions/actions";
 import { useSelector } from "react-redux";
 
-const Header=()=> {
+const Header=(props)=> {
 
-  const [data,setData]=useState();
+  const [searchText,setSearchText]=useState();
+  const [searchSuggestions,setSearchSuggestions]=useState(["SHIRT","T-SHIRT","TROUSERS","SHORTS","JACKET","KURTA","PYJAMA","CAP","SAREE","DRESS","HAT"]);
 
   const navigate=useNavigate();
 
@@ -25,21 +27,47 @@ const Header=()=> {
 
 
 
-
+  // function to set the state at the central store as user is logged out and navigates to login page
   const handleLogout=()=>{
     dispatch(LOGIN())
     alert("logged out successfully!")
     navigate('/login')
   }
 
+
   const getdata =useSelector((state) => state.searchReducer.products);
-  
 
-
-  const fetchShirts=()=>{
-    ProductService.getProductsByCategory("SHIRT").then(result=>{dispatch(SEARCH_RESULT(result.data))})
+  // fetch products by category and display the results 
+  const fetchProductsByCategory=(category)=>{
+    console.log("key: "+category)
+    ProductService.getProductsByCategory(category).then(result=>{dispatch(SEARCH_RESULT(result.data))})
     // navigate to another page
-    
+    navigate('/product_search')
+  }
+
+  // after the sending the search term , we fetch the matching suggestions 
+  const getSuggestions = (searchTerm) => {
+    return searchSuggestions.filter((suggestion) => suggestion.toLowerCase().startsWith(searchTerm.toLowerCase()));
+  };
+
+  // after selecting an option from dropdown list, we set it as searchtext
+  const handleSelect = (suggestion) => {
+    searchText(suggestion);
+  };
+
+
+  const handleSearchBox=(e)=>{
+    // get search text 
+    e.preventDefault();
+    console.log("searchText : "+searchText)
+
+    // match searchText with existing categories
+    //const searchCategory=searchSuggestions.find(suggestion=>{suggestion.match(/+{searchText"}+/gi)})
+
+    // find products by the search text 
+    ProductService.getProductsByCategory(searchText).then(result=>{dispatch(SEARCH_RESULT(result.data))})
+    // display products on the page
+    navigate('/product_search')
   }
 
 
@@ -53,61 +81,57 @@ const Header=()=> {
             className="me-auto my-auto ml-auto mr-auto justify-content-center"
             style={{ maxHeight: '100px' }}
             navbarScroll
+            onSelect={fetchProductsByCategory}
           >
             <NavDropdown title="Mens" id="basic-nav-dropdown">
-                <NavDropdown.Item onClick={()=>{fetchShirts()}}>Shirts</NavDropdown.Item>
-                <NavDropdown.Item>T- Shirts</NavDropdown.Item>
-                <NavDropdown.Item>Jackets</NavDropdown.Item>
+                <NavDropdown.Item eventKey="CAP">Caps</NavDropdown.Item>
+                <NavDropdown.Item eventKey="HAT">Hats</NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Trousers
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.4">
-                  Shorts
-                </NavDropdown.Item>
+                <NavDropdown.Item eventKey="SHIRT">Shirts</NavDropdown.Item>
+                <NavDropdown.Item eventKey="T_SHIRT">T-Shirts</NavDropdown.Item>
+                <NavDropdown.Item eventKey="JACKET">Jackets</NavDropdown.Item>
+                <NavDropdown.Item eventKey="KURTA">Kurtas</NavDropdown.Item>
+                <NavDropdown.Item eventKey="SWEATER">Sweaters</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item eventKey="TROUSER">Trousers</NavDropdown.Item>
+                <NavDropdown.Item eventKey="JEANS">Jeans</NavDropdown.Item>
+                <NavDropdown.Item eventKey="SHORTS">Shorts</NavDropdown.Item>
+                <NavDropdown.Item eventKey="PAJAMAS">Pajamas</NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="Women" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Saree</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Dress
-              </NavDropdown.Item>
-            </NavDropdown>
-            <NavDropdown title="Kids" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Shirts</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                T Shirts
-              </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Pant</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Fancy Dress
-                </NavDropdown.Item>
+              <NavDropdown.Item eventKey="SAREE">Saree</NavDropdown.Item>
+              <NavDropdown.Item eventKey="DRESS">Dress</NavDropdown.Item>
             </NavDropdown>
           </Nav>
-          <Form className="d-flex align-items-center justify-content-center mx-4">
+          <Form className="d-flex align-items-center justify-content-center mx-1" onSubmit={handleSearchBox}>
             <Form.Control
               type="search"
-              placeholder="Search"
+              placeholder="Search for products"
               className=""
               aria-label="Search"
+              value={searchText}
+              onChange={(event) => {setSearchText(event.target.value)}}
             />
-            <Button className="mx-3" variant="outline-success" onClick={()=>navigate('/product')}>Search</Button>
-            <Navbar.Text className="mx-2"></Navbar.Text>
-            
-            {isLogged ? 
-            <>
-            <img class="ml-3" src={require('../images/icons8-cart-pastel-glyph-32.png')} alt="not found" onClick={()=>navigate('/cart')}/>
-            <Navbar.Text className="mx-2"></Navbar.Text>
-            <NavDropdown title={<img src={require('../images/icons8-user-ios-16-filled-32.png')} alt="not found"/>} id="basic-nav-dropdown" drop="start">
-              <NavDropdown.Item onClick={()=>navigate('/profile')}>Profile</NavDropdown.Item>
-              <NavDropdown.Item  onClick={()=>navigate('/orders')}>Orders</NavDropdown.Item>
-              <NavDropdown.Item  onClick={()=>navigate('/wishlist')}>Wishlist</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
-            </NavDropdown>
-            </>
-            : ''}
+
+            <Button type='submit' className="mx-1" variant="outline-success">Search</Button>
+            <Navbar.Text className="mx-1"></Navbar.Text>
           </Form>
+
+          {/* Conditional rendering of user icon and cart icon */}
+          {isLogged ? 
+          <Form className="d-flex align-items-center justify-content-center mx-4">
+          <img class="ml-3" src={require('../images/icons8-cart-pastel-glyph-32.png')} alt="not found" onClick={()=>navigate('/cart')}/>
+          <Navbar.Text className="mx-2"></Navbar.Text>
+          <NavDropdown title={<img src={require('../images/icons8-user-ios-16-filled-32.png')} alt="not found"/>} id="basic-nav-dropdown" drop="start">
+            <NavDropdown.Item onClick={()=>navigate('/profile')}>Profile</NavDropdown.Item>
+            <NavDropdown.Item  onClick={()=>navigate('/orders')}>Orders</NavDropdown.Item>
+            <NavDropdown.Item  onClick={()=>navigate('/wishlist')}>Wishlist</NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
+          </NavDropdown>
+          </Form>
+          : ''}
+          
         </Navbar.Collapse>
       </Container>
     </Navbar>

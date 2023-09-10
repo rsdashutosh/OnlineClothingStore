@@ -10,7 +10,6 @@ class UserService{
     userAuth(user){
         return axios.post(this.baseurl+"/login",user,
             {headers:{'content-type':'application/json'}})
-
     }
 
     deleteUser(id){
@@ -18,8 +17,7 @@ class UserService{
     }
 
     addUser(user){
-        return axios.post(this.baseurl,user,
-        {headers:{'content-type':'application/json'}})
+        return axios.post(this.baseurl,user,{headers:{'content-type':'application/json'}})
     }
 
     updateUser(user){

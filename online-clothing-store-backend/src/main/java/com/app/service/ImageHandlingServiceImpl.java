@@ -43,7 +43,9 @@ public class ImageHandlingServiceImpl implements ImageHandlingService {
 		Product product = productRepo.findById(productId).get();
 		// product found --> PERSISTENT
 		// store the image on server side folder
+		// "images/" + "red_jacket.png" => path="images/red_jacket.png"
 		String path = uploadFolder.concat(image.getOriginalFilename());
+		
 		System.out.println(path);
 		// Use FileUtils method : writeByte[] --> File
 		writeByteArrayToFile(new File(path), image.getBytes());

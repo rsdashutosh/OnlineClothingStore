@@ -14,13 +14,12 @@ import ProductSpecific from './pages/ProductSpecific';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import MyNavbar from './components/Navbar';
 import ProductSearch from './pages/ProductSearch';
 
 function App() {
   return (
     <div className="App">
-      <Header/>
+      <Header />
         <Routes>
           <Route path="/" element={<Navigate replace to="/login"/>}></Route>
           <Route path="/admin" element={<Admin/>}></Route>

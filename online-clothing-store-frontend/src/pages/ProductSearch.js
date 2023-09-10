@@ -13,14 +13,14 @@ import { useSelector } from "react-redux";
 
 const ProductSearch = () => {
 
-const [data, setData] = useState([]);
+//const [data, setData] = useState([]);
 
 const navigate=useNavigate();
 
-const getdata = useSelector((state) => state.cartreducer.products);
+const getdata = useSelector((state) => state.searchReducer.products);
 
     
-console.log("get data of product search : ",getdata);
+console.log("shirts : ",getdata);
 
 const dispatch = useDispatch();
 
