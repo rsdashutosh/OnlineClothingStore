@@ -16,7 +16,7 @@ Some Notable features of Frontend :
 - Conditional redering of cart and user icons based on whether user is logged in or not
 - Backend connectivity through axios calls
 - Searching of products by Category
-- 
+  
 Some Notable features of Backend :
 - All CRUD endpoints for all ~10-12 entities working fine
 - Use of DTOs to avoid exposing entities directly in the controller layer
