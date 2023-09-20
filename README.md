@@ -12,7 +12,7 @@ Technologies used :
 - Database : MySQL
 
 Some Notable features of Frontend : 
-- State manageement done by Redux
+- State management done by Redux
 - Conditional rendering of cart and user icons based on whether user is logged in or not
 - Backend connectivity through axios calls
 - Searching of products by Category
