@@ -1,18 +1,22 @@
 package com.app.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.dtos.OrderDTO;
+import com.app.dtos.OrderFromCartDTO;
 import com.app.dtos.OrderResponseDTO;
 import com.app.dtos.PaymentResponseDTO;
+import com.app.enums.OrderStatus;
 import com.app.pojos.Order;
 import com.app.pojos.Payment;
 import com.app.pojos.Product;
@@ -60,6 +64,41 @@ public class OrderServiceImpl implements OrderService {
 	        // persisting the received data into the database
 	        return "Order placed with ID: " + persistedOrder.getId();
 	    }
+	    
+	    
+	    // to create orders for each item in the cart 
+		@Override
+		public String placeOrderFromCart(@Valid OrderFromCartDTO orderFromCartDTO) {
+			// extract the user id from the DTO and find the user from repo
+			User user=userRepo.findById(orderFromCartDTO.getUserId()).get();
+			
+			// now create a new order for each product from the array of product ids received inside the DTO
+			Integer[] products=orderFromCartDTO.getProductIds();
+			
+			for (Integer productId : products) {
+				// fetch the product details 
+				Product product=productRepo.findById(productId).get();
+				
+				// find the values for all the remaining fields of order entity
+			    LocalDate orderDate=LocalDate.now();
+			    OrderStatus orderStatus=OrderStatus.PLACED;
+			    Double tax=product.getPrice()*0.18;
+			    Double orderAmount=(product.getPrice()+tax)-(product.getPrice()*(product.getDiscount()/100));
+			    
+			    Order order=new Order();
+			    order.setOrderDate(orderDate);
+			    order.setOrderStatus(orderStatus);
+			    order.setTax(tax);
+			    order.setOrderAmount(orderAmount);
+			    order.addProduct(product);
+			    order.setUser(user);
+			    
+			    orderRepo.save(order);
+			}
+			
+			return "Order placed successfully!";
+		}
+	    
 
 	    // GET order by ID
 	    @Override

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.dtos.OrderDTO;
+import com.app.dtos.OrderFromCartDTO;
 import com.app.dtos.OrderResponseDTO;
 import com.app.service.OrderService;
 
@@ -31,6 +32,12 @@ public class OrderController {
 	    @PostMapping("/")
 	    public ResponseEntity<?> placeOrder(@Valid @RequestBody OrderDTO orderDto) {
 	        return ResponseEntity.status(HttpStatus.OK).body(orderService.placeOrder(orderDto));
+	    }
+	    
+	    // create a new endpoint which accepts user id and products ids of products in the cart and then creates a new order for each product
+	    @PostMapping("/cart")
+	    public ResponseEntity<?> placeOrdersFromCart(@Valid @RequestBody OrderFromCartDTO orderFromCartDTO) {
+	        return ResponseEntity.status(HttpStatus.OK).body(orderService.placeOrderFromCart(orderFromCartDTO));
 	    }
 
 	    @GetMapping

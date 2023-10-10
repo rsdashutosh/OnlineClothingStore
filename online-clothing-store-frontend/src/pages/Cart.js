@@ -4,14 +4,18 @@ import {useSelector} from "react-redux";
 import {useDispatch} from "react-redux";
 import {useState} from 'react'
 import {useEffect} from 'react'
+import OrderService from '../service/OrderService';
+import { useNavigate } from 'react-router-dom';
 
 export default function Cart() {
     //to set total price
     const[price, setPrice] = useState(0);
     const[totalDiscount, setDiscount] = useState(0);
+    const[responseReceived, setResponseReceived] = useState(false);
      // console.log(price);
 
      const dispatch = useDispatch();
+     const navigate=useNavigate();
 
     const getdata = useSelector((state) => state.cartreducer.carts);
     //console.log(getdata);
@@ -42,6 +46,51 @@ export default function Cart() {
         });
         setDiscount(discount);
     };
+
+
+    // method to define how the order will be placed
+    const placeOrder=()=>{
+        // get the products currently place in the cart 
+        const cartItems=getdata;
+        const productsIds=[];
+
+        // create an array of   product ids of all the products in the cart
+        cartItems.forEach((cartItem)=>{productsIds.push(cartItem.id)})
+        console.log(productsIds)
+        
+        // create the DTO containing the user id and the product ids
+        const orderDetails={userId:9,productIds:productsIds}
+
+        // send these order details to backend for create the order
+        OrderService.addOrdersFromCart(orderDetails)
+        .then(
+            response=>{
+                if(response.data==="order placed successfully!" && responseReceived===false){
+                    console.log(response.data)
+                    setResponseReceived(true);
+                    alert("Order placed successfully!");
+                }else{
+                    console.log("failure")
+                    setResponseReceived(true);
+                    alert("Order could not be placed, please try again :( ");
+                }
+            }
+            
+        )
+
+        setResponseReceived(false);
+
+        // code to empty the cart
+        cartItems.forEach((cartItem)=>dlt(cartItem.id));
+
+        // navigate to orders page
+        navigate("/orders")
+
+        // on successful placing of order , remove the items from the cart
+        alert("Order successfully placed !");
+        
+    }
+
 
     useEffect(() => { total();discount() }, [total,discount])
     

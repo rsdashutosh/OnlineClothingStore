@@ -3,6 +3,7 @@ package com.app.service;
 import java.util.List;
 
 import com.app.dtos.OrderDTO;
+import com.app.dtos.OrderFromCartDTO;
 import com.app.dtos.OrderResponseDTO;
 
 public interface OrderService {
@@ -12,5 +13,6 @@ public interface OrderService {
     public OrderDTO getOrder(Integer orderId);
     public String updateOrderDetails(Integer orderId, OrderDTO orderDto);
     public String cancelOrder(Integer orderId);
+	String placeOrderFromCart(OrderFromCartDTO orderFromCartDTO);
 
 }
