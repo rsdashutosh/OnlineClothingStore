@@ -18,6 +18,9 @@ export default function Cart() {
      const navigate=useNavigate();
 
     const getdata = useSelector((state) => state.cartreducer.carts);
+
+    const userId = useSelector((state) => state.userReducer.userId);
+
     //console.log(getdata);
 
 
@@ -59,7 +62,7 @@ export default function Cart() {
         console.log(productsIds)
         
         // create the DTO containing the user id and the product ids
-        const orderDetails={userId:9,productIds:productsIds}
+        const orderDetails={userId:userId,productIds:productsIds}
 
         // send these order details to backend for create the order
         OrderService.addOrdersFromCart(orderDetails)

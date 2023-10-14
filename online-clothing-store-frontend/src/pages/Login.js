@@ -3,7 +3,7 @@ import UserService from '../service/UserService';
 import { Alert } from 'bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { LOGIN } from '../redux/actions/actions';
+import { LOGIN, STORE_USER } from '../redux/actions/actions';
 
 export default function Login() {
 
@@ -23,9 +23,11 @@ export default function Login() {
 
     UserService.userAuth(user)
       .then(response=>{
-        if(response.data==="login successful")
+        if(response.data.message==="login successful")
         {
           console.log("success")
+
+          dispatch(STORE_USER(response.data.userId))
           // if role == user then navigate to home , if role == admin navigate to admin dashboard
           navigate('/home');
 

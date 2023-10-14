@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.app.dtos.LoginResponseDTO;
 import com.app.dtos.UserDTO;
 import com.app.dtos.UserLoginDTO;
 import com.app.dtos.UserResponseDTO;
@@ -47,12 +48,21 @@ public class UserServiceImpl implements UserService {
 	
 	// User Authentication
 	@Override
-	public String userLogin(String email,String password) {
+	public LoginResponseDTO userLogin(String email,String password) {
 		User user = userRepo.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("user not registered!"));
+		LoginResponseDTO loginResponseDTO=new LoginResponseDTO();
 		if(user.getPassword().equals(password))
-			return "login successful";
+		{
+			loginResponseDTO.setMessage("login successful");
+			loginResponseDTO.setUserId(user.getId());
+		}	
 		else
-			return "login failed";
+		{
+			loginResponseDTO.setMessage("login failed");
+			loginResponseDTO.setUserId(-1);
+		}
+		return loginResponseDTO;
+			
 	}
 	
 	// GET all users

@@ -14,8 +14,10 @@ const OrderHistory=()=>{
 
     const orderData = useSelector((state) => state.orderReducer.orders);
 
+    const userId = useSelector((state) => state.userReducer.userId);
+
     function getOrderData(){
-        const userId=9;
+        //const userId=9;
         OrderService.getAllOrdersOfACustomer(userId).then(result=>{dispatch(STORE_ORDERS(result.data))})
         
         // get products of each order

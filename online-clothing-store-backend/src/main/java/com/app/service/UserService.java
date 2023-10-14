@@ -1,6 +1,8 @@
 package com.app.service;
 
 import java.util.List;
+
+import com.app.dtos.LoginResponseDTO;
 import com.app.dtos.UserDTO;
 import com.app.dtos.UserLoginDTO;
 import com.app.dtos.UserResponseDTO;
@@ -12,6 +14,6 @@ public interface UserService {
 	public List<UserResponseDTO> getAllUsers();
 	public String updateUserDetails(Integer userId, UserDTO userDTO);
 	public String deleteUser(Integer userId);
-	public String userLogin(String email,String password);
+	public LoginResponseDTO userLogin(String email,String password);
 	
 }

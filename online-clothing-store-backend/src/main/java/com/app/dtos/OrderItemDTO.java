@@ -32,7 +32,7 @@ public class OrderItemDTO {
     private Double tax;
     private Double orderAmount;
     private Integer productId;
-    private String productName;
+    private String productName; 
 	private String productDescription;
     
     @NotNull(message = "userId is mandatory")

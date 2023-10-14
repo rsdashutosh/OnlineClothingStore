@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.app.dtos.LoginResponseDTO;
 import com.app.dtos.UserDTO;
 import com.app.dtos.UserLoginDTO;
 import com.app.dtos.UserResponseDTO;
@@ -45,8 +47,8 @@ public class UserController {
 	
 	// authorizing the user details by username/email
 	@PostMapping(value="/login")
-	public ResponseEntity<String> getUserByEmail(@Valid @RequestBody UserLoginDTO userLoginDTO) {
-		return new ResponseEntity<String>(userService.userLogin(userLoginDTO.getEmail(),userLoginDTO.getPassword()), HttpStatus.OK);
+	public ResponseEntity<?> getUserByEmail(@Valid @RequestBody UserLoginDTO userLoginDTO) {
+		return new ResponseEntity<LoginResponseDTO>(userService.userLogin(userLoginDTO.getEmail(),userLoginDTO.getPassword()), HttpStatus.OK);
 	}
 	
 	@PutMapping("/{userId}")

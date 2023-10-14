@@ -1,4 +1,5 @@
 const INIT_STATE = {
+    userId:"",
     email:"",
     password:"",
     carts: [],
@@ -95,6 +96,20 @@ export const orderReducer = (state=INIT_STATE, action) => {
         return {
             ...state,
             orders:orders
+        }
+        default:
+            return state;
+        }
+    }
+
+
+export const userReducer = (state=INIT_STATE, action) => {
+    switch(action.type){
+        case "STORE_USER":
+        const user_id=action.payload;
+        return {
+            ...state,
+            userId:user_id
         }
         default:
             return state;
