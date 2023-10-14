@@ -3,7 +3,8 @@ const INIT_STATE = {
     password:"",
     carts: [],
     wishlists: [],
-    products:[]
+    products:[],
+    orders:[]
 };
 
 export const cartreducer = (state = INIT_STATE, action) => {
@@ -80,6 +81,20 @@ export const searchReducer = (state=INIT_STATE, action) => {
         return {
             ...state,
             products:products
+        }
+        default:
+            return state;
+        }
+    }
+
+//reducers/isLogged.js
+export const orderReducer = (state=INIT_STATE, action) => {
+    switch(action.type){
+        case "STORE_ORDERS":
+        const orders=action.payload;
+        return {
+            ...state,
+            orders:orders
         }
         default:
             return state;

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.app.dtos.OrderDTO;
 import com.app.dtos.OrderFromCartDTO;
+import com.app.dtos.OrderItemDTO;
 import com.app.dtos.OrderResponseDTO;
 import com.app.dtos.PaymentResponseDTO;
 import com.app.enums.OrderStatus;
@@ -154,6 +155,25 @@ public class OrderServiceImpl implements OrderService {
 			return orderResponseDTOs;
 			
 		
+		}
+
+		// service layer method for fetching orders for a specific user
+		@Override
+		public List<OrderItemDTO> getAllOrdersOfAUser(@Valid Integer userId) {
+			User user=userRepo.findById(userId).get();
+			List<Order> orders=user.getOrders();
+
+			List<OrderItemDTO> orderItemDTOs=new ArrayList<OrderItemDTO>();
+			for (Order order : orders) {
+				OrderItemDTO orderItemDTO=mapper.map(order, OrderItemDTO.class);
+				orderItemDTO.setUserId(order.getUser().getId());
+				orderItemDTO.setProductId(order.getProducts().get(0).getId());
+				orderItemDTO.setProductName(order.getProducts().get(0).getName());
+				orderItemDTO.setProductDescription(order.getProducts().get(0).getDescription());
+				
+				orderItemDTOs.add(orderItemDTO);
+			}
+			return orderItemDTOs;
 		}
 	
 	

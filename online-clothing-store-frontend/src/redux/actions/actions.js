@@ -60,3 +60,18 @@ export const SEARCH_RESULT = (products) =>{
 }
 
 
+// for storing fetched orders of a user
+export const STORE_ORDERS = (orders) =>{
+  return{
+      type : "STORE_ORDERS",
+      payload : orders
+  }
+}
+
+export const FETCH_ORDERS = () =>{
+  return{
+      type : "FETCH_ORDERS",
+      //payload : orders
+  }
+}
+

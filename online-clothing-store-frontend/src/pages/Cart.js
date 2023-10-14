@@ -65,12 +65,12 @@ export default function Cart() {
         OrderService.addOrdersFromCart(orderDetails)
         .then(
             response=>{
-                if(response.data==="order placed successfully!" && responseReceived===false){
+                if(response.data==="Order placed successfully!" && responseReceived===false){
                     console.log(response.data)
                     setResponseReceived(true);
                     alert("Order placed successfully!");
                 }else{
-                    console.log("failure")
+                    console.log(response.data)
                     setResponseReceived(true);
                     alert("Order could not be placed, please try again :( ");
                 }
@@ -159,7 +159,7 @@ export default function Cart() {
             <h6>Discount on MRP - ₹{totalDiscount}</h6>
             <hr></hr>
             <h6>Total Amount ₹{price-totalDiscount}</h6>
-            <a href="#" class="btn bg-success my-1 text-white">Place Order</a>
+            <a href="#" class="btn bg-success my-1 text-white" onClick={placeOrder}>Place Order</a>
         </div>
         <div className='col-1'></div>
       </div>

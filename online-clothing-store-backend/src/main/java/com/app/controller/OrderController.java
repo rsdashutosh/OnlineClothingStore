@@ -45,6 +45,12 @@ public class OrderController {
 	        return new ResponseEntity<List<OrderResponseDTO>>(orderService.getAllOrders(), HttpStatus.OK);
 	    }
 	    
+	    // get all orders of a user
+	    @GetMapping("/user_id/{userId}")
+	    public ResponseEntity<?> getAllOrdersOfAUser(@Valid @PathVariable Integer userId) {
+	        return new ResponseEntity<List<?>>(orderService.getAllOrdersOfAUser(userId), HttpStatus.OK);
+	    }
+	    
 	    @GetMapping("/{orderId}")
 	    public ResponseEntity<OrderDTO> getOrderById(@PathVariable Integer orderId) {
 	        return new ResponseEntity<OrderDTO>(orderService.getOrder(orderId), HttpStatus.OK);
