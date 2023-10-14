@@ -5,7 +5,8 @@ const INIT_STATE = {
     carts: [],
     wishlists: [],
     products:[],
-    orders:[]
+    orders:[],
+    userDetails:[]
 };
 
 export const cartreducer = (state = INIT_STATE, action) => {
@@ -105,11 +106,17 @@ export const orderReducer = (state=INIT_STATE, action) => {
 
 export const userReducer = (state=INIT_STATE, action) => {
     switch(action.type){
-        case "STORE_USER":
+        case "STORE_USER_ID":
         const user_id=action.payload;
         return {
             ...state,
             userId:user_id
+        }
+        case "STORE_USER":
+        const userDetails=action.payload;
+        return {
+            ...state,
+            userDetails:userDetails
         }
         default:
             return state;

@@ -76,11 +76,26 @@ export const FETCH_ORDERS = () =>{
 }
 
 
+// for user id
+export const STORE_USER_ID = (user_id) =>{
+  return{
+      type : "STORE_USER_ID",
+      payload : user_id
+  }
+}
+
+export const FETCH_USER_ID = () =>{
+  return{
+      type : "FETCH_USER_ID",
+      //payload : orders
+  }
+}
+
 // for user
-export const STORE_USER = (user_id) =>{
+export const STORE_USER = (user_details) =>{
   return{
       type : "STORE_USER",
-      payload : user_id
+      payload : user_details
   }
 }
 

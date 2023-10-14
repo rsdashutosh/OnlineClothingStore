@@ -9,12 +9,20 @@ import { useEffect } from 'react';
 import UserService from '../service/UserService';
 import OrderHistory from './OrderHistory';
 import OrderService from '../service/OrderService';
+import { useDispatch, useSelector } from 'react-redux';
+import { STORE_USER } from '../redux/actions/actions';
 
 const UserProfile = () => {
 
-  const [userData,setUserData]= useState([]);
+  const [userData,setUserData]= useState({});
+
+  const userId = useSelector((state) => state.userReducer.userId);
+
+  const userDetails = useSelector((state) => state.userReducer.userDetails);
 
   const navigate=useNavigate();
+
+  const dispatch=useDispatch();
 
   useEffect(()=>{
       console.log("in useeffect initialization");
@@ -22,15 +30,13 @@ const UserProfile = () => {
   },[])  
 
 const handleRequestForUsers=()=>{
-    console.log("in handle request for product");
-    OrderService.getAllOrdersOfACustomer()
+    UserService.getUserDetails(userId)
     .then(result=>{
-        setUserData(result.data)
+        dispatch(STORE_USER(result.data))
+        console.log(userDetails.firstName)
     })
 }
   
-
-
 
   return (
     <Container className="mt-4">
@@ -67,17 +73,17 @@ const handleRequestForUsers=()=>{
           </thead>
           <tbody>
               { 
-                  userData.map(
-                      (payment)=>(
-                      <tr key={payment.id}>
-                          <td>{payment.id}</td>
-                          <td>{payment.amount}</td>
-                          <td>{payment.paymentMethod}</td>
-                          <td>{payment.paymentStatus}</td>
-                          <td>{payment.paymentTimestamp}</td>
-                          <td>{payment.orderId}</td>
-                          <td>{payment.userId}</td>
-                      </tr>))
+                  // userData.map(
+                  //     (payment)=>(
+                  //     <tr key={payment.id}>
+                  //         <td>{payment.id}</td>
+                  //         <td>{payment.amount}</td>
+                  //         <td>{payment.paymentMethod}</td>
+                  //         <td>{payment.paymentStatus}</td>
+                  //         <td>{payment.paymentTimestamp}</td>
+                  //         <td>{payment.orderId}</td>
+                  //         <td>{payment.userId}</td>
+                  //     </tr>))
               
               }
           </tbody>

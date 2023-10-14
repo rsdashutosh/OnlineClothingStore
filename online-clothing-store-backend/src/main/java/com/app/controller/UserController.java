@@ -41,8 +41,8 @@ public class UserController {
 	}
 
 	@GetMapping(value="/user_id/{userId}")
-	public ResponseEntity<UserDTO> getUserById(@PathVariable Integer userId) {
-		return new ResponseEntity<UserDTO>(userService.getUser(userId), HttpStatus.OK);
+	public ResponseEntity<UserDTO> getUserById(@PathVariable String userId) {
+		return new ResponseEntity<UserDTO>(userService.getUser(Integer.valueOf(userId)), HttpStatus.OK);
 	}
 	
 	// authorizing the user details by username/email

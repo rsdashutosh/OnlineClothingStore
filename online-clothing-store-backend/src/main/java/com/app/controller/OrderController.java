@@ -47,8 +47,8 @@ public class OrderController {
 	    
 	    // get all orders of a user
 	    @GetMapping("/user_id/{userId}")
-	    public ResponseEntity<?> getAllOrdersOfAUser(@Valid @PathVariable Integer userId) {
-	        return new ResponseEntity<List<?>>(orderService.getAllOrdersOfAUser(userId), HttpStatus.OK);
+	    public ResponseEntity<?> getAllOrdersOfAUser(@Valid @PathVariable String userId) {
+	        return new ResponseEntity<List<?>>(orderService.getAllOrdersOfAUser(Integer.valueOf(userId)), HttpStatus.OK);
 	    }
 	    
 	    @GetMapping("/{orderId}")

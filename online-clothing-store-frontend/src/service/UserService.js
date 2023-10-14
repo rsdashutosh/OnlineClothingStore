@@ -7,6 +7,10 @@ class UserService{
         return axios.get(this.baseurl)
     }
 
+    getUserDetails(userId){
+        return axios.get(this.baseurl+"/user_id/"+userId)
+    }
+
     userAuth(user){
         return axios.post(this.baseurl+"/login",user,
             {headers:{'content-type':'application/json'}})
